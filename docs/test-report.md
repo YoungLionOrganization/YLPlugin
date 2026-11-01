@@ -56,9 +56,10 @@ reviewers. Concrete outcomes:
 | Product QA | Actual create/convert/inspect/list/validate/check/extract/sign/verify/encrypt workflows; same bytes through C/C++/Python; private-key examples do not enter source control |
 | Regression | Rebuilt/re-ran after fixes, full normal and sanitized suites passed; unchanged upstream YLSpec tests also passed |
 
-## Not executed / not implemented
+## Initial local verification limits
 
-Windows/macOS/ARM/mobile execution, signed app bundles, mobile stores, physical
+At the initial local verification stage, Windows/macOS/ARM/mobile execution,
+signed app bundles, mobile stores, physical
 device lifecycle/low-memory testing, a real integration into the current
 LeoMiniGames executable, and its complete historical regression suite were not
 run. Their source was inspected for compatibility; the migration plan is additive.
@@ -68,4 +69,18 @@ single-resource decoding remain unimplemented. Qt's RCC internal parser is not
 claimed hardened; the adapter requires host approval/independent validation.
 Project licensing and independent release/security audit remain open.
 
-No GitHub Release, registry publication or production deployment was performed.
+That local stage did not publish a GitHub Release, registry package or production
+deployment.
+
+## GitHub release verification
+
+The explicitly authorized v0.1.0 publication follows the remote desktop,
+sanitizer and coverage-guided fuzz workflow. The package job depends on all three
+job groups succeeding, and records the exact commit and workflow URL in the
+release asset `release-manifest.json`. Consult that run for the final platform
+outcomes, including explicitly skipped native execution on non-Linux runners;
+the initial local results above are not substituted for remote results.
+
+Release assets contain committed sources, a pure Python facade wheel, the RCC
+demo and checksums. No native binary, payment service or production deployment
+is implied. License selection and independent security review remain open.
