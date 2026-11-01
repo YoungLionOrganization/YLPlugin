@@ -1,0 +1,10 @@
+{
+  "id": "ylplugin_demo",
+  "name": "YLPlugin Tap Demo",
+  "version": "1.0.0",
+  "entry": "Main.qml",
+  "package_format": "rcc-v1",
+  "api_version": "0.7",
+  "min_api_version": "0.7",
+  "required_capabilities": ["resources"]
+}

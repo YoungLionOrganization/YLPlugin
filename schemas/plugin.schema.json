@@ -1,0 +1,425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://younglion.xyz/schemas/ylplugin/profile-1.0.json",
+  "title": "YLSpec plugin profile 1.0 logical tree (native validator is authoritative)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "_ylspec",
+    "data"
+  ],
+  "properties": {
+    "_ylspec": {
+      "type": "object",
+      "required": [
+        "version",
+        "profile",
+        "profile_version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "0.1"
+        },
+        "profile": {
+          "const": "xyz.younglion.plugin"
+        },
+        "profile_version": {
+          "const": "1.0"
+        },
+        "requires": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "entrypoints",
+        "targets"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]{1,9}(\\.[0-9]{1,9}){0,2}$"
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[^\\u0000]+$"
+        },
+        "entrypoints": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "runtime",
+              "runtime_min",
+              "runtime_max",
+              "resource"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              "runtime": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              "runtime_min": {
+                "type": "string",
+                "pattern": "^[0-9]{1,9}(\\.[0-9]{1,9}){0,2}$"
+              },
+              "runtime_max": {
+                "type": "string",
+                "pattern": "^[0-9]{1,9}(\\.[0-9]{1,9}){0,2}$"
+              },
+              "resource": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[A-Za-z0-9._/-]+$"
+              },
+              "os": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[^\\u0000]+$"
+              },
+              "arch": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[^\\u0000]+$"
+              },
+              "abi": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[^\\u0000]+$"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "runtime": {
+                      "const": "native"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "os",
+                    "arch",
+                    "abi"
+                  ],
+                  "properties": {
+                    "os": {
+                      "not": {
+                        "const": "*"
+                      }
+                    },
+                    "arch": {
+                      "not": {
+                        "const": "*"
+                      }
+                    },
+                    "abi": {
+                      "not": {
+                        "const": "*"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "host",
+              "api_min",
+              "api_max",
+              "entrypoint"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              "host": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255,
+                    "pattern": "^[A-Za-z0-9._-]+$"
+                  },
+                  {
+                    "const": "*"
+                  }
+                ]
+              },
+              "api_min": {
+                "type": "string",
+                "pattern": "^[0-9]{1,9}(\\.[0-9]{1,9}){0,2}$"
+              },
+              "api_max": {
+                "type": "string",
+                "pattern": "^[0-9]{1,9}(\\.[0-9]{1,9}){0,2}$"
+              },
+              "entrypoint": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              "priority": {
+                "type": "integer",
+                "minimum": -9223372036854775808,
+                "maximum": 9223372036854775807
+              },
+              "fallback": {
+                "type": "boolean"
+              },
+              "required_capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "pattern": "^[^\\u0000]+$"
+                },
+                "uniqueItems": true
+              },
+              "optional_capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "pattern": "^[^\\u0000]+$"
+                },
+                "uniqueItems": true
+              },
+              "required_permissions": {
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255,
+                      "pattern": "^[^\\u0000]+$"
+                    },
+                    "uniqueItems": true
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "format",
+                      "registry",
+                      "registry_version",
+                      "value"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "format": {
+                        "const": "bitmask"
+                      },
+                      "registry": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "registry_version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "value": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9223372036854775807
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "format",
+                      "registry",
+                      "registry_version",
+                      "values"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "format": {
+                        "const": "bytes"
+                      },
+                      "registry": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "registry_version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "values": {
+                        "type": "array",
+                        "maxItems": 8192,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 255
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "optional_permissions": {
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 255,
+                      "pattern": "^[^\\u0000]+$"
+                    },
+                    "uniqueItems": true
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "format",
+                      "registry",
+                      "registry_version",
+                      "value"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "format": {
+                        "const": "bitmask"
+                      },
+                      "registry": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "registry_version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "value": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9223372036854775807
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "format",
+                      "registry",
+                      "registry_version",
+                      "values"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "format": {
+                        "const": "bytes"
+                      },
+                      "registry": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "registry_version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "pattern": "^[^\\u0000]+$"
+                      },
+                      "values": {
+                        "type": "array",
+                        "maxItems": 8192,
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 255
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "memory": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9223372036854775807
+              },
+              "storage": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9223372036854775807
+              }
+            }
+          }
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 255,
+        "pattern": "^[^\\u0000]+$"
+      },
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  }
+}

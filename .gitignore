@@ -1,0 +1,10 @@
+/build*/
+__pycache__/
+*.pyc
+*.ylplugin
+!tests/vectors/*.ylplugin
+!examples/artifacts/*.ylplugin
+*.pem
+*.key
+/dist/
+*.egg-info/

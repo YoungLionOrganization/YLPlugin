@@ -1,0 +1,33 @@
+{
+  "valid.ylplugin": {
+    "open": 0,
+    "validate": 0,
+    "sha256": "df5beac41ae6a49fcbb1bae1cd1ddd17946cd8ac8f6ec1e04b1e216350176f20"
+  },
+  "truncated.ylplugin": {
+    "open": 1,
+    "sha256": "4bf3ab375057388c7c8b4f46f8852cdfa26463b813b47f59c0b1ec1998c5a2bb"
+  },
+  "mandatory-feature.ylplugin": {
+    "open": 1,
+    "sha256": "852d5e6e3e2eb8bb05115af3b2d64570a3f57786f957aa477466a4c38442bcbe"
+  },
+  "offset-overflow.ylplugin": {
+    "open": 1,
+    "sha256": "9f02a9530649d4238124c1a66b7e91c04ee2e8366a00d4ed08d695957a708fb1"
+  },
+  "path-traversal.ylplugin": {
+    "open": 1,
+    "sha256": "6443254af50e80dc20b133e98b6c9a549dd08f769738e5793a86404929e670f0"
+  },
+  "payload-tamper.ylplugin": {
+    "open": 0,
+    "validate": 6,
+    "sha256": "5c7e03ff365bc80b8dc9028bb47704bb569d2dc5a3b6ba90020e0aa9540a14d2"
+  },
+  "unsupported-profile.ylplugin": {
+    "open": 0,
+    "validate": 2,
+    "sha256": "db07d77afdf29a877599e4e73c9efa6dc68c00570959242586a3298cdbf61d90"
+  }
+}

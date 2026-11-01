@@ -1,0 +1,20 @@
+[_ylspec]
+version = "0.1"
+profile = "xyz.younglion.plugin"
+profile_version = "1.0"
+[data]
+id = "xyz.test.vector"
+version = "1.0"
+[[data.entrypoints]]
+id = "main"
+runtime = "data"
+runtime_min = "1.0"
+runtime_max = "1.0"
+resource = "sample.bin"
+[[data.targets]]
+id = "test"
+host = "xyz.test.host"
+api_min = "1.0"
+api_max = "1.0"
+entrypoint = "main"
+required_permissions = { format = "bytes", registry = "test.bits", registry_version = "1", values = [-1] }

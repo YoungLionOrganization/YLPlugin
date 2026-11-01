@@ -1,0 +1,12 @@
+{
+  "id": "xyz.example.viewer",
+  "api": "1.0",
+  "os": "linux",
+  "arch": "x86_64",
+  "runtimes": {"data": "1.0"},
+  "capabilities": [],
+  "permission_formats": ["strings"],
+  "allow_generic": true,
+  "memory": 67108864,
+  "storage": 67108864
+}
