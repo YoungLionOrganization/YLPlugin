@@ -104,3 +104,27 @@ Seven offline registry-gate tests cover checksum tampering, wrong npm owner,
 failed/non-main CI, Python identity and incomplete Maven bundles. Installed
 platform-wheel autodiscovery, packaged Node prebuild loading and Java/Kotlin
 native-JAR loading also passed locally. No registry endpoint was used by these tests.
+
+### Completed remote verification
+
+The final implementation commit is `f36b5d5e5ba1e20cb060cf8a9f385dd1947310a2`:
+
+* [Core build-and-conformance 41705359048](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41705359048)
+  passed all seven jobs, including desktop builds, sanitizers, fuzzing and source packaging.
+* [Language libraries 41705359143](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41705359143)
+  passed all six jobs: Linux x86_64/ARM64, macOS x86_64/ARM64, Windows x86_64 and aggregate packaging.
+  Each platform tested the native SDK APIs and installed its Python wheel.
+  Windows native-plugin activation remains intentionally skipped because secure extraction is unsupported.
+* [Inherited-secret check 41703864231](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41703864231)
+  passed on `1c4db135f2163e773e2d49976a3f2b635ed7b224`; the subsequent implementation change only adds checkout attributes.
+
+The downloaded `registry-distributions` artifact (ID `13267200195`) was independently
+checked against every SHA256SUMS entry. It contains five Node prebuilds, five Python
+platform wheels and three Maven publications; the natives JAR contains all five JNI
+runtimes. `libraries.json` identifies the exact implementation commit above.
+The Windows import-library name and LF checkout policy were corrected before these
+successful runs; deterministic example comparisons now pass on Windows too.
+
+These results verify build, test, install and packaging behavior. Secret presence
+does not validate registry-side ownership or token permissions. No npm, PyPI or
+Central version was uploaded, and the published v0.1.0 release remains unchanged.
