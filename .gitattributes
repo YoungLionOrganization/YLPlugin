@@ -1,0 +1,6 @@
+# Keep manifest/resource bytes identical on every checkout platform.
+* text=auto eol=lf
+*.ylplugin binary
+*.wasm binary
+*.rcc binary
+*.png binary
