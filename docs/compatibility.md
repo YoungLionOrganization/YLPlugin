@@ -1,7 +1,7 @@
 # SDK and platform compatibility
 
 File format 1.0 and profile 1.0 are portable; execution availability belongs to
-the host. SDK 0.1.1 is a development version and does not alter the released
+the host. SDK 0.1.1 is released and experimental. It does not alter the released
 v0.1.0 bytes or claim a stable C++ ABI.
 
 | Layer | Baseline / limitation |

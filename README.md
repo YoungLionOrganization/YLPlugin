@@ -3,6 +3,11 @@
 [![Release](https://img.shields.io/github/v/release/YoungLionOrganization/YLPlugin?label=release)](https://github.com/YoungLionOrganization/YLPlugin/releases/latest)
 [![Core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/ci.yml)
 [![Language SDKs](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/libraries.yml/badge.svg?branch=main)](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/libraries.yml)
+[![PyPI version](https://img.shields.io/pypi/v/ylplugin)](https://pypi.org/project/ylplugin/)
+[![PyPI distributions](https://img.shields.io/pypi/format/ylplugin)](https://pypi.org/project/ylplugin/#files)
+[![npm version](https://img.shields.io/npm/v/%40younglionorganization%2Fylplugin)](https://www.npmjs.com/package/@younglionorganization/ylplugin)
+[![Format: 1.0](https://img.shields.io/badge/format-1.0-orange.svg)](docs/specification.md)
+[![C11 ABI](https://img.shields.io/badge/C%20ABI-C11-555555.svg)](docs/c-api.md)
 [![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)](docs/building.md)
 [![JavaScript / TypeScript](https://img.shields.io/badge/JavaScript%20%2F%20TypeScript-Node.js%2020%2B-3178C6?logo=typescript&logoColor=white)](docs/javascript-api.md)
 [![Java / Kotlin](https://img.shields.io/badge/Java%20%2F%20Kotlin-JVM%2011%2B-7F52FF?logo=kotlin&logoColor=white)](docs/java-api.md)
@@ -35,6 +40,69 @@ language CI matrix. Python wheels are tagged for their actual platform. Source
 builds and unsupported platforms can supply an explicit native library path.
 There is no second JS, Java or Python container parser and no runtime binary
 download during SDK import. See [compatibility](docs/compatibility.md).
+
+## Installation and quick starts
+
+Python and Node.js packages are published separately from the source release:
+
+```sh
+python -m pip install ylplugin==0.1.1
+npm install @younglionorganization/ylplugin@0.1.1
+```
+
+Python wheels include the native ctypes runtime. The npm package includes the
+tested desktop Node prebuilds; TypeScript declarations ship in the same package.
+Check the [platform requirements](docs/compatibility.md) before installation.
+For JVM dependencies and Central availability, see the [JVM guide](jvm/README.md).
+
+Run these examples from a checkout, using the included data container:
+
+```python
+import json
+from ylplugin import Library
+
+with Library().open("examples/artifacts/data.ylplugin") as plugin:
+    plugin.validate()
+    catalog = json.loads(plugin.read("catalog.json"))
+    print(catalog["total"])  # 42
+```
+
+```javascript
+import {Package} from '@younglionorganization/ylplugin';
+
+const plugin = new Package('examples/artifacts/data.ylplugin');
+try {
+  plugin.validate();
+  console.log(JSON.parse(plugin.read('catalog.json')).total); // 42
+} finally {
+  plugin.close();
+}
+```
+
+Complete runnable examples: [Python](examples/data/read.py),
+[JavaScript](examples/data/read.mjs), [Java](docs/java-api.md),
+[Kotlin](docs/kotlin-api.md) and [C++](examples/read.cpp).
+
+## Architecture
+
+```mermaid
+flowchart LR
+    Container[".ylplugin container"] --> Core["C++20 container core"]
+    Core --> Metadata["Embedded YLSpec metadata"]
+    Core --> Resources["Indexed resources and integrity"]
+    Core --> C["C ABI: Python ctypes"]
+    Core --> Node["Node-API: JavaScript / TypeScript"]
+    Core --> JNI["JNI: Java / Kotlin"]
+    Core --> CLI["Inspection and build CLI"]
+    Metadata --> Preflight["Host compatibility and permissions"]
+    Resources --> Preflight
+    Preflight --> Approval["Explicit host approval"]
+    Approval --> Adapters["Data / native / optional Qt RCC"]
+```
+
+The host supplies its own runtime capabilities and permission grants. SDK loading,
+package validation and plugin activation are separate operations. WASM execution
+in the example is supplied explicitly by the host.
 
 ## What works
 
@@ -104,3 +172,6 @@ never prints secret values and does not publish packages.
 The project's license decision is still pending: [LICENSING.md](LICENSING.md).
 Third-party dependency terms remain separate. Package publication does not itself
 grant a license or approve a plugin's execution.
+
+Maintained by [Cavanshirpro](https://github.com/Cavanshirpro) under
+[YoungLionOrganization](https://github.com/YoungLionOrganization).

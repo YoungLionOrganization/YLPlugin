@@ -8,7 +8,7 @@ does not publish to npm, PyPI or Maven Central.
 ## Versions and identities
 
 `VERSION` is authoritative and `tools/check_versions.py` verifies mirrored Python,
-npm and Java metadata. Development 0.1.1 does not mutate v0.1.0. Configured names:
+npm and Java metadata. Release 0.1.1 does not mutate v0.1.0. Configured names:
 
 * npm: `@younglionorganization/ylplugin`
 * PyPI: `ylplugin`
@@ -62,5 +62,6 @@ registry are not supplied to the active upload step.
 Registry versions are immutable. After a partial upload inspect remote state
 before retrying; a failed upload is not reported as success and this workflow
 does not silently overwrite remote versions. Central validation errors retain a
-deployment identifier for investigation. No package registry upload was requested
-as part of writing these workflows; the next publication remains an explicit action.
+deployment identifier for investigation. The initial implementation only built
+distributions; registry publication was subsequently authorized and dispatched
+for 0.1.1. Future versions still require an explicit publication action.
