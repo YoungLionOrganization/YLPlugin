@@ -1,14 +1,16 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "ylplugin"
-version = "0.1.1"
+version = "0.1.2"
 description = "Native YLPlugin container SDK: inspect, build, verify and preflight plugins"
 readme = "bindings/python/README.md"
 authors = [{name = "YoungLionOrganization"}]
 requires-python = ">=3.11"
+license = "LGPL-3.0-only"
+license-files = ["LICENSE", "COPYING", "LICENSING.md", "THIRD_PARTY_NOTICES.md", "SOURCES.md"]
 
 [tool.setuptools.packages.find]
 where = ["bindings/python"]

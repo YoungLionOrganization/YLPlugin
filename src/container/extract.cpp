@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 #include "../internal.hpp"
 #include <set>
 #if defined(__linux__) || defined(__APPLE__)

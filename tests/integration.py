@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Exercise the actual executable and Python binding against the same core."""
 import json
 import os

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Ensure language metadata matches VERSION without altering released tags."""
 from pathlib import Path
 import json

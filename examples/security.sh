@@ -1,4 +1,7 @@
 #!/bin/sh
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 # Creates fresh example keys in a private directory; never use sample keys in production.
 set -eu
 umask 077

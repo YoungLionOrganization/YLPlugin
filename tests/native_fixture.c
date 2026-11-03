@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 #include <ylplugin/native.h>
 static int start(void *ctx) {return ctx?0:1;}
 static void stop(void *ctx) {(void)ctx;}

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Configure static-core SDK bundles while retaining the public shared SDK default."""
 from pathlib import Path
 import json

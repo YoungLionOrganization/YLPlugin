@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 import json
 import sys
 from ylplugin import Library

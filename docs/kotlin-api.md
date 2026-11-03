@@ -1,6 +1,6 @@
 # Kotlin SDK
 
-Coordinates: `xyz.younglion:ylplugin-kotlin`, version 0.1.1 in development. The
+Coordinates: `xyz.younglion:ylplugin-kotlin`, version 0.1.2; registry availability is tracked by the publishing workflow. The
 JVM target is 11 and the wrapper depends on Java/JNI. Kotlin adds `use` helpers,
 not another native interface or container parser.
 

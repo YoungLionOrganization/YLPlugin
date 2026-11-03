@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 import {Package, create, type Host, type Permission} from '@younglionorganization/ylplugin';
 const permission: Permission = {format: 'bitmask', registry: 'example.bits', registry_version: '1', value: 9223372036854775807n};
 const host: Host = {id: 'example.host', api: '1.0', os: 'linux', arch: 'arm64', grants: {viewer: permission}};

@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 #ifndef YLPLUGIN_H
 #define YLPLUGIN_H
 #include <stddef.h>

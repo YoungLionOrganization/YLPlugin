@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 cmake_minimum_required(VERSION 3.26)
 project(YLPluginConsumer LANGUAGES C CXX)
 find_package(YLPlugin 0.1 CONFIG REQUIRED)

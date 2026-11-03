@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Authoring-schema checks; native profile validation remains authoritative."""
 from pathlib import Path
 import json

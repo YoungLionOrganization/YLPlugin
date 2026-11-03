@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Assemble tested native artifacts into npm and Maven distributions; no upload."""
 from pathlib import Path
 import argparse
@@ -6,6 +9,8 @@ import json
 import shutil
 import subprocess
 import zipfile
+import tarfile
+from email.parser import BytesParser
 
 parser=argparse.ArgumentParser();parser.add_argument('native_root',type=Path);parser.add_argument('output',type=Path)
 args=parser.parse_args();root=Path(__file__).resolve().parents[1];version=(root/'VERSION').read_text().strip()
@@ -23,7 +28,7 @@ for metadata in args.native_root.rglob('native.json'):
     for wheel in source.glob('*.whl'):shutil.copy2(wheel,args.output/wheel.name)
 assert {'linux-x86_64','linux-arm64','windows-x86_64'}.issubset(targets)
 assert any(name.startswith('macos-') for name in targets)
-for file in ('LICENSING.md','THIRD_PARTY_NOTICES.md'):shutil.copy2(root/file,root/'javascript'/file)
+for file in ('LICENSE','COPYING','LICENSING.md','SOURCES.md','THIRD_PARTY_NOTICES.md'):shutil.copy2(root/file,root/'javascript'/file)
 subprocess.run(['npm','pack','--ignore-scripts','--pack-destination',str(args.output.resolve())],cwd=root/'javascript',check=True)
 subprocess.run(['gradle','-p',str(root/'jvm'),'publishAllPublicationsToStagingRepository','--no-daemon'],check=True)
 repository=root/'jvm/build/maven-repository'
@@ -33,5 +38,28 @@ with zipfile.ZipFile(args.output/f'ylplugin-jvm-{version}.zip','w',zipfile.ZIP_D
             bundle.write(path,path.relative_to(repository).as_posix())
 (args.output/'libraries.json').write_text(json.dumps({'version':version,'commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'targets':targets},indent=2)+'\n')
 checksums={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in args.output.iterdir() if p.is_file()}
+# Check the actual packaged license/source payload, not only source metadata.
+with tarfile.open(args.output/f'younglionorganization-ylplugin-{version}.tgz') as bundle:
+    names=bundle.getnames()
+    assert {'package/LICENSE','package/COPYING','package/SOURCES.md'}.issubset(names)
+    assert any(name.endswith(f'/YLPlugin-source-{version}.tar.gz') for name in names)
+    assert json.load(bundle.extractfile('package/package.json'))['license']=='LGPL-3.0-only'
+for path in args.output.glob('*.whl'):
+    with zipfile.ZipFile(path) as bundle:
+        names=bundle.namelist()
+        metadata=next(name for name in names if name.endswith('.dist-info/METADATA'))
+        assert BytesParser().parsebytes(bundle.read(metadata))['License-Expression']=='LGPL-3.0-only'
+        assert any(name.endswith('/licenses/LICENSE') for name in names)
+        assert any(name.endswith('/licenses/COPYING') for name in names)
+        assert any(name.endswith(f'/YLPlugin-source-{version}.tar.gz') for name in names)
+with zipfile.ZipFile(args.output/f'ylplugin-jvm-{version}.zip') as bundle:
+    import io
+    for name in bundle.namelist():
+        if name.endswith('.pom'):
+            assert b'GNU Lesser General Public License, version 3.0 only' in bundle.read(name)
+        if name.endswith('.jar'):
+            with zipfile.ZipFile(io.BytesIO(bundle.read(name))) as jar:
+                assert {'META-INF/LICENSE','META-INF/COPYING','META-INF/SOURCES.md'}.issubset(jar.namelist())
+                assert any(item.endswith(f'/YLPlugin-source-{version}.tar.gz') for item in jar.namelist())
 (args.output/'SHA256SUMS').write_text(''.join(f'{digest}  {name}\n' for name,digest in sorted(checksums.items())))
 print('Prepared registry distributions for',sorted(targets))

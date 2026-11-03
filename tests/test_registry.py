@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Exercise publication gates offline. No credential or registry endpoint is used."""
 import importlib.util
 import io
@@ -20,7 +23,7 @@ class Gates(unittest.TestCase):
         (self.root/'release').mkdir();(self.root/'release/registries.json').write_bytes((ROOT/'release/registries.json').read_bytes())
         self.source=self.root/'registry-input';self.source.mkdir()
         self.sha='a'*40;self.run={'status':'completed','conclusion':'success','head_branch':'main','path':'.github/workflows/libraries.yml','head_sha':self.sha}
-        (self.source/'libraries.json').write_text(json.dumps({'version':'0.1.1','commit':self.sha}))
+        (self.source/'libraries.json').write_text(json.dumps({'version':'0.1.2','commit':self.sha}))
         self.env=patch.dict(os.environ,{'GITHUB_REPOSITORY':'YoungLionOrganization/YLPlugin','RELEASE_RUN_ID':'123','GITHUB_ENV':str(self.root/'environment')});self.env.start()
         def api(path):
             if '/actions/runs/' in path:return self.run
@@ -32,8 +35,8 @@ class Gates(unittest.TestCase):
     def sums(self):
         (self.source/'SHA256SUMS').write_text(''.join(hashlib.sha256(path.read_bytes()).hexdigest()+'  '+path.name+'\n' for path in sorted(self.source.iterdir()) if path.name!='SHA256SUMS'))
     def npm(self,name='@younglionorganization/ylplugin'):
-        path=self.source/'younglionorganization-ylplugin-0.1.1.tgz'
-        data=json.dumps({'name':name,'version':'0.1.1'}).encode()
+        path=self.source/'younglionorganization-ylplugin-0.1.2.tgz'
+        data=json.dumps({'name':name,'version':'0.1.2'}).encode()
         with tarfile.open(path,'w:gz') as archive:
             item=tarfile.TarInfo('package/package.json');item.size=len(data);archive.addfile(item,io.BytesIO(data))
         return path
@@ -53,13 +56,13 @@ class Gates(unittest.TestCase):
         self.run['conclusion']='failure';self.npm();self.sums()
         with self.assertRaises(ValueError):registry.prepare('npm')
     def test_python_wheel_metadata_and_filename(self):
-        with zipfile.ZipFile(self.source/'ylplugin-0.1.1-py3-none-any.whl','w') as archive:archive.writestr('ylplugin-0.1.1.dist-info/METADATA','Name: ylplugin\nVersion: 0.1.1\n')
+        with zipfile.ZipFile(self.source/'ylplugin-0.1.2-py3-none-any.whl','w') as archive:archive.writestr('ylplugin-0.1.2.dist-info/METADATA','Name: ylplugin\nVersion: 0.1.2\n')
         self.sums();registry.prepare('pypi');self.assertEqual(len(list((self.root/'registry-ready').glob('*.whl'))),1)
     def test_incomplete_maven_bundle_rejected(self):
-        with zipfile.ZipFile(self.source/'ylplugin-jvm-0.1.1.zip','w') as archive:
+        with zipfile.ZipFile(self.source/'ylplugin-jvm-0.1.2.zip','w') as archive:
             for name in ('ylplugin','ylplugin-kotlin','ylplugin-natives'):
-                pom=f'<project xmlns="http://maven.apache.org/POM/4.0.0"><groupId>xyz.younglion</groupId><artifactId>{name}</artifactId><version>0.1.1</version></project>'
-                archive.writestr(f'xyz/younglion/{name}/0.1.1/{name}-0.1.1.pom',pom)
+                pom=f'<project xmlns="http://maven.apache.org/POM/4.0.0"><groupId>xyz.younglion</groupId><artifactId>{name}</artifactId><version>0.1.2</version></project>'
+                archive.writestr(f'xyz/younglion/{name}/0.1.2/{name}-0.1.2.pom',pom)
         self.sums()
         with self.assertRaisesRegex(ValueError,'incomplete Maven'):registry.prepare('maven')
 

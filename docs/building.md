@@ -77,7 +77,7 @@ provide the separately built shared library using Library(path) or YLPLUGIN_LIBR
 The v0.1.0 wheel is facade-only; development platform wheels are described below.
 No package registry or GitHub release publishing workflow is configured.
 
-## Building the language SDKs (0.1.1 development)
+## Building the language SDKs
 
 Use Node 20+ headers, a JDK and Gradle 9.1 for language tests. Enable
 YLPLUGIN_BUILD_NODE and/or YLPLUGIN_BUILD_JNI; set NODE_INCLUDE_DIR and JAVA_HOME.

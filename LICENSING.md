@@ -1,20 +1,38 @@
-# License decision pending
+# YLPlugin licensing
 
-No license for the new YLPlugin source has been selected by its owner. No grant
-is inferred from YLSpec, LeoMiniGames or this work's examples. This project does
-not copy their license as its own. Publication of v0.1.0 makes no new license
-grant and does not make this a publicly licensed package. Add an owner-approved
-LICENSE/NOTICE when a license is selected; do not infer permission from publication.
+Copyright (C) 2026 Cavanshirpro.
 
-Third-party components retain their own terms. Linking/building YLSpec, Qt,
-OpenSSL, Zstd or nlohmann-json does not change this project's license decision.
-See THIRD_PARTY_NOTICES.md. The optional Qt adapter does not bundle Qt binaries;
-hosts/distributors must satisfy their selected Qt distribution's obligations.
+Original YLPlugin code, language bindings, tools, tests, examples and documentation
+are licensed under the **GNU Lesser General Public License, version 3 only**
+(`LGPL-3.0-only`). This license is selected by the project owner.
 
-## Language distributions
+The full LGPLv3 text is in [LICENSE](LICENSE). Its incorporated GPLv3 terms are
+in [COPYING](COPYING). The software is provided without warranty, as described
+in those texts. SPDX identifiers in source files identify the same license.
 
-The JS package declares UNLICENSED; Maven metadata refers to this no-grant
-statement, and Python documentation carries the same status. These labels do
-not choose a new permissive license. Static native bundles retain dependency
-licenses under their package/JAR/wheel notices. An eventual owner-selected license
-needs a dedicated change; registry credentials or a signature are not a license.
+## Using and distributing the library
+
+Applications may use YLPlugin under LGPLv3's library-linking provisions. When
+redistributing it or a combined work, retain the notices and license texts,
+provide the required corresponding source, and preserve users' ability to modify
+the library and relink or replace the covered library components as required by
+LGPLv3. Do not prohibit reverse engineering for debugging those modifications.
+The full license controls; this paragraph is a practical introduction.
+
+Native Node/JNI/ctypes modules can embed the YLPlugin core statically. Rebuilding
+and replacing the complete covered module is supported; the host SDK version
+check requires the same version string and does not require an official binary
+hash or publisher signature. See [SOURCES.md](SOURCES.md) for source and build
+instructions. Packaged native distributions include source archives and license
+texts alongside their dependency notices.
+
+## Third-party components
+
+YLSpec, tomlc17, OpenSSL, Zstandard, nlohmann-json, Node/JDK headers and optional
+Qt retain their own copyright and licensing terms. This change does not relicense
+them. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the collected
+dependency license files in binary packages.
+
+Version 0.1.2 applies the owner-selected license to source and package metadata.
+Older registry files contain historical license metadata and are immutable;
+use 0.1.2 or later for distributions carrying this license and its notices.

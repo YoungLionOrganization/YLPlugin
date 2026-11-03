@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Add one self-contained ctypes runtime to a platform-tagged facade wheel."""
 from pathlib import Path
 import argparse

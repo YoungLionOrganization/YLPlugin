@@ -1,21 +1,51 @@
 {
   "name": "@younglionorganization/ylplugin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Native YLPlugin container SDK for JavaScript and TypeScript",
   "type": "module",
   "main": "./src/index.cjs",
   "types": "./src/index.d.ts",
   "exports": {
     ".": {
-      "import": {"types": "./src/index.d.ts", "default": "./src/index.mjs"},
-      "require": {"types": "./src/index.d.cts", "default": "./src/index.cjs"}
+      "import": {
+        "types": "./src/index.d.ts",
+        "default": "./src/index.mjs"
+      },
+      "require": {
+        "types": "./src/index.d.cts",
+        "default": "./src/index.cjs"
+      }
     }
   },
-  "files": ["src", "prebuilds", "README.md", "LICENSING.md", "THIRD_PARTY_NOTICES.md", "licenses"],
-  "license": "UNLICENSED",
-  "repository": {"type": "git", "url": "git+https://github.com/YoungLionOrganization/YLPlugin.git", "directory": "javascript"},
-  "engines": {"node": ">=20"},
-  "publishConfig": {"access": "public"},
-  "scripts": {"test": "node --test test/sdk.test.mjs", "typecheck": "tsc --noEmit -p test/tsconfig.json"},
-  "devDependencies": {"typescript": "5.9.3", "@types/node": "22.18.6"}
+  "files": [
+    "src",
+    "prebuilds",
+    "README.md",
+    "LICENSING.md",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses",
+    "LICENSE",
+    "COPYING",
+    "SOURCES.md"
+  ],
+  "license": "LGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoungLionOrganization/YLPlugin.git",
+    "directory": "javascript"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test test/sdk.test.mjs",
+    "typecheck": "tsc --noEmit -p test/tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "22.18.6"
+  }
 }

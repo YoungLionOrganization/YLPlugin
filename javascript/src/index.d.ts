@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 /// <reference types="node" />
 export type Integer = number | bigint;
 export type KeyProvider = (id: string) => Uint8Array | null | undefined;

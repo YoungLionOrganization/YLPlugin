@@ -83,7 +83,8 @@ the initial local results above are not substituted for remote results.
 
 Release assets contain committed sources, a pure Python facade wheel, the RCC
 demo and checksums. No native binary, payment service or production deployment
-is implied. License selection and independent security review remain open.
+is implied. This initial report predates the owner's LGPLv3 selection in 0.1.2;
+independent security review remains open.
 
 ## 0.1.1 SDK expansion — 2026-11-03
 

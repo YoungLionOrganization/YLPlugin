@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """POSIX integration: cancel a real writer after staging begins, before publication."""
 from pathlib import Path
 import json

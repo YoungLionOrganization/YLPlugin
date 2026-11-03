@@ -1,7 +1,7 @@
 # Java SDK
 
 Coordinates: `xyz.younglion:ylplugin` and runtime dependency
-`xyz.younglion:ylplugin-natives`, version 0.1.1 in development. Java 11+ is the
+`xyz.younglion:ylplugin-natives`, version 0.1.2; registry availability is tracked by the publishing workflow. Java 11+ is the
 library baseline; CI runs smoke tests on JDK 17. This is a desktop JNI SDK,
 not an Android AAR or an implemented Java plugin execution runtime.
 

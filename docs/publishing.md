@@ -15,9 +15,9 @@ npm and Java metadata. Release 0.1.1 does not mutate v0.1.0. Configured names:
 * Central: `xyz.younglion:ylplugin`, `ylplugin-kotlin`, `ylplugin-natives`
 
 Registry presence is not asserted by configuration. First publication must have
-ownership for these names. Licenses remain explicit: npm is UNLICENSED and the
-POM refers to the project's no-grant licensing statement. Do not copy YLSpec's
-Apache grant as a YLPlugin license.
+ownership for these names. Version 0.1.2 and later use LGPL-3.0-only in npm,
+Python metadata and Maven POMs. Packages include LGPLv3/GPLv3 texts and project
+source archives. Third-party terms, including YLSpec's Apache license, remain separate.
 
 ## Organization secrets
 

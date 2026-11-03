@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Create data, WASM and optionally a platform-specific native container."""
 from pathlib import Path
 import argparse

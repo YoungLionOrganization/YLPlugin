@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Download the installed Node version's official headers/import library for CMake."""
 import json
 from pathlib import Path

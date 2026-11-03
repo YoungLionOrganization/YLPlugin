@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 'use strict';
 const {join, resolve} = require('node:path');
 const metadata = require('../package.json');

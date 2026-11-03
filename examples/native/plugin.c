@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 #include <ylplugin/native.h>
 #include <stdlib.h>
 #include <stdio.h>

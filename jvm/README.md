@@ -9,8 +9,9 @@ integrity and compatibility behavior always comes from the same core.
 | `xyz.younglion:ylplugin-kotlin` | openPlugin, readText, isSupported |
 | `xyz.younglion:ylplugin-natives` | JNI binaries and dependency notices |
 
-0.1.1 is development work until manual Central publication. Gradle staging is
-not an upload. The POM records no project license grant, not YLSpec's license.
+Version 0.1.2 applies LGPL-3.0-only to all three publications. JARs include the
+license texts, source archives and dependency notices. Central publication is a
+separate manual workflow; Gradle staging by itself is not an upload.
 
 ```sh
 gradle -p jvm :java:smokeTest :kotlin:smokeTest -Dylplugin.native.path=/absolute/path/libylplugin_jni.so --no-daemon

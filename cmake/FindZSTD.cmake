@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 find_path(ZSTD_INCLUDE_DIR zstd.h)
 find_library(ZSTD_LIBRARY NAMES zstd libzstd zstd_static)
 include(FindPackageHandleStandardArgs)

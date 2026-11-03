@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Build and install-test the collected platform's wheel; Linux is auditwheel-verified."""
 from pathlib import Path
 import json

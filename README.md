@@ -13,14 +13,14 @@
 [![Java / Kotlin](https://img.shields.io/badge/Java%20%2F%20Kotlin-JVM%2011%2B-7F52FF?logo=kotlin&logoColor=white)](docs/java-api.md)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](docs/python-api.md)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Windows-555)](docs/compatibility.md)
-[![License pending](https://img.shields.io/badge/license-pending-lightgrey)](LICENSING.md)
+[![License: LGPLv3](https://img.shields.io/badge/license-LGPLv3-blue.svg)](LICENSE)
 
 A standalone plugin container and native SDK for applications that need to
 inspect, validate, build and select components before executing them. A
 `.ylplugin` has its own indexed binary format and embeds the existing YLSpec
 metadata frame. It is not a renamed ZIP and does not require YLPkg or LeoMiniGames.
 
-**Version: 0.1.1.** See [GitHub releases](https://github.com/YoungLionOrganization/YLPlugin/releases)
+**Version: 0.1.2.** See [GitHub releases](https://github.com/YoungLionOrganization/YLPlugin/releases)
 for verified downloads. npm, Maven Central and PyPI publication uses the separate
 manual registry workflow described in [publishing](docs/publishing.md).
 No stable ABI or production security audit is claimed during 0.x.
@@ -46,8 +46,8 @@ download during SDK import. See [compatibility](docs/compatibility.md).
 Python and Node.js packages are published separately from the source release:
 
 ```sh
-python -m pip install ylplugin==0.1.1
-npm install @younglionorganization/ylplugin@0.1.1
+python -m pip install ylplugin==0.1.2
+npm install @younglionorganization/ylplugin@0.1.2
 ```
 
 Python wheels include the native ctypes runtime. The npm package includes the
@@ -169,9 +169,10 @@ Start with [the documentation guide](docs/index.md), [examples](docs/examples.md
 registry scopes and the manual npm/PyPI/Maven workflows. The availability check
 never prints secret values and does not publish packages.
 
-The project's license decision is still pending: [LICENSING.md](LICENSING.md).
-Third-party dependency terms remain separate. Package publication does not itself
-grant a license or approve a plugin's execution.
+YLPlugin is licensed under **LGPL-3.0-only**: [LICENSE](LICENSE),
+[incorporated GPLv3 terms](COPYING) and [licensing guide](LICENSING.md).
+Packages include the license texts and corresponding project source; see
+[SOURCES.md](SOURCES.md). Third-party dependency terms remain separate.
 
 Maintained by [Cavanshirpro](https://github.com/Cavanshirpro) under
 [YoungLionOrganization](https://github.com/YoungLionOrganization).

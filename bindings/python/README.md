@@ -12,7 +12,7 @@ with Library().open("data.ylplugin") as plugin:
     print(json.loads(plugin.read("catalog.json"))["total"])
 ```
 
-Development 0.1.1 packaging creates platform wheels with a runtime and dependency
+Version 0.1.2 packaging creates platform wheels with a runtime and dependency
 notices. The published 0.1.0 wheel is facade-only; it needs an explicit SDK path.
 Source builds can use `Library('/absolute/path/libylplugin.so')` or
 `YLPLUGIN_LIBRARY`. No code is downloaded at import.
@@ -24,5 +24,6 @@ on one handle are serialized.
 
 Documentation: https://github.com/YoungLionOrganization/YLPlugin/blob/main/docs/python-api.md
 
-This is not a Python execution runtime or an OS sandbox. License selection is
-pending; publication does not make a license grant.
+This is not a Python execution runtime or an OS sandbox. YLPlugin is LGPL-3.0-only.
+License texts, project source archives and dependency notices ship with platform wheels.
+See https://github.com/YoungLionOrganization/YLPlugin/blob/main/LICENSING.md.

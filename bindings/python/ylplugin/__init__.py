@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """YLPlugin SDK: ctypes over the same native C++ reader/writer, never a second parser."""
 from __future__ import annotations
 
@@ -12,7 +15,7 @@ from dataclasses import dataclass
 import threading
 from typing import Callable
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 KeyProvider = Callable[[str], bytes | None]
 
 

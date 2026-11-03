@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Cavanshirpro
+// SPDX-License-Identifier: LGPL-3.0-only
+
 package xyz.younglion.ylplugin;
 import java.lang.ref.Cleaner;
 import java.lang.ref.Reference;

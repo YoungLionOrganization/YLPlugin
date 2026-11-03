@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Build source/Python-facade release assets from the committed tree (no publication)."""
 from pathlib import Path
 import hashlib

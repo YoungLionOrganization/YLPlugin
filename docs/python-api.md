@@ -1,6 +1,6 @@
 # Python SDK
 
-`ylplugin` requires Python 3.11+. Published version 0.1.1 platform wheels
+`ylplugin` requires Python 3.11+. Version 0.1.2 platform wheels
 contain a ctypes runtime built from the same core. Source/facade-only installs
 require an installed SDK or explicit path. Published v0.1.0's facade-only wheel
 is preserved.

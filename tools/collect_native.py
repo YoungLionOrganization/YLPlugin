@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 """Collect only the actual platform's binaries and required third-party notices."""
 from pathlib import Path
 import argparse
@@ -5,6 +8,7 @@ import json
 import os
 import platform
 import shutil
+import subprocess
 
 parser=argparse.ArgumentParser();parser.add_argument('--build',type=Path,required=True);parser.add_argument('--output',type=Path,required=True);parser.add_argument('--ylspec',type=Path,required=True);parser.add_argument('--system-prefix',type=Path,default=Path('/'))
 args=parser.parse_args();root=Path(__file__).resolve().parents[1]
@@ -17,6 +21,14 @@ for filename in ('ylplugin.node',prefix+'ylplugin_jni'+suffix,prefix+'ylplugin_r
     candidates=list(args.build.rglob(filename));assert len(candidates)==1,(filename,candidates)
     shutil.copy2(candidates[0],target/filename)
 licenses=target/'licenses';licenses.mkdir()
+for name in ('LICENSE','COPYING','LICENSING.md','SOURCES.md'):
+    shutil.copy2(root/name,licenses/name)
+version=(root/'VERSION').read_text().strip()
+subprocess.run(['git','archive','--format=tar.gz',f'--prefix=YLPlugin-{version}/',
+                '--output='+str((licenses/f'YLPlugin-source-{version}.tar.gz').resolve()),'HEAD'],cwd=root,check=True)
+ylspec_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=args.ylspec,text=True).strip()
+subprocess.run(['git','archive','--format=tar.gz','--prefix=YLSpec/',
+                '--output='+str((licenses/f'YLSpec-source-{ylspec_commit}.tar.gz').resolve()),'HEAD'],cwd=args.ylspec,check=True)
 for name,path in {'YLSpec-LICENSE':args.ylspec/'LICENSE','YLSpec-NOTICE':args.ylspec/'NOTICE','YLSpec-third-parties.md':args.ylspec/'THIRD_PARTY_NOTICES.md','tomlc17-LICENSE':args.ylspec/'vendor/tomlc17/LICENSE','YLPlugin-LICENSING.md':root/'LICENSING.md','YLPlugin-THIRD_PARTY_NOTICES.md':root/'THIRD_PARTY_NOTICES.md'}.items():shutil.copy2(path,licenses/name)
 if os_name=='windows':
     base=Path(os.environ['VCPKG_INSTALLATION_ROOT'])/'installed/x64-windows-static/share'

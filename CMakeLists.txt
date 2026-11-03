@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
 cmake_minimum_required(VERSION 3.26)
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" YLPLUGIN_VERSION LIMIT_COUNT 1)
 project(YLPlugin VERSION ${YLPLUGIN_VERSION} LANGUAGES C CXX)
@@ -212,3 +215,5 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/YLPluginConfigVersi
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/YLPluginConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/YLPluginConfigVersion.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/YLPlugin)
 install(FILES cmake/FindZSTD.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/YLPlugin)
 install(DIRECTORY docs/ schemas/ DESTINATION ${CMAKE_INSTALL_DATADIR}/ylplugin)
+install(FILES LICENSE COPYING LICENSING.md SOURCES.md THIRD_PARTY_NOTICES.md
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/ylplugin)

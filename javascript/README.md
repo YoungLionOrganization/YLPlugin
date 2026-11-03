@@ -1,7 +1,7 @@
 # YLPlugin for JavaScript and TypeScript
 
 Node-API SDK for the native container, with ESM/CommonJS declarations and exact
-bigint support. Configured package: `@younglionorganization/ylplugin` 0.1.1
+bigint support. Configured package: `@younglionorganization/ylplugin` 0.1.2
 (development; publication is manual).
 
 ```js
@@ -22,4 +22,5 @@ npm --prefix javascript run typecheck
 Prebuilds come from the language matrix; unsupported OS/libc combinations need
 source builds. There are no install hooks or downloads. Read [the API](../docs/javascript-api.md),
 [compatibility](../docs/compatibility.md) and [publishing](../docs/publishing.md).
-The project's license remains pending.
+The project is licensed under LGPL-3.0-only. Packages include LICENSE, COPYING,
+source archives and third-party notices; see ../LICENSING.md and ../SOURCES.md.
