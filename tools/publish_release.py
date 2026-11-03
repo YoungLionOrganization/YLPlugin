@@ -62,7 +62,14 @@ for name, checksum in manifest["sha256"].items():
     assert digest(root / name) == checksum
 
 with tarfile.open(root / f"ylplugin-{version}-source.tar.gz") as source:
-    notes = source.extractfile(f"YLPlugin-{version}/docs/releases/{tag}.md").read().decode()
+    notes_member = f"YLPlugin-{version}/docs/releases/{tag}.md"
+    if notes_member in source.getnames():
+        notes = source.extractfile(notes_member).read().decode()
+    else:
+        # Release notes may be finalized on main after immutable CI artifacts.
+        # Read only the version-specific file from this trusted workflow checkout.
+        notes = Path(f"docs/releases/{tag}.md").read_text()
+        assert notes.startswith(f"# YLPlugin {tag} ")
 notes += f"\n## Verified release build\n\nCommit: `{commit}`\n\n"
 notes += f"[All {len(jobs)} CI jobs passed]({manifest['workflow_run']}). Linux x86_64/ARM64, Windows, macOS, sanitizer, fuzz and packaging jobs succeeded. Native execution tests are intentionally skipped on Windows/macOS. See the workflow for precise results and the release manifest for asset hashes.\n"
 

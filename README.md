@@ -1,14 +1,24 @@
 # YLPlugin
 
+[![Release](https://img.shields.io/github/v/release/YoungLionOrganization/YLPlugin?label=release)](https://github.com/YoungLionOrganization/YLPlugin/releases/latest)
+[![Core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/ci.yml)
+[![Language SDKs](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/libraries.yml/badge.svg?branch=main)](https://github.com/YoungLionOrganization/YLPlugin/actions/workflows/libraries.yml)
+[![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)](docs/building.md)
+[![JavaScript / TypeScript](https://img.shields.io/badge/JavaScript%20%2F%20TypeScript-Node.js%2020%2B-3178C6?logo=typescript&logoColor=white)](docs/javascript-api.md)
+[![Java / Kotlin](https://img.shields.io/badge/Java%20%2F%20Kotlin-JVM%2011%2B-7F52FF?logo=kotlin&logoColor=white)](docs/java-api.md)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](docs/python-api.md)
+[![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Windows-555)](docs/compatibility.md)
+[![License pending](https://img.shields.io/badge/license-pending-lightgrey)](LICENSING.md)
+
 A standalone plugin container and native SDK for applications that need to
 inspect, validate, build and select components before executing them. A
 `.ylplugin` has its own indexed binary format and embeds the existing YLSpec
 metadata frame. It is not a renamed ZIP and does not require YLPkg or LeoMiniGames.
 
-**Development version: 0.1.1.** The published [v0.1.0 release](https://github.com/YoungLionOrganization/YLPlugin/releases/tag/v0.1.0)
-is preserved. New language libraries and registry workflows are being prepared
-for the next release; npm, Maven Central and PyPI publication is a separate manual
-operation. No stable ABI or production security audit is claimed during 0.x.
+**Version: 0.1.1.** See [GitHub releases](https://github.com/YoungLionOrganization/YLPlugin/releases)
+for verified downloads. npm, Maven Central and PyPI publication uses the separate
+manual registry workflow described in [publishing](docs/publishing.md).
+No stable ABI or production security audit is claimed during 0.x.
 
 ## Choose an SDK
 
