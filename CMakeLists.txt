@@ -83,7 +83,9 @@ if(YLPLUGIN_BUILD_NODE)
   elseif(APPLE)
     target_link_options(ylplugin_node PRIVATE -undefined dynamic_lookup)
   endif()
-  set_target_properties(ylplugin_node PROPERTIES PREFIX "" OUTPUT_NAME ylplugin SUFFIX ".node")
+  # The Windows import library must not overwrite the static core ylplugin.lib.
+  set_target_properties(ylplugin_node PROPERTIES PREFIX "" OUTPUT_NAME ylplugin SUFFIX ".node"
+    ARCHIVE_OUTPUT_NAME ylplugin_node)
 endif()
 if(YLPLUGIN_BUILD_JNI)
   find_package(JNI REQUIRED COMPONENTS JVM)

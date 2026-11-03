@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync, mkdtempSync, realpathSync, rmSync} from 'node:fs';
+import {readFileSync, writeFileSync, mkdtempSync, realpathSync, rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -15,6 +15,18 @@ const manifest = readFileSync(join(root, 'examples/data/plugin.ylspec'), 'utf8')
 const resource = {path: 'catalog.json', file: join(root, 'examples/data/catalog.json'), media: 'application/json'};
 const host = {id: 'xyz.example.data-viewer', api: '1.0', os: 'linux', arch: 'x86_64', runtimes: {data: '1.0'}, memory: 67108864};
 const code = expected => error => error.code === expected;
+
+test('a rejected native version stays rejected on subsequent calls', () => {
+  const work = realpathSync(mkdtempSync(join(tmpdir(), 'ylplugin-version-')));
+  try {
+    const fake = join(work, 'mismatch.cjs');
+    writeFileSync(fake, "exports.invoke = () => '0.0.0'; exports.open = () => ({});");
+    const script = `const assert = require('node:assert/strict');
+      const {Package} = require(${JSON.stringify(join(root, 'javascript/src/index.cjs'))});
+      for (let i = 0; i < 2; i++) assert.throws(() => new Package('unused'), /does not match/);`;
+    execFileSync(process.execPath, ['-e', script], {env: {...process.env, YLPLUGIN_NODE_PATH: fake}});
+  } finally { rmSync(work, {recursive: true, force: true}); }
+});
 
 test('ESM/CJS native roundtrip, bigint permissions and deterministic builder', () => {
   const work = realpathSync(mkdtempSync(join(tmpdir(), 'ylplugin-node-')));

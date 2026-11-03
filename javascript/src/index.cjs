@@ -1,16 +1,17 @@
 'use strict';
 const {join, resolve} = require('node:path');
-const {readFileSync} = require('node:fs');
 const metadata = require('../package.json');
 let addon;
 function native() {
   if (addon) return addon;
   const target = `${process.platform}-${process.arch}`;
   const location = process.env.YLPLUGIN_NODE_PATH || join(__dirname, '..', 'prebuilds', target, 'ylplugin.node');
-  try { addon = require(resolve(location)); }
+  let loaded;
+  try { loaded = require(resolve(location)); }
   catch (cause) { throw new Error(`No YLPlugin native addon for ${target}; build it or set YLPLUGIN_NODE_PATH. ${cause.message}`, {cause}); }
-  const version = addon.invoke(null, 'version', '{}', Buffer.alloc(0), undefined, undefined, undefined);
+  const version = loaded.invoke(null, 'version', '{}', Buffer.alloc(0), undefined, undefined, undefined);
   if (version !== metadata.version) throw new Error(`YLPlugin addon ${version} does not match package ${metadata.version}`);
+  addon = loaded;
   return addon;
 }
 function encode(value, seen = new Set()) {

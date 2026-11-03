@@ -88,7 +88,7 @@ is implied. License selection and independent security review remain open.
 ## 0.1.1 SDK expansion — 2026-11-03
 
 Local checks include 11/11 ASan/UBSan CTests and 9/9 static-core CTests,
-ESM/CommonJS and TS declarations, three Node integration
+ESM/CommonJS and TS declarations, four Node integration
 suites, 19 Java/JNI checks, Kotlin resource/use lifecycle tests, Python integer/
 limit/thread/callback ownership checks and static-core CTest. The actual data
 and WASM fixtures round-trip deterministically. Native sample activation uses an
