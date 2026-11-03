@@ -97,7 +97,8 @@ if(YLPLUGIN_BUILD_PYTHON_RUNTIME)
   endif()
   add_library(ylplugin_runtime SHARED src/c_api.cpp)
   target_compile_definitions(ylplugin_runtime PRIVATE YLPLUGIN_RUNTIME_EXPORT YLPLUGIN_BUILD YLPLUGIN_VERSION="${PROJECT_VERSION}")
-  target_link_libraries(ylplugin_runtime PRIVATE ylplugin)
+  # c_api.cpp includes internal.hpp, so it needs OpenSSL's compile usage too.
+  target_link_libraries(ylplugin_runtime PRIVATE ylplugin OpenSSL::Crypto)
 endif()
 # Bindings keep embedded crypto/core symbols private, avoiding collisions with
 # a host (such as Node) that already has another OpenSSL build loaded.
