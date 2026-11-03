@@ -4,9 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ylplugin"
-version = "0.1.0"
-description = "Python interface to the YLPlugin native SDK (experimental)"
+version = "0.1.1"
+description = "Native YLPlugin container SDK: inspect, build, verify and preflight plugins"
+readme = "bindings/python/README.md"
+authors = [{name = "YoungLionOrganization"}]
 requires-python = ">=3.11"
 
 [tool.setuptools.packages.find]
 where = ["bindings/python"]
+
+[tool.setuptools.package-data]
+ylplugin = ["py.typed"]

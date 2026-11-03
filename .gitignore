@@ -8,3 +8,17 @@ __pycache__/
 *.key
 /dist/
 *.egg-info/
+node_modules/
+.gradle/
+**/build/
+javascript/prebuilds/
+jvm/natives/src/main/resources/natives/
+jvm/natives/src/main/resources/licenses/
+/native-dist/
+/native-input/
+/registry-dist/
+/registry-input/
+/registry-ready/
+/javascript/licenses/
+/javascript/LICENSING.md
+/javascript/THIRD_PARTY_NOTICES.md

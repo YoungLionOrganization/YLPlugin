@@ -1,0 +1,6 @@
+{
+  "npm_package": "@younglionorganization/ylplugin",
+  "pypi_project": "ylplugin",
+  "maven_group": "xyz.younglion",
+  "maven_artifacts": ["ylplugin", "ylplugin-kotlin", "ylplugin-natives"]
+}

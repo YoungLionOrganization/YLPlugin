@@ -125,3 +125,11 @@ Truncated files MUST fail validation; there is no salvage-and-execute mode.
 Builds using store/Zstd and no encryption/signature randomness are reproducible
 for identical ordered metadata and resource inputs. Signatures are deterministic;
 encrypted outputs intentionally are not.
+
+## SDK evolution without a wire change
+
+SDK 0.1.1 adds language frontends and examples but does not change any header,
+record, algorithm ID or profile rule above. Host-language JSON is internal
+argument/report transport only. Each frontend delegates container decoding,
+validation, hashing, encryption and signatures to the same native implementation.
+Binary conformance remains defined by this specification and published vectors.

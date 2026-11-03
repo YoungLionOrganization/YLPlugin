@@ -74,3 +74,11 @@ exist; pause/stop gameplay using host lifecycle services. Memory pressure is a
 host decision, not permission to free mounted bytes. External native activation
 is disabled for Android/iOS. Store and application policies remain a host release
 responsibility; this SDK does not claim App Store/Play Store approval.
+
+## SDK languages are not execution runtimes
+
+Node-API, JNI and ctypes are host SDK adapters, not automatic JS/Java/Python
+plugin execution. The WASM example explicitly supplies a Node WebAssembly host
+after preflight/read verification; the core still has no built-in WASM adapter.
+Native and encrypted-data examples are documented in [examples](examples.md).
+Packaged SDK binaries and plugin payload binaries have separate trust/lifetimes.

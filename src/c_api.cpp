@@ -20,7 +20,7 @@ template<class Fn> ylp_status guard(ylp_error* error,Fn fn) noexcept {
         if(error) { error->code=YLP_RUNTIME; std::snprintf(error->message,sizeof(error->message),"unexpected exception"); } return YLP_RUNTIME;
     }
 }
-std::filesystem::path utf8_path(const std::string& s) { return std::filesystem::path(reinterpret_cast<const char8_t*>(s.c_str())); }
+std::filesystem::path utf8_path(const std::string& s) { ylp::require(s.find('\0')==std::string::npos,ylp::Code::invalid_metadata,"NUL in filesystem path"); return std::filesystem::path(reinterpret_cast<const char8_t*>(s.c_str())); }
 void check(bool b) { ylp::require(b,ylp::Code::invalid_metadata,"invalid API argument or ABI structure"); }
 ylp::Limits limits(const ylp_limits* v) {
     if(!v) return {};
@@ -46,7 +46,7 @@ const ylp::Permission& permission(const ylp_package* p,size_t i,int optional) {
 }
 }
 extern "C" {
-const char* ylp_version(void) { return "0.1.0"; }
+const char* ylp_version(void) { return YLPLUGIN_VERSION; }
 ylp_limits ylp_default_limits(void) { ylp::Limits l; return {sizeof(ylp_limits),YLP_ABI_VERSION,l.metadata,l.toc,l.records,l.record,l.total,l.ratio}; }
 void ylp_buffer_free(ylp_buffer* out) { if(out) { std::free(out->data); *out={}; } }
 ylp_status ylp_open(const char* path,const ylp_limits* l,ylp_package** out,ylp_error* e) {
@@ -116,7 +116,10 @@ ylp_status ylp_create(const char* output,const char* manifest,const char* build,
             in.media=r.value("media",std::string("application/octet-stream"));in.variant=r.value("variant",std::string());
             in.key_id=r.value("key_id",std::string());
             auto compression=r.value("compression",0),extraction=r.value("extraction",0);check(compression>=0&&compression<=1&&extraction>=0&&extraction<=2);
-            in.compression=static_cast<uint8_t>(compression);in.extraction=static_cast<uint8_t>(extraction);in.alignment=r.value("alignment",uint32_t(8));inputs.push_back(std::move(in));
+            in.compression=static_cast<uint8_t>(compression);in.extraction=static_cast<uint8_t>(extraction);
+            if(r.contains("alignment"))check(r.at("alignment").is_number_integer()&&
+                (r.at("alignment").is_number_unsigned()||r.at("alignment").get<int64_t>()>=0)&&r.at("alignment").get<uint64_t>()<=UINT32_MAX);
+            in.alignment=r.value("alignment",uint32_t(8));inputs.push_back(std::move(in));
         }
         ylp::BuildOptions options;options.keys=keys(k,kc);options.cancel=cancel(c,cc);ylp::create(std::filesystem::path(reinterpret_cast<const char8_t*>(output)),manifest,std::move(inputs),options);});
 }

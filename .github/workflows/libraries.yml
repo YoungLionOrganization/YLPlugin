@@ -1,0 +1,83 @@
+name: language-libraries
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions: {contents: read}
+concurrency:
+  group: language-libraries-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15, macos-15-intel, windows-2022]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: {repository: YoungLionOrganization/YLSpec, ref: 8a07a17295eb7065e402a49e96200a551b23f752, path: _deps/YLSpec}
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with: {node-version: '24'}
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+        with: {distribution: temurin, java-version: '17'}
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
+        with: {gradle-version: '9.1.0'}
+      - name: Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build libssl-dev zlib1g-dev libzstd-dev nlohmann-json3-dev patchelf
+      - name: macOS dependencies
+        if: runner.os == 'macOS'
+        run: brew install ninja openssl@3 zstd nlohmann-json
+      - name: Windows dependencies
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: vcpkg install openssl:x64-windows-static zstd:x64-windows-static nlohmann-json:x64-windows-static
+      - run: python tools/check_versions.py
+      - run: python tests/test_registry.py
+      - run: python tools/node_headers.py
+      - run: python tools/configure_libraries.py
+      - run: cmake --build build-sdk --config Release --parallel 4
+      - run: ctest --test-dir build-sdk -C Release --output-on-failure
+      - run: npm ci --prefix javascript --ignore-scripts
+      - run: npm --prefix javascript run typecheck
+      - name: Test native-backed language APIs
+        shell: bash
+        run: |
+          native_node=$(find build-sdk -name ylplugin.node -type f | head -1)
+          native_jni=$(find build-sdk -type f \( -name libylplugin_jni.so -o -name libylplugin_jni.dylib -o -name ylplugin_jni.dll \) | head -1)
+          export YLPLUGIN_NODE_PATH="$PWD/$native_node"
+          npm --prefix javascript test
+          gradle -p jvm :java:smokeTest :kotlin:smokeTest -Dylplugin.native.path="$PWD/$native_jni" --no-daemon
+      - run: python tools/collect_native.py --build build-sdk --output native-dist --ylspec _deps/YLSpec
+      - name: Package and test platform Python wheel
+        shell: bash
+        run: |
+          python -m pip wheel --no-deps . --wheel-dir build/python-base
+          python tools/build_platform_wheel.py
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with: {name: 'language-native-${{ matrix.os }}', path: native-dist/*, if-no-files-found: error}
+  package:
+    needs: native
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with: {node-version: '24'}
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+        with: {distribution: temurin, java-version: '17'}
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
+        with: {gradle-version: '9.1.0'}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with: {pattern: 'language-native-*', path: native-input}
+      - run: python tools/package_libraries.py native-input registry-dist
+      - run: python -m pip install twine
+      - run: python -m twine check registry-dist/*.whl
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with: {name: registry-distributions, path: registry-dist/*, if-no-files-found: error}

@@ -3,7 +3,13 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <ylspec.h>
-#if defined(_WIN32)
+#if defined(YLPLUGIN_RUNTIME_EXPORT) && defined(_WIN32)
+#define YLP_API __declspec(dllexport)
+#elif defined(YLPLUGIN_RUNTIME_EXPORT)
+#define YLP_API __attribute__((visibility("default")))
+#elif defined(YLPLUGIN_STATIC)
+#define YLP_API
+#elif defined(_WIN32)
 #if defined(YLPLUGIN_BUILD)
 #define YLP_API __declspec(dllexport)
 #else

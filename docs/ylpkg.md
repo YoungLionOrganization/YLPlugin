@@ -35,3 +35,10 @@ codec/encryption algorithm IDs and key IDs as future interface inputs. Neither
 format should duplicate permission meanings, identity/account records, trust
 stores or payment logic. Changes to the shared record/crypto wire contract require
 an explicit new container version/algorithm ID, never an undocumented flag.
+
+## Registry package versus YLPkg
+
+An npm/PyPI/Maven distribution installs a host SDK in a developer ecosystem.
+It is neither a .ylplugin payload nor a .ylpkg component installer. The new
+language publication workflows do not implement dependency resolution for
+plugins, install host engines automatically or give package metadata authority.

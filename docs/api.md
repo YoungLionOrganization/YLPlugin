@@ -104,3 +104,12 @@ exceptions cancel. `Error.code` is the native status. Use a context manager or
 close explicitly; never close while another thread is inside a call. No Python
 execution runtime adapter is implemented. Python SDK and native runtime support
 are separate concerns.
+
+## 0.1.1 language frontends
+
+The C ABI stays version 1. Node/JNI use a shared internal dispatcher into the
+same core; Python uses the C ABI and version-checked native runtime. Native
+integers are not rounded through JS doubles: large results become bigint, Java
+uses Long/BigInteger and Python uses int. Per-handle ownership prevents callback
+close/reentry. See [JS/TS](javascript-api.md), [Java](java-api.md),
+[Kotlin](kotlin-api.md) and [Python](python-api.md) for actual frontend coverage.

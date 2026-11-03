@@ -74,3 +74,11 @@ CLI does not expose limit overrides; custom high-capacity hosts use the SDK.
 SIGINT/SIGTERM request cooperative cancellation of long operations, with exit 8
 and normal staging cleanup. SIGKILL/power loss cannot run cleanup; see security.md
 for abandoned private staging directories.
+
+## Authoring examples and registry scope
+
+The same CLI can package JSON datasets, native modules and WASM blobs as well as
+RCC. `examples/build_examples.py` writes explicit plans and validates generated
+containers. The CLI never turns a data entry into executable code automatically.
+Registry publication is deliberately outside CLI commands; use the manual
+[verified publishing workflow](publishing.md), not a plugin-supplied instruction.

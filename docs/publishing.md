@@ -1,0 +1,66 @@
+# Build, stage and publish libraries
+
+The repository has three distinct operations. CI builds/tests without registry
+credentials; the GitHub release workflow publishes verified core assets; the
+registry workflow uploads previously built language distributions. A normal push
+does not publish to npm, PyPI or Maven Central.
+
+## Versions and identities
+
+`VERSION` is authoritative and `tools/check_versions.py` verifies mirrored Python,
+npm and Java metadata. Development 0.1.1 does not mutate v0.1.0. Configured names:
+
+* npm: `@younglionorganization/ylplugin`
+* PyPI: `ylplugin`
+* Central: `xyz.younglion:ylplugin`, `ylplugin-kotlin`, `ylplugin-natives`
+
+Registry presence is not asserted by configuration. First publication must have
+ownership for these names. Licenses remain explicit: npm is UNLICENSED and the
+POM refers to the project's no-grant licensing statement. Do not copy YLSpec's
+Apache grant as a YLPlugin license.
+
+## Organization secrets
+
+Grant this repository access under organization Settings → Secrets and variables
+→ Actions. Remove old repository copies; same-name repository secrets override
+organization values, and environment values take precedence too.
+
+| Secret | Use |
+|---|---|
+| NPM_TOKEN | npm package/scope publishing permission |
+| PYPI_API_TOKEN | Permission to publish **ylplugin**, not only ylspec |
+| MAVEN_CENTRAL_USERNAME / MAVEN_CENTRAL_PASSWORD | Central Portal generated user-token pair |
+| MAVEN_GPG_PRIVATE_KEY / MAVEN_GPG_PASSPHRASE | OpenPGP signing, separate from portal authentication |
+
+Run **Check inherited publishing secrets** to check names/availability only. It
+does not show values, validate remote permissions or publish anything. Sharing
+secret storage does not broaden a project-scoped token. Future OIDC/trusted
+publisher setup can replace registry tokens after service-side configuration;
+this workflow does not claim an unconfigured OIDC publisher already exists.
+
+## Pipeline
+
+1. **build-and-conformance** checks core/shared SDK, Qt tests, sanitizers and fuzzing.
+2. **language-libraries** builds native Node/JNI/ctypes bundles on the declared
+   desktop matrix, tests ESM/CJS/TS/Java/Kotlin/Python, builds platform wheels and
+   collates third-party notices. Its package job emits `registry-distributions`:
+   npm tarball, Python wheels, Central bundle, `libraries.json` and `SHA256SUMS`.
+3. Publish the matching GitHub Release through **publish-verified-release** using
+   a successful core run. The tag must refer to the same commit as the language
+   artifacts. This release operation does not upload registry packages.
+4. Run **publish-registry-libraries** manually on main with the language run ID
+   and one registry choice. It checks successful main CI, published release/tag,
+   commit, every checksum and package coordinates before exposing that registry's
+   credentials to its upload step. It never rebuilds binaries at publication time.
+
+The Central step signs an isolated bundle using temporary GNUPGHOME and passphrase
+stdin, computes required checksums, submits to Central and polls deployment state.
+No private key or token goes into artifacts/logs. npm lifecycle scripts are disabled.
+PyPI uploads are noninteractive and metadata-checked. Credentials for a different
+registry are not supplied to the active upload step.
+
+Registry versions are immutable. After a partial upload inspect remote state
+before retrying; a failed upload is not reported as success and this workflow
+does not silently overwrite remote versions. Central validation errors retain a
+deployment identifier for investigation. No package registry upload was requested
+as part of writing these workflows; the next publication remains an explicit action.

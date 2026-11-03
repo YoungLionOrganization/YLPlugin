@@ -74,5 +74,25 @@ are fixed-width, serialized explicitly and independent of native struct layout.
 
 Python packaging: `python -m pip install .` installs the pure ctypes facade;
 provide the separately built shared library using Library(path) or YLPLUGIN_LIBRARY.
-The Python wheel does not bundle SDK binaries or claim platform wheel coverage.
+The v0.1.0 wheel is facade-only; development platform wheels are described below.
 No package registry or GitHub release publishing workflow is configured.
+
+## Building the language SDKs (0.1.1 development)
+
+Use Node 20+ headers, a JDK and Gradle 9.1 for language tests. Enable
+YLPLUGIN_BUILD_NODE and/or YLPLUGIN_BUILD_JNI; set NODE_INCLUDE_DIR and JAVA_HOME.
+Windows Node builds additionally need the matching node.lib. The documented
+[language CI](../.github/workflows/libraries.yml) downloads official Node headers,
+builds static-core bundles, tests each frontend and constructs platform wheels,
+npm prebuilds and the native JAR. Node/JNI do not require Qt.
+
+YLPLUGIN_LIBRARY_TYPE=STATIC is opt-in. Standalone ctypes runtimes use
+YLPLUGIN_BUILD_PYTHON_RUNTIME=ON with that static core. Shared C/C++ SDK builds
+remain the default. OpenSSL/Zstd must be suitable for linking into modules;
+non-PIC static zlib is not valid there, so GNU bundles use the system shared zlib
+where needed. Never retag an unverified Linux wheel: auditwheel checks its actual
+ABI. The local helper toolchains are not committed or required by consumers.
+
+Run `python tools/check_versions.py`, npm test/typecheck, Gradle smokeTest tasks
+and CTest before packaging. Python source installs can still use an explicit SDK;
+platform wheels add runtime autodiscovery. See [compatibility](compatibility.md).

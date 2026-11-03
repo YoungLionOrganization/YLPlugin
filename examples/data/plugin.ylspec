@@ -1,0 +1,36 @@
+[_ylspec]
+version = "0.1"
+profile = "xyz.younglion.plugin"
+profile_version = "1.0"
+[data]
+id = "xyz.younglion.examples.data"
+version = "1.0.0"
+[[data.entrypoints]]
+id = "catalog"
+runtime = "data"
+runtime_min = "1.0"
+runtime_max = "1.0"
+resource = "catalog.json"
+[[data.targets]]
+id = "viewer"
+host = "xyz.example.data-viewer"
+api_min = "1.0"
+api_max = "1.0"
+entrypoint = "catalog"
+required_permissions = []
+optional_permissions = { format = "bytes", registry = "xyz.example.viewer.bits", registry_version = "1", values = [37, 8, 255, 0] }
+[[data.targets]]
+id = "analysis"
+host = "xyz.example.analysis"
+api_min = "1.0"
+api_max = "1.0"
+entrypoint = "catalog"
+required_permissions = { format = "bitmask", registry = "xyz.example.analysis.bits", registry_version = "1", value = 9223372036854775807 }
+[[data.targets]]
+id = "generic"
+host = "*"
+api_min = "1.0"
+api_max = "1.0"
+entrypoint = "catalog"
+priority = -10
+required_permissions = []

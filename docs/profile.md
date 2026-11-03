@@ -108,3 +108,11 @@ version ranges; JSON Schema alone is not a conformance decision. The exported
 `ylp_plugin_profile()` supplies an actual YLSpec `yl_profile` callback. Use it in a
 caller-owned `yl_registry`; there is no global registration or schema fetching.
 Published positive/negative vectors are under `tests/vectors`.
+
+## Binding representation requirements
+
+The 0.1.1 SDK frontends preserve this profile unchanged. JS uses bigint when a
+mask exceeds the safe number range, Java uses Long and Python int; the writer
+still emits decimal integers. A host must not stringify a mask to work around
+its language's numeric limits. See the [language compatibility rules](compatibility.md).
+The data example demonstrates a full signed-64 mask and explicit generic opt-in.

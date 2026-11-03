@@ -1,0 +1,20 @@
+[_ylspec]
+version = "0.1"
+profile = "xyz.younglion.plugin"
+profile_version = "1.0"
+[data]
+id = "xyz.younglion.examples.wasm"
+version = "1.0.0"
+[[data.entrypoints]]
+id = "add"
+runtime = "wasm"
+runtime_min = "1.0"
+runtime_max = "1.0"
+resource = "add.wasm"
+[[data.targets]]
+id = "node-wasm-host"
+host = "xyz.example.node-wasm"
+api_min = "1.0"
+api_max = "1.0"
+entrypoint = "add"
+required_permissions = []

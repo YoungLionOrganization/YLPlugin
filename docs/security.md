@@ -66,3 +66,20 @@ This is an experimental implementation, with no independent cryptographic audit,
 no OS sandbox and no general validator for Qt's RCC internals. See `test-report.md`
 for exact executed checks and remaining platform validation. Do not deploy it as
 a production security boundary before completing the release audit in RELEASES.md.
+
+## Language boundary checks in 0.1.1
+
+Node/JNI callbacks are synchronous and per-handle reentry/close is rejected. Java
+uses AutoCloseable/Cleaner and UTF-8 conversion with surrogate checks; Python
+validates integer widths and NUL paths before ctypes and serializes close/read.
+These rules prevent integer wrapping and freeing an active native operation;
+they do not sandbox native code or terminate blocking host callbacks.
+
+Native wheels/prebuilds/JAR resources contain trusted SDK code and dependency
+notices. They never fetch a binary on import. Registry publication verifies CI
+provenance, package identities and hashes before using organization secrets;
+permission to publish a library is not permission to execute an untrusted plugin.
+
+Static SDK modules export only their frontend/C ABI entrypoints; embedded core
+and crypto symbols remain private to avoid interposition with a host OpenSSL build.
+This controls linkage, not the trust or isolation of activated plugin code.

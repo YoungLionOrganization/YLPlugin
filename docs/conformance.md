@@ -51,3 +51,11 @@ symlink ancestors, shared extraction parents and partial-file rejection. Real
 RCC conversion bytes and mount/engine teardown are tested separately. Signature/
 encryption fixtures are generated with fresh ephemeral keys in the test temporary
 directory; no private encryption/signing keys are embedded in this repository.
+
+## Language consistency
+
+0.1.1 adds cross-frontend round trips for the data fixture, exact maximum integer
+masks, encrypted/compressed reads, revoked keys, cancellation and callback-close
+rejection. Java additionally checks supplementary Unicode and cleanup; JS tests
+ESM/CJS and the host-supplied WASM example. These tests reuse native parsing and
+do not count language wrappers as independent container implementations.

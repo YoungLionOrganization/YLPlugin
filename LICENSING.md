@@ -10,3 +10,11 @@ Third-party components retain their own terms. Linking/building YLSpec, Qt,
 OpenSSL, Zstd or nlohmann-json does not change this project's license decision.
 See THIRD_PARTY_NOTICES.md. The optional Qt adapter does not bundle Qt binaries;
 hosts/distributors must satisfy their selected Qt distribution's obligations.
+
+## Language distributions
+
+The JS package declares UNLICENSED; Maven metadata refers to this no-grant
+statement, and Python documentation carries the same status. These labels do
+not choose a new permissive license. Static native bundles retain dependency
+licenses under their package/JAR/wheel notices. An eventual owner-selected license
+needs a dedicated change; registry credentials or a signature are not a license.

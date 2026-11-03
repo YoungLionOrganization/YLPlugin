@@ -69,3 +69,11 @@ The sample under `examples/artifacts` contains a real root-layout RCC built from
 this project's own QML and manifest. It is a packaging/memory-mount fixture, not
 a claim that the current unchanged LMG executable already opens `.ylplugin`.
 The memory RCC runtime mounts data; starting the embedded QML remains a host action.
+
+## Language-host examples
+
+RCC is one resource type, not a requirement of the SDK. New [data/WASM/native
+examples](examples.md) demonstrate application-independent use through the same
+profile. JS/Java/Kotlin/Python clients may inspect packages without linking Qt.
+The new JVM/Node APIs do not replace the LeoMiniGames loader or grant its publisher
+privileges, and wrapping a legacy RCC still preserves its original bytes.

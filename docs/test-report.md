@@ -1,4 +1,4 @@
-# Executed test and internal audit report — 2026-11-01–02 (Asia/Baku)
+# Executed verification history — 0.1.0 and 0.1.1
 
 Environment: Linux x86_64, GCC/G++ 14.2, CMake 3.31.6, CPython 3.12.14,
 OpenSSL 3.5.7 runtime, Zstd 1.5.7, nlohmann-json 3.11.3, Qt 6.8.2.
@@ -84,3 +84,23 @@ the initial local results above are not substituted for remote results.
 Release assets contain committed sources, a pure Python facade wheel, the RCC
 demo and checksums. No native binary, payment service or production deployment
 is implied. License selection and independent security review remain open.
+
+## 0.1.1 SDK expansion — 2026-11-03
+
+Local checks include 11/11 ASan/UBSan CTests and 9/9 static-core CTests,
+ESM/CommonJS and TS declarations, three Node integration
+suites, 19 Java/JNI checks, Kotlin resource/use lifecycle tests, Python integer/
+limit/thread/callback ownership checks and static-core CTest. The actual data
+and WASM fixtures round-trip deterministically. Native sample activation uses an
+external approved digest; denied hashes do not produce a cache.
+
+YLSpec organization-secret availability check passed in
+[run 41449801522](https://github.com/YoungLionOrganization/YLSpec/actions/runs/41449801522)
+without printing values or publishing. New remote platform results belong to the
+language-libraries run for the exact commit; workflow definitions alone are not
+reported as execution. Registry uploads were not requested or performed here.
+
+Seven offline registry-gate tests cover checksum tampering, wrong npm owner,
+failed/non-main CI, Python identity and incomplete Maven bundles. Installed
+platform-wheel autodiscovery, packaged Node prebuild loading and Java/Kotlin
+native-JAR loading also passed locally. No registry endpoint was used by these tests.

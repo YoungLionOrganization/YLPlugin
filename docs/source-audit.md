@@ -40,3 +40,11 @@ QFile referencing them, including after unregister. Unregister returns false
 when references remain. The optional adapter consequently retains such buffers
 until process exit instead of risking use-after-free; hosts should tear down
 engines/files first. Qt RCC parsing itself requires host-reviewed bytes.
+
+## SDK expansion audit (2026-11-03)
+
+The language expansion also inspected YLSpec's actual Node-API/JNI loaders,
+Gradle publications and registry workflow contracts at
+`8a07a17295eb7065e402a49e96200a551b23f752`. Its organization-secret update changes
+credential documentation/availability checks only. YLPlugin's new bridges use
+its existing core, not copied YLSpec parsers or a rewritten metadata standard.

@@ -23,3 +23,11 @@ Before production use or stable compatibility promises:
 WASM/Python execution, a general C runtime-vtable registration ABI, key hardware
 integration, power-loss recovery and YLPkg installation remain separate work.
 No placeholder CLI commands claim these features.
+
+## Next SDK release: 0.1.1
+
+VERSION and mirrored language metadata describe development 0.1.1. The released
+v0.1.0 tag/assets stay unchanged. The next release adds JS/TS/Java/Kotlin APIs,
+stronger Python ownership checks, new examples and verified registry artifacts.
+Use the [publication sequence](docs/publishing.md); adding a workflow is not an
+upload and a successful compile is not an independent security audit.

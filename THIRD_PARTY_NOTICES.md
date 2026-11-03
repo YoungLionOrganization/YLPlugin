@@ -18,3 +18,11 @@ license/notice files. Before distributing binaries, collect the exact licenses
 and applicable notices from the actual dependency builds; this inventory is not
 a substitute for their license texts. The Python binding uses Python's standard
 library only and does not vendor ctypes, CPython or another container parser.
+
+## Language binding packaging
+
+Node-API headers follow Node.js's MIT terms; JNI headers follow OpenJDK's GPL
+with Classpath Exception. Kotlin's standard library remains a Maven dependency.
+Bundled native artifacts include actual collected YLSpec/tomlc17, OpenSSL, Zstd,
+nlohmann-json and applicable tool/header notices. Static builds do not change
+the project's own pending license, and Qt is not linked into language bundles.

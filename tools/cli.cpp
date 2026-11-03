@@ -1,4 +1,5 @@
 #include <ylplugin/ylplugin.hpp>
+#include <ylplugin/ylplugin.h>
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -88,7 +89,7 @@ std::vector<Input> plan(const Args& a) {
     return inputs;
 }
 void help() {
-    std::cout<<"YLPlugin 0.1.0 (experimental)\n"
+    std::cout<<"YLPlugin "<<ylp_version()<<" (experimental)\n"
       "ylplugin --version\n"
       "ylplugin create --manifest plugin.ylspec (--root resources | --plan resources.json) --output package.ylplugin\n"
       "ylplugin inspect|list|validate FILE [--json]\n"
@@ -103,7 +104,7 @@ void help() {
 }
 int run(const Args& a) {
     if(a.command.empty()||a.flags.contains("--help")){help();return 0;}
-    if(a.command=="--version") {std::cout<<"0.1.0\n";return 0;}
+    if(a.command=="--version") {std::cout<<ylp_version()<<"\n";return 0;}
     bool machine=a.flags.contains("--json");
     auto print=[&](const Json& j){std::cout<<j.dump(machine?-1:2)<<'\n';};
     std::shared_ptr<Secret> secret;auto keys=key_provider(a,secret);
