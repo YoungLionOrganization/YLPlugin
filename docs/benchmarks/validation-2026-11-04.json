@@ -1,0 +1,40 @@
+{
+  "operation": "validate plaintext store resource, warm cache",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "size_bytes": 33554432,
+  "iterations": 7,
+  "rss_scope": "whole isolated process including interpreter and native runtime",
+  "results": [
+    {
+      "label": "baseline",
+      "version": "0.1.2",
+      "samples_ms": [
+        40.39598600002137,
+        40.84651599998779,
+        43.88980199996695,
+        43.19560500005082,
+        41.678832999991755,
+        39.997244000005594,
+        40.59545799998432
+      ],
+      "median_ms": 40.84651599998779,
+      "peak_rss_mib": 50.01953125
+    },
+    {
+      "label": "candidate",
+      "version": "0.1.3",
+      "samples_ms": [
+        29.046634000110316,
+        28.404083000054925,
+        29.218385000035596,
+        28.87921199999255,
+        29.6319599999606,
+        28.627992999986418,
+        28.162860000065848
+      ],
+      "median_ms": 28.87921199999255,
+      "peak_rss_mib": 18.6015625
+    }
+  ]
+}

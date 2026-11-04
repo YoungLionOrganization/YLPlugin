@@ -5,6 +5,11 @@ Package: `@younglionorganization/ylplugin`. Version 0.1.2 is published on
 The [publishing workflow](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711646655)
 consumed verified CI artifacts without rebuilding them.
 
+The source branch prepares 0.1.3; it is not yet on npm. Native file opens now
+reject unpaired UTF-16 surrogates instead of substituting U+FFFD. Valid Unicode
+paths are preserved. Slice cancellation also covers empty resources and the
+final reader callback. See [troubleshooting](troubleshooting.md).
+
 Node 20+ is the supported runtime. ESM and CommonJS share one implementation and
 ship declarations for both module systems. Browser execution is not provided:
 this SDK uses Node-API and native file access. WASM plugin bytes can be handled

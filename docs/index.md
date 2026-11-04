@@ -21,6 +21,9 @@ execute are separate decisions.
 | Threat model and FFI boundaries | [Security](security.md) |
 | Organization secrets and registry publication | [Publishing](publishing.md) |
 | Actual executed checks | [Test report](test-report.md) |
+| Validation memory, benchmark method and measured limits | [Performance](performance.md) |
+| Version mismatches, platform/argument/integrity/cancellation errors | [Troubleshooting](troubleshooting.md) |
+| Development and reproducible bug reports | [Contributing](../CONTRIBUTING.md) |
 | Legacy game compatibility | [RCC migration](migration-rcc.md) |
 | Future installer boundary | [YLPkg](ylpkg.md) |
 

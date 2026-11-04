@@ -49,6 +49,37 @@ struct Signing {
     }
     TrustProvider trust(){return [this](const std::string& id,std::array<uint8_t,32>& out){out=pub;return id=="test-key";};}
 };
+void validation_regressions() {
+    Temp tmp; Bytes content(3*1024*1024+37,0x25);save(tmp.path/"payload",content);
+    Input input;input.path="data.bin";input.file=tmp.path/"payload";
+    create(tmp.path/"streamed",manifest(),{input});auto bytes=load(tmp.path/"streamed");
+    const auto payload=u64(bytes,72);size_t largest=0;uint64_t consumed=0;
+    bool cancel_on_final=false,final_read=false;
+    Package tracked(bytes.size(),[&](uint64_t off,std::span<uint8_t> out) {
+        if(off>=payload) {
+            largest=std::max(largest,out.size());consumed+=out.size();
+            if(cancel_on_final&&off+out.size()==bytes.size())final_read=true;
+        }
+        std::copy_n(bytes.begin()+static_cast<ptrdiff_t>(off),out.size(),out.begin());
+    });
+    tracked.validate();
+    expect(largest<=1024*1024&&consumed==content.size(),"plaintext validation scans all bytes with bounded reader requests");
+    bytes.back()^=1;
+    rejected([&]{tracked.validate();},"streamed validation rejects corruption at the resource tail");
+    rejected([&]{tracked.read_slice("data.bin",0,1);},"slice authenticates corruption outside returned range");
+    bytes.back()^=1;tracked.validate();
+    auto cancelled_as_expected=[&](auto operation,const std::string& label) {
+        bool failed=false;try { operation(); } catch(const Error& e) { failed=e.code==Code::cancelled; }
+        expect(failed,label);
+    };
+    cancel_on_final=true;
+    cancelled_as_expected([&]{tracked.read_slice("data.bin",0,1,[&]{return final_read;});},"slice honors cancellation raised by the final reader callback");
+    save(tmp.path/"empty",Bytes{});input.file=tmp.path/"empty";
+    create(tmp.path/"empty-package",manifest(),{input});Package empty(tmp.path/"empty-package");
+    expect(empty.read_slice("data.bin",0,0).empty(),"empty record retains valid empty SHA256 handling");
+    cancelled_as_expected([&]{empty.read_slice("data.bin",0,0,[]{return true;});},"empty slice honors cancellation");
+    cancelled_as_expected([&]{empty.validate({},[]{return true;});},"empty record validation honors cancellation");
+}
 void native_test(const std::filesystem::path& library){
 #if defined(__linux__)
 #if defined(__aarch64__)
@@ -74,6 +105,7 @@ void native_test(const std::filesystem::path& library){
 #endif
 }
 void core(){
+    validation_regressions();
     Temp tmp;auto source=tmp.path/"source";Bytes content(8192);for(size_t i=0;i<content.size();++i)content[i]=static_cast<uint8_t>(i%251);save(source,content);
     Input in;in.path="data.bin";in.file=source;
     auto path=tmp.path/"base.ylplugin";create(path,manifest(),{in});Package p(path);p.validate();expect(p.read("data.bin")==content,"store roundtrip");

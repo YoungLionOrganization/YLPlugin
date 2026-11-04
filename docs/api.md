@@ -3,7 +3,7 @@
 ## C ABI
 
 Include `ylplugin/ylplugin.h`, link `YLPlugin::ylplugin`. ABI version is 1 within
-experimental SDK 0.1.0; no stable 1.x ABI is promised. Versioned configuration/view structures have
+experimental SDK 0.1.x; no stable 1.x ABI is promised. Versioned configuration/view structures have
 `struct_size` and `abi_version`; initialize them as documented. Functions returning
 `ylp_status` catch C++ exceptions, report a bounded caller-owned `ylp_error`, and
 return status 0 on success. No thread-local/global last-error state is used.
@@ -56,6 +56,13 @@ thread-safe. `read` authenticates/decompresses/hashes one bounded record;
 `read_slice` streams through an entire plaintext store record to verify its hash
 while retaining only the requested slice. It is not a zero-copy mmap API and
 does not claim constant-time integrity validation of a slice.
+
+In 0.1.3, `validate` also uses full-resource streaming SHA256 for plaintext store
+records with at most 1 MiB of payload scratch space. It does not retain successful
+hashes across calls: later modifications are detected on the next scan. Encrypted/
+compressed records keep the decode/authentication path. `read_slice` checks
+cancellation before work and after the final reader callback, including empty
+resources. See [performance](performance.md) for allocation scope and measurement.
 
 `create` sorts resource inputs and uses the real YLSpec serializer to normalize
 numeric output. `sign` accepts a caller-owned unencrypted Ed25519 private PEM

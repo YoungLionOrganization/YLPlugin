@@ -1,6 +1,6 @@
 # Building, testing and installing
 
-Requirements: CMake 3.26+, C11/C++20 compilers, YLSpec 0.1.2, OpenSSL 3+, Zstd,
+Requirements: CMake 3.26+, C11/C++20 compilers, YLSpec 0.1.2+, OpenSSL 3+, Zstd,
 nlohmann-json 3.11+, and threads. Python 3.11+ is needed for integration tests.
 QtCore 6.4+ is optional; the core, CLI, C/C++ SDK and Python SDK have no Qt
 dependency. No dependency is downloaded during configure.
@@ -43,15 +43,9 @@ installed export (`YLPlugin::qt` is the in-tree alias). Shared library runtime
 search paths/DLL deployment are the host's responsibility. The project does not
 depend on LeoMiniGames or require its source in SDK consumers.
 
-In the prepared cloud workspace:
-
-```sh
-source /workspace/younglion-env/native.sh
-cmake -S /workspace/YLPlugin -B /workspace/YLPlugin/build -G Ninja \
-  -DYLPLUGIN_YLSPEC_SOURCE=/workspace/YLSpec -DYLPLUGIN_QT=ON
-cmake --build /workspace/YLPlugin/build --parallel 4
-ctest --test-dir /workspace/YLPlugin/build --output-on-failure
-```
+The default branch prepares 0.1.3; the latest published packages remain 0.1.2.
+Use matching source/native/facade versions. From 0.1.3, changing `VERSION`
+automatically triggers CMake reconfiguration in an existing build directory.
 
 For ASan/UBSan add `-DYLPLUGIN_SANITIZE=ON -DYLSPEC_SANITIZE=ON` in a separate
 Debug build. On GCC/Linux, CMake preloads libasan AND libstdc++ for ctypes tests
@@ -72,10 +66,11 @@ Android/iOS and Windows ARM64 need actual SDK/toolchain/device validation before
 release; they are not claimed tested by the local Linux run. Core format types
 are fixed-width, serialized explicitly and independent of native struct layout.
 
-Python packaging: `python -m pip install .` installs the pure ctypes facade;
-provide the separately built shared library using Library(path) or YLPLUGIN_LIBRARY.
-The v0.1.0 wheel is facade-only; development platform wheels are described below.
-No package registry or GitHub release publishing workflow is configured.
+Python source packaging: `python -m pip install .` installs the ctypes facade;
+provide the separately built shared library using `Library(path)` or `YLPLUGIN_LIBRARY`.
+Published 0.1.2 platform wheels include a native runtime. The universal GitHub
+facade wheel does not. Release and npm/PyPI/Maven publishing workflows are
+configured separately from build CI; see [publishing](publishing.md).
 
 ## Building the language SDKs
 
@@ -96,3 +91,7 @@ ABI. The local helper toolchains are not committed or required by consumers.
 Run `python tools/check_versions.py`, npm test/typecheck, Gradle smokeTest tasks
 and CTest before packaging. Python source installs can still use an explicit SDK;
 platform wheels add runtime autodiscovery. See [compatibility](compatibility.md).
+
+For benchmark runs use a Release build without sanitizers. The
+[performance guide](performance.md) describes the isolated-process harness;
+[troubleshooting](troubleshooting.md) covers version and runtime loading failures.

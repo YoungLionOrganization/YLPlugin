@@ -1,0 +1,52 @@
+# SPDX-FileCopyrightText: 2026 Cavanshirpro
+# SPDX-License-Identifier: LGPL-3.0-only
+
+name: Bug report
+description: Report a reproducible YLPlugin SDK or CLI issue.
+title: "[Bug]: "
+body:
+  - type: dropdown
+    id: sdk
+    attributes:
+      label: SDK or component
+      options:
+        - C / C++ core
+        - JavaScript / TypeScript
+        - Python
+        - Java / Kotlin
+        - CLI
+        - Qt RCC adapter
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package and native runtime version or commit
+      placeholder: "0.1.2, or the 0.1.3 development commit SHA"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS, architecture and language/runtime version
+      placeholder: "Ubuntu 24.04 x86_64, Node 24"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the command or code and the manifest/resource needed to reproduce it.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Error code and relevant output
+      render: text

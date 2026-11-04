@@ -30,6 +30,12 @@ Available on GitHub Releases, npm, PyPI and Maven Central. Published native SDKs
 cover Linux x86_64/ARM64, macOS x86_64/ARM64 and Windows x86_64.
 No stable ABI or production security audit is claimed during 0.x.
 
+**In development: 0.1.3.** Work focuses on bounded-memory plaintext validation,
+cancellation fixes, strict Node Unicode paths and incremental build versioning.
+See the [changelog](CHANGELOG.md), [performance guide](docs/performance.md) and
+[troubleshooting](docs/troubleshooting.md). Installation commands below use the
+published 0.1.2 packages; 0.1.3 has not been released.
+
 ## Choose an SDK
 
 | SDK | Implementation | Package / build |
@@ -196,3 +202,5 @@ Packages include the license texts and corresponding project source; see
 
 Maintained by [Cavanshirpro](https://github.com/Cavanshirpro) under
 [YoungLionOrganization](https://github.com/YoungLionOrganization).
+
+For bug reports and development verification, see [contributing](CONTRIBUTING.md).

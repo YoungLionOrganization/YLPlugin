@@ -96,3 +96,20 @@ test('host-supplied WebAssembly runtime explicitly executes the verified example
   const output = execFileSync(process.execPath, [join(root, 'examples/wasm/host.mjs'), join(root, 'examples/artifacts/wasm.ylplugin')], {encoding: 'utf8'});
   assert.equal(output.trim(), '42');
 });
+
+test('filesystem paths reject lone surrogates without opening a replacement filename', () => {
+  const work = realpathSync(mkdtempSync(join(tmpdir(), 'ylplugin-unicode-')));
+  try {
+    writeFileSync(join(work, '\uFFFD.ylplugin'), readFileSync(fixture));
+    for (const name of ['\uD800', '\uDC00', 'prefix\uD800suffix']) {
+      assert.throws(() => new Package(join(work, name + '.ylplugin')), code(3));
+    }
+    for (const name of ['\uFFFD', 'Cavanşir-🦁']) {
+      const filename = join(work, name + '.ylplugin');
+      writeFileSync(filename, readFileSync(fixture));
+      const plugin = new Package(filename);
+      try { plugin.validate(); assert.equal(JSON.parse(plugin.read('catalog.json')).total, 42); }
+      finally { plugin.close(); }
+    }
+  } finally { rmSync(work, {recursive: true, force: true}); }
+});

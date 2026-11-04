@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ylplugin"
-version = "0.1.2"
+version = "0.1.3"
 description = "Native YLPlugin container SDK: inspect, build, verify and preflight plugins"
 readme = "bindings/python/README.md"
 authors = [{name = "YoungLionOrganization"}]

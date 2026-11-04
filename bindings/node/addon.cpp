@@ -13,7 +13,23 @@ void ok(napi_env env,napi_status status) {
     if(status!=napi_ok)throw Error(Code::invalid_metadata,"invalid Node-API argument or allocation");
     bool pending=false;napi_is_exception_pending(env,&pending);if(pending)throw Pending{};
 }
-std::string string(napi_env env,napi_value value) {
+std::string string(napi_env env,napi_value value,bool filesystem_path=false) {
+    if(filesystem_path) {
+        // V8 replaces lone UTF-16 surrogates during UTF-8 conversion. Reject
+        // those paths before conversion so a different existing file is not opened.
+        size_t count=0;ok(env,napi_get_value_string_utf16(env,value,nullptr,0,&count));
+        std::u16string units(count,u'\0');
+        ok(env,napi_get_value_string_utf16(env,value,units.data(),count+1,&count));
+        for(size_t i=0;i<count;++i) {
+            auto unit=units[i];
+            if(unit>=0xD800&&unit<=0xDBFF) {
+                if(i+1>=count||units[i+1]<0xDC00||units[i+1]>0xDFFF)
+                    throw Error(Code::invalid_metadata,"unpaired UTF-16 surrogate in filesystem path");
+                ++i;
+            } else if(unit>=0xDC00&&unit<=0xDFFF)
+                throw Error(Code::invalid_metadata,"unpaired UTF-16 surrogate in filesystem path");
+        }
+    }
     size_t size=0;ok(env,napi_get_value_string_utf8(env,value,nullptr,0,&size));std::string out(size,'\0');
     ok(env,napi_get_value_string_utf8(env,value,out.data(),size+1,&size));
     if(out.find('\0')!=std::string::npos)throw Error(Code::invalid_metadata,"NUL in binding string");return out;
@@ -63,7 +79,7 @@ template<class Fn> napi_value guard(napi_env env,Fn fn){try{return fn();}catch(c
 binding::Handle* handle(napi_env env,napi_value value) {void* p=nullptr;ok(env,napi_get_value_external(env,value,&p));if(!p)throw Error(Code::invalid_metadata,"invalid package handle");return static_cast<binding::Handle*>(p);}
 napi_value open(napi_env env,napi_callback_info info) {return guard(env,[&]{
     napi_value args[2];size_t n=2;ok(env,napi_get_cb_info(env,info,&n,args,nullptr,nullptr));if(n!=2)throw Error(Code::invalid_metadata,"path and limits JSON required");
-    auto h=std::make_unique<binding::Handle>(string(env,args[0]),Json::parse(string(env,args[1])));napi_value out;
+    auto h=std::make_unique<binding::Handle>(string(env,args[0],true),Json::parse(string(env,args[1])));napi_value out;
     ok(env,napi_create_external(env,h.get(),[](napi_env,void* p,void*){delete static_cast<binding::Handle*>(p);},nullptr,&out));h.release();return out;
 });}
 napi_value close(napi_env env,napi_callback_info info) {return guard(env,[&]{napi_value arg,out;size_t n=1;ok(env,napi_get_cb_info(env,info,&n,&arg,nullptr,nullptr));if(n!=1)throw Error(Code::invalid_metadata,"package handle required");binding::close(handle(env,arg));ok(env,napi_get_undefined(env,&out));return out;});}

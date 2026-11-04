@@ -265,9 +265,10 @@ Bytes Package::read(const std::string& path,const KeyProvider& keys,const Cancel
     return b;
 }
 Bytes Package::read_slice(const std::string& path,uint64_t offset,size_t count,const Cancel& cancel) const {
+    cancelled(cancel);
     const auto& r=resource(path); require(!r.compression&&!r.encryption,Code::unsupported,"slices require plaintext store records");
     require(offset<=r.size&&count<=r.size-offset,Code::invalid_metadata,"slice outside resource");
-    Bytes out(count),chunk(1024*1024); std::array<uint8_t,32> digest{};
+    Bytes out(count),chunk(static_cast<size_t>(std::min<uint64_t>(1024*1024,r.size))); std::array<uint8_t,32> digest{};
     std::unique_ptr<EVP_MD_CTX,decltype(&EVP_MD_CTX_free)> ctx(EVP_MD_CTX_new(),EVP_MD_CTX_free);
     require(ctx&&EVP_DigestInit_ex(ctx.get(),EVP_sha256(),nullptr)==1,Code::integrity,"hash init failed");
     for(uint64_t pos=0;pos<r.size;) {
@@ -278,10 +279,18 @@ Bytes Package::read_slice(const std::string& path,uint64_t offset,size_t count,c
         if(begin<end) std::copy_n(chunk.begin()+static_cast<ptrdiff_t>(begin-pos),static_cast<size_t>(end-begin),out.begin()+static_cast<ptrdiff_t>(begin-offset));
         pos+=n;
     }
+    cancelled(cancel);
     unsigned n=0; require(EVP_DigestFinal_ex(ctx.get(),digest.data(),&n)==1&&n==32&&CRYPTO_memcmp(digest.data(),r.hash.data(),32)==0,Code::integrity,"slice resource SHA256 mismatch"); return out;
 }
 void Package::validate(const KeyProvider& keys,const Cancel& cancel) const {
-    metadata(); for(const auto& r:resources()) { cancelled(cancel); read(r.path,keys,cancel); }
+    cancelled(cancel); metadata();
+    for(const auto& r:resources()) {
+        cancelled(cancel);
+        // A zero-length result still authenticates every source byte. Avoid
+        // allocating the entire plaintext resource solely to discard it.
+        if(!r.compression&&!r.encryption) read_slice(r.path,0,0,cancel);
+        else read(r.path,keys,cancel);
+    }
 }
 bool Package::signed_package() const { return !impl_->signature.empty(); }
 std::string Package::signing_key_id() const {

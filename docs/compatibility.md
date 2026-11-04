@@ -4,6 +4,10 @@ File format 1.0 and profile 1.0 are portable; execution availability belongs to
 the host. SDK 0.1.2 carries LGPLv3 licensing and remains experimental. It does not alter the released
 v0.1.0 bytes or claim a stable C++ ABI.
 
+The default branch now prepares 0.1.3. Published installation examples remain on
+0.1.2 until a separate release. The 0.1.3 changes retain file/profile 1.0 and C ABI
+version 1, but package/runtime version matching still requires the same SDK version.
+
 | Layer | Baseline / limitation |
 |---|---|
 | C/C++ core | C11 dependency / C++20 SDK, 64-bit serialized offsets |
