@@ -15,6 +15,10 @@ namespace ylp {
 namespace {
 constexpr std::array<uint8_t,8> magic{'Y','L','P','L','U','G',0,0};
 constexpr std::array<uint8_t,8> sigmagic{'Y','L','S','I','G',0,0,0};
+std::string path_text(const std::filesystem::path& path) {
+    const auto utf8=path.u8string();
+    return {reinterpret_cast<const char*>(utf8.data()),utf8.size()};
+}
 std::string lower(std::string s) { for(auto& c:s) if(c>='A'&&c<='Z') c=static_cast<char>(c-'A'+'a'); return s; }
 void paths(const std::vector<Resource>& resources) {
     std::set<std::string> names;
@@ -80,7 +84,7 @@ Bytes encode_record(const Resource& r) {
 }
 Bytes file_bytes(const std::filesystem::path& p,uint64_t maximum) {
     std::ifstream f(p,std::ios::binary|std::ios::ate);
-    require(bool(f),Code::io,"cannot open input file: "+p.string());
+    if(!f) fail(Code::io,"cannot open input file: "+path_text(p));
     auto end=f.tellg(); require(end>=0,Code::io,"input size unavailable");
     auto n=static_cast<uint64_t>(end);
     require(n<=maximum&&n<=SIZE_MAX&&n<=static_cast<uint64_t>(std::numeric_limits<std::streamsize>::max()),Code::resource_limit,"input exceeds limit");
@@ -124,7 +128,8 @@ Bytes Package::Impl::bytes(uint64_t offset,uint64_t count) const {
 }
 Package::Package(const std::filesystem::path& path,Limits limits) {
     struct File { std::ifstream stream; std::mutex mutex; explicit File(const std::filesystem::path& p):stream(p,std::ios::binary|std::ios::ate) {} };
-    auto file=std::make_shared<File>(path); require(bool(file->stream),Code::io,"cannot open package: "+path.string());
+    auto file=std::make_shared<File>(path);
+    if(!file->stream) fail(Code::io,"cannot open package: "+path_text(path));
     auto end=file->stream.tellg(); require(end>=0,Code::io,"package size unavailable");
     impl_=std::make_shared<Impl>(); impl_->size=static_cast<uint64_t>(end); impl_->limits=limits;
     impl_->reader=[file](uint64_t offset,std::span<uint8_t> out) {

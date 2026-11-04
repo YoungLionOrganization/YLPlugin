@@ -79,6 +79,11 @@ void validation_regressions() {
     expect(empty.read_slice("data.bin",0,0).empty(),"empty record retains valid empty SHA256 handling");
     cancelled_as_expected([&]{empty.read_slice("data.bin",0,0,[]{return true;});},"empty slice honors cancellation");
     cancelled_as_expected([&]{empty.validate({},[]{return true;});},"empty record validation honors cancellation");
+    auto unicode_input=tmp.path/std::filesystem::path(u8"\uFFFD-\U0001F981.bin");
+    auto unicode_output=tmp.path/std::filesystem::path(u8"\uFFFD-\U0001F981.ylplugin");
+    save(unicode_input,content);input.file=unicode_input;
+    create(unicode_output,manifest(),{input});
+    expect(Package(unicode_output).read("data.bin")==content,"Unicode filesystem input and package paths remain usable");
 }
 void native_test(const std::filesystem::path& library){
 #if defined(__linux__)

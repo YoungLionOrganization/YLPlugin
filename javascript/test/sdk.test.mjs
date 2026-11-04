@@ -111,5 +111,13 @@ test('filesystem paths reject lone surrogates without opening a replacement file
       try { plugin.validate(); assert.equal(JSON.parse(plugin.read('catalog.json')).total, 42); }
       finally { plugin.close(); }
     }
+    const input = join(work, '\uFFFD-input.json');
+    const output = join(work, '🦁-built.ylplugin');
+    writeFileSync(input, readFileSync(resource.file));
+    create(output, manifest, [{...resource, file: input}]);
+    const built = new Package(output);
+    try { built.validate(); assert.equal(JSON.parse(built.read('catalog.json')).total, 42); }
+    finally { built.close(); }
+    assert.throws(() => new Package(join(work, '\uFFFD-missing.ylplugin')), code(5));
   } finally { rmSync(work, {recursive: true, force: true}); }
 });

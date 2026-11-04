@@ -29,6 +29,9 @@ Container resource names follow the portable-path rules in the specification;
 filesystem paths are UTF-8 and cannot contain NUL. Node 0.1.3 also rejects lone
 UTF-16 surrogates before encoding a file-open path. Valid paired Unicode and
 actual U+FFFD characters are allowed in filesystem paths.
+Core file-open error messages use UTF-8 as well, so valid Unicode paths do not
+depend on the Windows local code page. A missing valid Unicode filename reports
+I/O code 5 rather than a character conversion failure.
 
 Slice offsets/counts must be nonnegative integers within the resource. JS callers
 must use bigint for integers outside the safe number range. Read slices require
