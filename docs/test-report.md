@@ -129,3 +129,33 @@ successful runs; deterministic example comparisons now pass on Windows too.
 These results verify build, test, install and packaging behavior. Secret presence
 does not validate registry-side ownership or token permissions. No npm, PyPI or
 Central version was uploaded, and the published v0.1.0 release remains unchanged.
+
+## 0.1.2 license and publication verification — 2026-11-04
+
+The LGPL-3.0-only implementation commit is
+`81b1fa257ca7085f41180d2f2b08934a852c1940`, authored and committed as Cavanshirpro.
+GitHub's license API identifies the root LICENSE as LGPL-3.0.
+
+* [Core CI 41709787677](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41709787677):
+  all seven jobs passed, including sanitizers, fuzzing and source/Python-facade packaging.
+* [Language CI 41709787678](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41709787678):
+  five platform builds and aggregate packaging passed. Actual npm/wheel/JAR/POM
+  contents were checked for LGPL metadata, full license texts and project source archives.
+* Local verification passed nine static-core CTests, four Node tests, TS ESM/CJS
+  declarations, 19 Java/JNI checks, Kotlin checks, seven registry gates and schema checks.
+  The local wheel/npm tarball and all nine Maven JARs contained the license texts
+  and project source archive; all three POMs declared LGPLv3.
+
+Completed publication workflows:
+
+| Destination | Successful run |
+|---|---|
+| GitHub v0.1.2 | [41711388362](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711388362) |
+| npm | [41711646655](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711646655) |
+| PyPI, five platform wheels | [41711655711](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711655711) |
+| Maven Central, three artifacts | [41711661036](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711661036) |
+
+Public npm and PyPI metadata were checked for version 0.1.2 and LGPL-3.0-only;
+the three published Maven POM license declarations were checked independently.
+Earlier 0.1.1 uploads also completed successfully before the owner selected LGPLv3;
+their historical metadata remains immutable. Current distributions carry the selected license.

@@ -10,8 +10,32 @@ integrity and compatibility behavior always comes from the same core.
 | `xyz.younglion:ylplugin-natives` | JNI binaries and dependency notices |
 
 Version 0.1.2 applies LGPL-3.0-only to all three publications. JARs include the
-license texts, source archives and dependency notices. Central publication is a
-separate manual workflow; Gradle staging by itself is not an upload.
+license texts, source archives and dependency notices. All three are published on
+[Maven Central](https://central.sonatype.com/artifact/xyz.younglion/ylplugin/0.1.2).
+
+## Install
+
+Use Maven Central in your Gradle repositories:
+
+```kotlin
+repositories { mavenCentral() }
+dependencies {
+    implementation("xyz.younglion:ylplugin:0.1.2")
+}
+```
+
+Kotlin applications can select the wrapper, which also brings in the Java API:
+
+```kotlin
+dependencies {
+    implementation("xyz.younglion:ylplugin-kotlin:0.1.2")
+}
+```
+
+The native runtime JAR is a transitive runtime dependency. See
+[compatibility](../docs/compatibility.md) for the packaged platforms.
+
+## Build and verify from source
 
 ```sh
 gradle -p jvm :java:smokeTest :kotlin:smokeTest -Dylplugin.native.path=/absolute/path/libylplugin_jni.so --no-daemon

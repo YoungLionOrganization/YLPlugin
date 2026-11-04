@@ -65,3 +65,12 @@ does not silently overwrite remote versions. Central validation errors retain a
 deployment identifier for investigation. The initial implementation only built
 distributions; registry publication was subsequently authorized and dispatched
 for 0.1.1. Future versions still require an explicit publication action.
+
+## Completed 0.1.2 publication
+
+The owner-selected LGPL-3.0-only patch was published from commit
+`81b1fa257ca7085f41180d2f2b08934a852c1940`. Core run `41709787677` and language
+run `41709787678` passed. Publication succeeded in GitHub run `41711388362`,
+npm run `41711646655`, PyPI run `41711655711` and Central run `41711661036`.
+Public npm/PyPI metadata and all three Central POMs expose the selected LGPLv3 license.
+This records completed uploads; subsequent versions still use the manual pipeline.

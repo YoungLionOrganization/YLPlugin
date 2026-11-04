@@ -1,8 +1,9 @@
 # JavaScript and TypeScript SDK
 
-Package: `@younglionorganization/ylplugin`. Version 0.1.1 was accepted by npm through
-the [publishing workflow](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41708369276).
-New packages can take a few minutes to become visible while npm processes them.
+Package: `@younglionorganization/ylplugin`. Version 0.1.2 is published on
+[npm](https://www.npmjs.com/package/@younglionorganization/ylplugin) under LGPL-3.0-only.
+The [publishing workflow](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711646655)
+consumed verified CI artifacts without rebuilding them.
 
 Node 20+ is the supported runtime. ESM and CommonJS share one implementation and
 ship declarations for both module systems. Browser execution is not provided:

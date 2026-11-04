@@ -6,8 +6,9 @@
 [![PyPI version](https://img.shields.io/pypi/v/ylplugin)](https://pypi.org/project/ylplugin/)
 [![PyPI distributions](https://img.shields.io/pypi/format/ylplugin)](https://pypi.org/project/ylplugin/#files)
 [![npm version](https://img.shields.io/npm/v/%40younglionorganization%2Fylplugin)](https://www.npmjs.com/package/@younglionorganization/ylplugin)
+[![Maven Central](https://img.shields.io/maven-central/v/xyz.younglion/ylplugin)](https://central.sonatype.com/artifact/xyz.younglion/ylplugin)
 [![Format: 1.0](https://img.shields.io/badge/format-1.0-orange.svg)](docs/specification.md)
-[![C11 ABI](https://img.shields.io/badge/C%20ABI-C11-555555.svg)](docs/c-api.md)
+[![C11 ABI](https://img.shields.io/badge/C%20ABI-C11-555555.svg)](docs/api.md#c-abi)
 [![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)](docs/building.md)
 [![JavaScript / TypeScript](https://img.shields.io/badge/JavaScript%20%2F%20TypeScript-Node.js%2020%2B-3178C6?logo=typescript&logoColor=white)](docs/javascript-api.md)
 [![Java / Kotlin](https://img.shields.io/badge/Java%20%2F%20Kotlin-JVM%2011%2B-7F52FF?logo=kotlin&logoColor=white)](docs/java-api.md)
@@ -15,14 +16,18 @@
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Windows-555)](docs/compatibility.md)
 [![License: LGPLv3](https://img.shields.io/badge/license-LGPLv3-blue.svg)](LICENSE)
 
+**One plugin container. A shared native core. SDKs for your host language.**
+
+[Documentation](docs/index.md) · [Examples](docs/examples.md) · [Downloads](https://github.com/YoungLionOrganization/YLPlugin/releases/latest) · [License](LICENSE)
+
 A standalone plugin container and native SDK for applications that need to
 inspect, validate, build and select components before executing them. A
 `.ylplugin` has its own indexed binary format and embeds the existing YLSpec
 metadata frame. It is not a renamed ZIP and does not require YLPkg or LeoMiniGames.
 
-**Version: 0.1.2.** See [GitHub releases](https://github.com/YoungLionOrganization/YLPlugin/releases)
-for verified downloads. npm, Maven Central and PyPI publication uses the separate
-manual registry workflow described in [publishing](docs/publishing.md).
+**Latest release: [v0.1.2](https://github.com/YoungLionOrganization/YLPlugin/releases/tag/v0.1.2), LGPLv3.**
+Available on GitHub Releases, npm, PyPI and Maven Central. Published native SDKs
+cover Linux x86_64/ARM64, macOS x86_64/ARM64 and Windows x86_64.
 No stable ABI or production security audit is claimed during 0.x.
 
 ## Choose an SDK
@@ -30,10 +35,10 @@ No stable ABI or production security audit is claimed during 0.x.
 | SDK | Implementation | Package / build |
 |---|---|---|
 | C / C++20 | Public C ABI and RAII handle | `YLPlugin::ylplugin`, [build instructions](docs/building.md) |
-| JavaScript / TypeScript | Node-API over the same native core; ESM/CJS and declarations | `@younglionorganization/ylplugin`, [API](docs/javascript-api.md) |
-| Java 11+ | JNI, `AutoCloseable`, structured maps/lists | `xyz.younglion:ylplugin`, [API](docs/java-api.md) |
-| Kotlin / JVM 11+ | Idiomatic `use` helpers over the Java/JNI library | `xyz.younglion:ylplugin-kotlin`, [API](docs/kotlin-api.md) |
-| Python 3.11+ | Typed ctypes facade; native runtime in platform wheels | `ylplugin`, [API](docs/python-api.md) |
+| JavaScript / TypeScript | Node-API over the same native core; ESM/CJS and declarations | [npm](https://www.npmjs.com/package/@younglionorganization/ylplugin), [API](docs/javascript-api.md) |
+| Java 11+ | JNI, `AutoCloseable`, structured maps/lists | [Maven Central](https://central.sonatype.com/artifact/xyz.younglion/ylplugin), [API](docs/java-api.md) |
+| Kotlin / JVM 11+ | Idiomatic `use` helpers over the Java/JNI library | [Maven Central](https://central.sonatype.com/artifact/xyz.younglion/ylplugin-kotlin), [API](docs/kotlin-api.md) |
+| Python 3.11+ | Typed ctypes facade; native runtime in platform wheels | [PyPI](https://pypi.org/project/ylplugin/), [API](docs/python-api.md) |
 
 The npm package and JVM native JAR collect only binaries built and tested by the
 language CI matrix. Python wheels are tagged for their actual platform. Source
@@ -161,7 +166,22 @@ Secure Windows extraction, mobile device validation and an independent release
 security audit remain open. SDK installation, SDK-native library loading and
 plugin activation are separate operations. See [security](docs/security.md).
 
-## Documentation and publication
+## Release verification
+
+Version 0.1.2 was built from `81b1fa257ca7085f41180d2f2b08934a852c1940`.
+[Core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41709787677)
+passed seven jobs, including desktop tests, sanitizers, fuzzing and packaging.
+[Language SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41709787678)
+passed all five platform builds and aggregate packaging, including checks of the
+actual license texts, source archives and package metadata.
+
+Publication succeeded for [GitHub Releases](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711388362),
+[npm](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711646655),
+[PyPI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711655711)
+and [Maven Central](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711661036).
+See the [test report](docs/test-report.md) for executed checks and platform limits.
+
+## Documentation
 
 Start with [the documentation guide](docs/index.md), [examples](docs/examples.md),
 [CLI reference](docs/cli.md) or [the normative format](docs/specification.md).
