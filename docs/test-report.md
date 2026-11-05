@@ -221,8 +221,11 @@ copyable authoring tutorial was executed through native CLI create, validation,
 preflight and a Python resource read; its host was SUPPORTED and total was 42.
 Relative documentation links and Python syntax checks passed.
 
-Live Wiki publication remains dependent on an initialized/accessibly authorized
-`YLPlugin.wiki.git` repository. Wiki feature enablement has been confirmed, but
-the initial clone returned Repository not found. About/topics administration
-calls returned HTTP 403. Source/export validation is not reported as successful
-live Wiki publication.
+After the owner enabled Wikis and saved the initial Home page, live publication
+to `YLPlugin.wiki.git` succeeded. Wiki commit
+`fbb592340946f11148f56edccb035dc09e80d816` contains all 23 rendered Markdown files,
+LICENSE/COPYING and the source manifest for
+`187ff9d2f24db82f63bc1f2859fd47f140ec52a9`. A fresh remote clone independently
+matched every page/license SHA256 and confirmed Cavanshirpro attribution.
+About/topics administration calls remain a separate HTTP 403 limitation; Wiki
+publication success does not imply that repository settings were changed.

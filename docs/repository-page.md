@@ -6,8 +6,8 @@ description, website and topics need repository administration permission.
 The current integration returned `403 Resource not accessible by integration`
 for both repository metadata and topic updates. Its repository-content access
 does not include GitHub administration operations, even when the account itself
-is an administrator. Wikis have now been enabled by the owner; a first saved
-Home page is needed before the Wiki Git repository can be initialized/accessed.
+is an administrator. The owner enabled Wikis and initialized Home; the detailed
+English Wiki has now been published and its remote content verified.
 
 The configured sponsorship destination is Patreon `YoungLionOrganization` in
 `.github/FUNDING.yml`; it is preserved and linked from the README/Wiki.
@@ -34,7 +34,7 @@ ylplugin plugin-system plugin-framework binary-format cpp20 c javascript typescr
 ```
 
 These settings do not enable GitHub Pages or change repository visibility.
-Use the documentation index as the website until the Wiki pages are published.
+The Wiki is now available as the repository website destination.
 Machine-readable settings are in [repository-settings.json](repository-settings.json)
 and [repository-topics.json](repository-topics.json). With an independently
 authorized administrator's GitHub CLI connection, these are equivalent to the

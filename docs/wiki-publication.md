@@ -5,6 +5,15 @@ with the SDK documentation and can be read in the main repository before or
 independently of GitHub Wiki publication. Home, topic pages, sidebar and footer
 are maintained together; the normative format/profile documents remain canonical.
 
+## Published Wiki
+
+The [English Wiki is live](https://github.com/YoungLionOrganization/YLPlugin/wiki).
+The first full publication contains 23 Markdown files (21 topic pages, sidebar
+and footer), plus LGPL/GPL license texts and a source manifest. Wiki commit
+`fbb592340946f11148f56edccb035dc09e80d816` was authored as Cavanshirpro from source
+commit `187ff9d2f24db82f63bc1f2859fd47f140ec52a9`. A fresh remote clone verified
+every page/license hash against the publication manifest.
+
 ## Check and preview
 
 ```sh

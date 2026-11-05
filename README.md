@@ -21,8 +21,11 @@
 
 [Documentation](docs/index.md) · [Examples](docs/examples.md) · [Downloads](https://github.com/YoungLionOrganization/YLPlugin/releases/latest) · [License](LICENSE)
 
-[English Wiki pages](docs/wiki/Home.md) · [Getting started](docs/getting-started.md) ·
+[English Wiki](https://github.com/YoungLionOrganization/YLPlugin/wiki) · [Getting started](docs/getting-started.md) ·
 [Author a plugin](docs/plugin-authoring.md) · [Host integration](docs/host-integration.md)
+
+The Wiki contains 21 detailed topic pages, a sidebar and a footer; its
+[versioned English sources](docs/wiki/Home.md) are maintained with the repository.
 
 A standalone plugin container and native SDK for applications that need to
 inspect, validate, build and select components before executing them. A

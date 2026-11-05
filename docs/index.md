@@ -7,9 +7,10 @@
 * Host developer: [host integration](host-integration.md), preflight, runtime and security contracts.
 * Maintainer: contributing, verification, publishing and [Wiki maintenance](wiki-publication.md).
 
-The [detailed English Wiki](wiki/Home.md) covers these workflows as an organized
+The [published English Wiki](https://github.com/YoungLionOrganization/YLPlugin/wiki) covers these workflows as an organized
 handbook with language guides, a CLI cookbook, crypto, runtime, performance,
-troubleshooting, licensing and community pages. [FAQ](faq.md) answers common scope questions.
+troubleshooting, licensing and community pages. [Versioned Wiki sources](wiki/Home.md)
+remain browsable in the repository. [FAQ](faq.md) answers common scope questions.
 
 ## Reference map
 
