@@ -159,3 +159,44 @@ Public npm and PyPI metadata were checked for version 0.1.2 and LGPL-3.0-only;
 the three published Maven POM license declarations were checked independently.
 Earlier 0.1.1 uploads also completed successfully before the owner selected LGPLv3;
 their historical metadata remains immutable. Current distributions carry the selected license.
+
+## 0.1.3 development verification — 2026-11-04
+
+Implementation commit: `cca0c717309857d2223421e547b29bd4a077527e`.
+Version 0.1.3 is unreleased; the published packages remain 0.1.2.
+
+Local verification passed 11 ASan/UBSan CTests (including RCC/QML), nine
+static-core CTests, five Node tests, TypeScript ESM/CommonJS checks, 19 Java/JNI
+checks, Kotlin lifecycle/resource checks, seven offline registry gates, schema
+checks and version/license checks. Touching VERSION caused Ninja to rerun CMake
+configuration without an explicit configure command.
+
+The Node wrong-file-open bug was reproduced on the 0.1.2 native addon: a lone
+UTF-16 surrogate opened an existing U+FFFD filename. The new regression rejects
+that path with code 3 and retains valid Unicode paths. Windows testing also
+exposed eager local-code-page conversion in core file diagnostics; those now
+use UTF-8 only when reporting an I/O failure. Regressions cover Unicode input/
+output package names and a missing Unicode filename returning I/O code 5. Core regressions check
+full-resource hashing, rejection of tail/out-of-slice corruption, bounded reader
+requests, empty-resource cancellation and cancellation after the final callback.
+
+The isolated 32 MiB, seven-sample warm-cache comparison measured 40.85 → 28.88 ms
+median validation and 50.02 → 18.60 MiB whole-process peak RSS. This is one Linux
+Release-build workload; [performance methodology and raw samples](performance.md)
+describe the exact scope. It is not a cross-platform speed guarantee.
+
+Remote verification for the implementation commit above completed successfully:
+
+| Workflow | Result |
+|---|---|
+| [Core CI 41889748794](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794) | All seven jobs passed: desktop builds, sanitizers, fuzzing and packaging |
+| [Language CI 41889749475](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475) | All six jobs passed: five platform builds and aggregate packaging |
+
+The Windows SDK job passed the lone-surrogate/valid-Unicode filesystem regression,
+all five Node tests, 19 Java/JNI checks, Kotlin checks and installed-wheel runtime
+autodiscovery. Linux x86_64/ARM64 and macOS x86_64/ARM64 SDK jobs also passed.
+Native plugin activation remains intentionally unsupported on Windows because
+secure extraction is not implemented; SDK Unicode filesystem tests do execute there.
+
+No 0.1.3 tag, GitHub Release or registry version was published. Its CI artifacts
+are development build outputs. The latest published version remains 0.1.2.

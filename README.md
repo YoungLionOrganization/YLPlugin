@@ -36,6 +36,10 @@ See the [changelog](CHANGELOG.md), [performance guide](docs/performance.md) and
 [troubleshooting](docs/troubleshooting.md). Installation commands below use the
 published 0.1.2 packages; 0.1.3 has not been released.
 
+Development verification passed: [core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794)
+and [five-platform SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475).
+See [executed checks](docs/test-report.md) for results and platform limits.
+
 ## Choose an SDK
 
 | SDK | Implementation | Package / build |
