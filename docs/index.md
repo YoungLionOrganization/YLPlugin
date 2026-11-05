@@ -1,5 +1,18 @@
 # Documentation guide
 
+## Reading paths
+
+* First use: [getting started](getting-started.md), then the SDK guide for your language.
+* Plugin author: [authoring tutorial](plugin-authoring.md), profile and examples.
+* Host developer: [host integration](host-integration.md), preflight, runtime and security contracts.
+* Maintainer: contributing, verification, publishing and [Wiki maintenance](wiki-publication.md).
+
+The [detailed English Wiki](wiki/Home.md) covers these workflows as an organized
+handbook with language guides, a CLI cookbook, crypto, runtime, performance,
+troubleshooting, licensing and community pages. [FAQ](faq.md) answers common scope questions.
+
+## Reference map
+
 Start with the SDK for your host language, then use preflight and explicit host
 policy before selecting a runtime. Packaging a component and authorizing it to
 execute are separate decisions.

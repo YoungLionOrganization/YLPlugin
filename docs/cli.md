@@ -1,9 +1,13 @@
-# CLI reference (0.1.0)
+# CLI reference
 
 All listed commands are implemented. None starts plugin code. Use `--json` for
 compact machine-readable JSON; default output is indented JSON. Metadata is
 returned as public TOML inside the inspect report. No command publishes, installs
 components, grants permissions or contacts a network service.
+
+For a step-by-step workflow see the [English Wiki cookbook](wiki/CLI-Cookbook.md)
+and [plugin authoring guide](plugin-authoring.md). Native SDK error statuses
+and these CLI process exit codes are different interfaces.
 
 ```sh
 ylplugin --version

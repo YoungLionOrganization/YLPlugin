@@ -15,10 +15,14 @@
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](docs/python-api.md)
 [![Platforms](https://img.shields.io/badge/platforms-Linux%20%7C%20macOS%20%7C%20Windows-555)](docs/compatibility.md)
 [![License: LGPLv3](https://img.shields.io/badge/license-LGPLv3-blue.svg)](LICENSE)
+[![Support on Patreon](https://img.shields.io/badge/Support-Patreon-FF424D?logo=patreon&logoColor=white)](https://www.patreon.com/YoungLionOrganization)
 
 **One plugin container. A shared native core. SDKs for your host language.**
 
 [Documentation](docs/index.md) · [Examples](docs/examples.md) · [Downloads](https://github.com/YoungLionOrganization/YLPlugin/releases/latest) · [License](LICENSE)
+
+[English Wiki pages](docs/wiki/Home.md) · [Getting started](docs/getting-started.md) ·
+[Author a plugin](docs/plugin-authoring.md) · [Host integration](docs/host-integration.md)
 
 A standalone plugin container and native SDK for applications that need to
 inspect, validate, build and select components before executing them. A
@@ -208,3 +212,6 @@ Maintained by [Cavanshirpro](https://github.com/Cavanshirpro) under
 [YoungLionOrganization](https://github.com/YoungLionOrganization).
 
 For bug reports and development verification, see [contributing](CONTRIBUTING.md).
+
+Support development through the repository's configured
+[YoungLionOrganization Patreon](https://www.patreon.com/YoungLionOrganization).

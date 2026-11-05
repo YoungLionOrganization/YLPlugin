@@ -8,7 +8,7 @@
   a filename containing the Unicode replacement character. Valid Unicode paths remain supported.
 * Core file-open diagnostics use UTF-8 instead of the Windows local code page;
   opening/building valid Unicode paths no longer fails while preparing an error message.
-* C++/Node/JVM slice reads honor cancellation on empty resources and after the
+* C++/Node slice reads honor cancellation on empty resources and after the
   final reader callback. Validation checks cancellation before metadata work.
 * Existing CMake build directories reconfigure when `VERSION` changes, keeping
   native runtime versions synchronized with language package metadata.

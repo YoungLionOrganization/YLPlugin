@@ -55,9 +55,10 @@ is a separate operation using an explicit trust provider.
 
 Callbacks are cooperative and synchronous. Return true/nonzero to cancel, and
 make custom blocking readers cooperate with the host's cancellation mechanism.
-From 0.1.3, C++/Node/JVM slices check cancellation before any work and after the
-last reader callback, including empty resources. The C ABI's slice function has
-no cancellation argument; C/Python callers can cancel full validation/read operations.
+From 0.1.3, C++/Node slices check cancellation before any work and after the
+last reader callback, including empty resources. C ABI/Python/JVM slice convenience
+methods have no cancellation argument; use their full validation/read interfaces
+where cancellation is exposed.
 
 ## Preflight rejects activation
 
