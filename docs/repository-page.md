@@ -12,7 +12,15 @@ English Wiki has now been published and its remote content verified.
 The configured sponsorship destination is Patreon `YoungLionOrganization` in
 `.github/FUNDING.yml`; it is preserved and linked from the README/Wiki.
 
-To apply the prepared settings, open the gear next to **About** on
+## Verified current state
+
+The owner applied the prepared About settings through GitHub's UI. Repository
+readback confirmed the description below, the published Wiki website URL and all
+15 proposed topics. The Wiki is enabled and its 23 Markdown files are published.
+The managed integration's administration restriction remains a tool limitation,
+not an outstanding repository setup task.
+
+To maintain these settings later, open the gear next to **About** on
 https://github.com/YoungLionOrganization/YLPlugin and save these values.
 
 ## Description

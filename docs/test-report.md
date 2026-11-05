@@ -227,5 +227,9 @@ to `YLPlugin.wiki.git` succeeded. Wiki commit
 LICENSE/COPYING and the source manifest for
 `187ff9d2f24db82f63bc1f2859fd47f140ec52a9`. A fresh remote clone independently
 matched every page/license SHA256 and confirmed Cavanshirpro attribution.
-About/topics administration calls remain a separate HTTP 403 limitation; Wiki
-publication success does not imply that repository settings were changed.
+About/topics administration calls returned HTTP 403 through the managed
+integration. The owner then applied the prepared settings through GitHub's UI.
+Fresh repository readback independently matched the proposed description,
+published Wiki homepage and all 15 topics. Funding still points to the owner's
+Patreon configuration. Repository setup and live Wiki publication are complete;
+the integration's administration restriction is retained as a capability note.
