@@ -200,3 +200,29 @@ secure extraction is not implemented; SDK Unicode filesystem tests do execute th
 
 No 0.1.3 tag, GitHub Release or registry version was published. Its CI artifacts
 are development build outputs. The latest published version remains 0.1.2.
+
+## English Wiki and documentation verification — 2026-11-05
+
+The documentation expansion adds getting-started, authoring, host-integration
+and FAQ guides plus 23 English Wiki Markdown files (21 topic pages, sidebar and
+footer), totaling approximately 8,200 words. Funding links use the owner's
+existing Patreon configuration; the Funding commit was preserved.
+
+Six offline Wiki-tool tests passed. They cover complete source/navigation link
+resolution, Wiki/repository URL conversion, anchors/external URLs, fenced/inline
+code preservation, invalid-link/fence rejection and actual local Git publication.
+The Git integration test verifies preservation of unrelated owner pages/assets,
+license text copying, source revision recording, Cavanshirpro attribution and
+idempotent publication without an empty commit. It uses a temporary local bare
+repository and does not publish to GitHub.
+
+The exported page/license SHA256 values were checked against actual bytes. The
+copyable authoring tutorial was executed through native CLI create, validation,
+preflight and a Python resource read; its host was SUPPORTED and total was 42.
+Relative documentation links and Python syntax checks passed.
+
+Live Wiki publication remains dependent on an initialized/accessibly authorized
+`YLPlugin.wiki.git` repository. Wiki feature enablement has been confirmed, but
+the initial clone returned Repository not found. About/topics administration
+calls returned HTTP 403. Source/export validation is not reported as successful
+live Wiki publication.

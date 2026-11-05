@@ -127,7 +127,12 @@ def main():
         (args.output / 'wiki-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8', newline='\n')
     print(f'Validated {len(pages)} English Wiki Markdown files (including navigation)')
     if args.publish:
-        publish(pages, manifest)
+        try:
+            publish(pages, manifest)
+        except subprocess.CalledProcessError as error:
+            parser.exit(1, 'Wiki Git operation failed. Confirm Wikis are enabled, an initial Home page '
+                        'has been saved, and the current Git connection can access the separate Wiki repository.\n'
+                        f'Git exited with status {error.returncode}; no force push was attempted.\n')
 
 
 if __name__ == '__main__':

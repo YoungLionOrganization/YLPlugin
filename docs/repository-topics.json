@@ -1,0 +1,7 @@
+{
+  "names": [
+    "ylplugin", "ylspec", "plugin-system", "plugin-framework", "binary-format",
+    "cpp20", "c", "javascript", "typescript", "java", "kotlin", "python",
+    "qt6", "native-sdk", "lgplv3"
+  ]
+}

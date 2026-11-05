@@ -1,0 +1,5 @@
+{
+  "description": "Portable .ylplugin containers and native C++20/C, JavaScript/TypeScript, Java/Kotlin and Python SDKs. Integrity, signing, encryption, host preflight and optional Qt RCC. LGPLv3.",
+  "homepage": "https://github.com/YoungLionOrganization/YLPlugin/wiki",
+  "has_wiki": true
+}
