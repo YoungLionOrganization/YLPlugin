@@ -72,11 +72,19 @@ no automatic Python execution adapter, Android AAR, installer or dependency solv
 
 ## Evidence and document status
 
-The final 0.1.3 implementation commit is
-`cca0c717309857d2223421e547b29bd4a077527e`. Its
+Metadata discovery and bundled CLI implementation:
+`e1b2ed7a8638e825cbdb9989c342276703405f36`. Its
+[five-platform SDK and packaging CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664789)
+passed all six jobs, including fresh wheel installs and actual npm/JVM package
+checks. The [core workflow](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664950)
+passed all seven jobs: four desktop platforms, sanitizers, fuzz and source-asset
+packaging. Together the workflows passed all thirteen jobs.
+
+Earlier performance and Unicode work at
+`cca0c717309857d2223421e547b29bd4a077527e` passed all thirteen jobs across
 [core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794)
-and [five-platform SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475)
-passed all thirteen jobs. No 0.1.3 release was published.
+and [SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475).
+No 0.1.3 release has been published.
 
 The Wiki is an explanatory guide. [The specification](../specification.md) and
 [profile](../profile.md) define the normative byte/metadata contract. Versioned

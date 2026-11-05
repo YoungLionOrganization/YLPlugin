@@ -1,6 +1,21 @@
 # Executed verification history
 
-## 0.1.3 metadata discovery and bundled CLI — 2026-11-05
+## 0.1.3 metadata discovery and bundled CLI — 2026-11-06 (Asia/Baku)
+
+Implementation commit: `e1b2ed7a8638e825cbdb9989c342276703405f36`.
+[SDK workflow 42125664789](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664789)
+passed all six jobs: Linux x86_64/ARM64, macOS x86_64/ARM64, Windows x86_64 and
+aggregate packaging. Each platform installed its actual wheel and ran the core,
+console command, module command, metadata and validation without SDK selectors.
+The aggregate job installed the npm archive, ran Java/Kotlin with the bundled
+native JAR, checked licensing/source payloads and passed Twine for all five wheels.
+[Core workflow 42125664950](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664950)
+also passed all seven jobs, including all four desktop platforms, sanitizers,
+fuzz and release-asset packaging. Two Ubuntu dependency installs downloaded Qt
+packages unusually slowly; those jobs were retried without changing the source.
+All thirteen final job results are successful.
+
+This is verified build output, not a registry release.
 
 Local Linux x86_64 checks for the development additions:
 

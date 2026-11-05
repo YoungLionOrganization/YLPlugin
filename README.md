@@ -44,8 +44,8 @@ See the [changelog](CHANGELOG.md), [performance guide](docs/performance.md) and
 [troubleshooting](docs/troubleshooting.md). Installation commands below use the
 published 0.1.2 packages; 0.1.3 has not been released.
 
-Earlier 0.1.3 performance/Unicode verification passed: [core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794)
-and [five-platform SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475).
+Development verification passed: [all seven core CI jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664950)
+and [all six SDK/platform packaging jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664789).
 See [executed checks](docs/test-report.md) for results and platform limits.
 
 ## Discover plugins by reading only their YLSpec metadata
