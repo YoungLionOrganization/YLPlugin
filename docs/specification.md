@@ -1,5 +1,14 @@
 # YLPlugin container 1.0 (experimental draft)
 
+## Direct YLSpec discovery
+
+The existing format layout supports reading only the 128-byte header and the
+YLSpec frame located at offset 128. SDK 0.1.3 adds dedicated operations that use
+this layout without parsing the table of contents or reading payload/signature
+regions. This is an additive SDK feature; the container format and profile stay
+at 1.0. See [metadata-only reads](metadata-only.md) for exact read scope, limits,
+all language entry points and trust boundaries.
+
 Normative language: English. MUST, MUST NOT and SHOULD are requirements.
 This draft is implemented by library 0.1.0; it is not a stable or audited release.
 The container, YLSpec frame, plugin profile, SDK ABI, runtime ABI and host API

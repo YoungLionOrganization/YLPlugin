@@ -12,3 +12,6 @@ import java.nio.charset.StandardCharsets
 fun <T> openPlugin(path: Path, block: (Plugin) -> T): T = YLPlugin.open(path.toString()).use(block)
 fun Plugin.readText(resource: String): String = String(read(resource), StandardCharsets.UTF_8)
 fun Plugin.isSupported(host: Map<String, Any>): Boolean = check(host)["status"] == "SUPPORTED"
+
+/** Read only the header and public YLSpec frame; no TOC, payload or signature validation. */
+fun readMetadata(path: Path): String = YLPlugin.readMetadata(path.toString())

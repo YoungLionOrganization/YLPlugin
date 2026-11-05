@@ -29,6 +29,8 @@ export class Package {
   extract(destination: string, paths?: string[], options?: Options): void;
 }
 export function create(output: string, manifest: string, resources: Input[], options?: Options): void;
+/** Header + YLSpec only; unverified discovery. */
+export function readMetadata(path: string, limits?: Limits): string;
 export function sign(input: string, output: string, keyId: string, privatePem: Uint8Array, options?: Options): void;
 export const version: string;
 }

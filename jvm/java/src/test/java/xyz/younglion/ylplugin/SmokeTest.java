@@ -25,8 +25,17 @@ public final class SmokeTest {
         Map<String,Object> resource = Map.of("path", "catalog.json", "file", root.resolve("examples/data/catalog.json").toString(), "media", "application/json");
         Map<String,Object> host = Map.of("id", "xyz.example.data-viewer", "api", "1.0", "os", "linux", "arch", "x86_64", "runtimes", Map.of("data", "1.0"), "memory", 67108864);
         try {
+            if (System.getProperty("ylplugin.native.path", "").isEmpty()) check(Cli.run("validate", fixture) == 0);
             check(YLPlugin.version().equals(YLPlugin.VERSION));
             try (Plugin p = YLPlugin.open(fixture)) {
+                check(YLPlugin.readMetadata(fixture).equals(p.metadata()));
+                rejected(() -> YLPlugin.readMetadata(fixture, Map.of("metadata", 1)), 4);
+                byte[] broken = Files.readAllBytes(Path.of(fixture));
+                int toc = (int)java.nio.ByteBuffer.wrap(broken).order(java.nio.ByteOrder.LITTLE_ENDIAN).getLong(48);
+                broken[toc] ^= (byte)128;
+                Path corrupt = work.resolve("broken-toc"); Files.write(corrupt, broken);
+                check(YLPlugin.readMetadata(corrupt.toString()).equals(p.metadata()));
+                rejected(() -> YLPlugin.open(corrupt.toString()), 1);
                 p.validate(); check(new String(p.read("catalog.json"), StandardCharsets.UTF_8).contains("42"));
                 Map<String,Object> permission = (Map<String,Object>)p.targets().get(1).get("required_permissions");
                 check(permission.get("value").equals(Long.MAX_VALUE));

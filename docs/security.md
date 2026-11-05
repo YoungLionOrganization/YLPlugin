@@ -1,5 +1,14 @@
 # Security architecture and limits
 
+## Metadata-only discovery (0.1.3 development)
+
+Standalone [metadata discovery](metadata-only.md) reads only the header and public
+YLSpec frame. It intentionally skips TOC/profile/resource validation and signatures.
+Successful discovery may coexist with a corrupt payload/index or forged publisher
+claims. Treat its text as unverified input and apply host trust and activation
+policy separately. The metadata byte limit and native parser limits still apply.
+
+
 Untrusted container bytes are data. Parsing, metadata inspection, profile
 validation and preflight never load plugin code. The trust boundaries are:
 

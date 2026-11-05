@@ -12,7 +12,22 @@ from ylplugin import Library, Limits, Error
 
 sdk = Library(sys.argv[1])
 fixture = root / "examples/artifacts/data.ylplugin"
+header_frame = bytearray(fixture.read_bytes())
+frame_end = 128 + int.from_bytes(header_frame[40:48], "little")
+virtual_size = 5 * 1024**3
+header_frame[24:32] = virtual_size.to_bytes(8, "little")
+ranges = []
+def range_reader(offset, count):
+    assert offset + count <= frame_end
+    ranges.append((offset, count))
+    return bytes(header_frame[offset:offset+count])
+assert sdk.read_metadata_reader(virtual_size, range_reader) == sdk.read_metadata(fixture)
+assert sum(count for _, count in ranges) == frame_end
+try: sdk.read_metadata_reader(virtual_size, lambda offset, count: b'')
+except ValueError as error: assert 'exactly' in str(error)
+else: raise AssertionError("short callback result accepted")
 with sdk.open(fixture) as package:
+    assert sdk.read_metadata(fixture) == package.metadata
     assert package.targets[1]["required_permissions"]["value"] == 2**63 - 1
     assert package.permission_bytes(0, optional=True) == bytes([37,8,255,0])
     for value in (-1, True, 1.5, 2**64):
@@ -36,6 +51,16 @@ with sdk.open(root / "tests/vectors/unsupported-profile.ylplugin") as package:
     except Error as error: assert error.code == 2
     else: raise AssertionError("profile error hidden")
 with tempfile.TemporaryDirectory() as temporary:
+    broken = Path(temporary) / "broken-toc.ylplugin"
+    data = bytearray(fixture.read_bytes()); data[int.from_bytes(data[48:56], 'little')] ^= 128
+    broken.write_bytes(data)
+    assert sdk.read_metadata(broken) == sdk.read_metadata(fixture)
+    try: sdk.open(broken)
+    except Error: pass
+    else: raise AssertionError("full open accepted corrupt TOC")
+    try: sdk.read_metadata(fixture, Limits(metadata=1))
+    except Error as error: assert error.code == 4
+    else: raise AssertionError("metadata limit ignored")
     output = Path(temporary) / "encrypted"
     key = b'k' * 32
     sdk.create(output, (root / "examples/data/plugin.ylspec").read_text(), [{"path": "catalog.json", "file": str(root / "examples/data/catalog.json"), "key_id": "content"}], keys=lambda _: key)

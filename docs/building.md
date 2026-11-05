@@ -1,5 +1,9 @@
 # Building, testing and installing
 
+For **0.1.3 development**, see [metadata-only discovery](metadata-only.md)
+and [bundled core/CLI installation](installation-cli.md). These additions
+are absent from published 0.1.2.
+
 Requirements: CMake 3.26+, C11/C++20 compilers, YLSpec 0.1.2+, OpenSSL 3+, Zstd,
 nlohmann-json 3.11+, and threads. Python 3.11+ is needed for integration tests.
 QtCore 6.4+ is optional; the core, CLI, C/C++ SDK and Python SDK have no Qt

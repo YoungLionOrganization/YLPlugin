@@ -1,5 +1,17 @@
 # Java SDK
 
+## Metadata discovery and CLI (0.1.3 development)
+
+`YLPlugin.readMetadata(path)` and `readMetadata(path, limits)` return canonical
+TOML using only the header and YLSpec frame. Neither constructs a Plugin handle
+nor reads TOC, payload or signature data. See [metadata-only reads](metadata-only.md).
+
+`Cli.run(args...)` forwards arguments to the bundled native executable and returns
+its exit code. `xyz.younglion.ylplugin.Cli` is also a Java main class. The transitive
+native JAR supplies the core and CLI; Maven does not modify the system PATH.
+See [installation](installation-cli.md).
+
+
 Coordinates: `xyz.younglion:ylplugin` and runtime dependency
 `xyz.younglion:ylplugin-natives`, version 0.1.2, published on Maven Central. Java 11+ is the
 library baseline; CI runs smoke tests on JDK 17. This is a desktop JNI SDK,

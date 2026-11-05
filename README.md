@@ -24,7 +24,7 @@
 [English Wiki](https://github.com/YoungLionOrganization/YLPlugin/wiki) · [Getting started](docs/getting-started.md) ·
 [Author a plugin](docs/plugin-authoring.md) · [Host integration](docs/host-integration.md)
 
-The Wiki contains 21 detailed topic pages, a sidebar and a footer; its
+The Wiki contains 22 detailed topic pages, a sidebar and a footer; its
 [versioned English sources](docs/wiki/Home.md) are maintained with the repository.
 
 A standalone plugin container and native SDK for applications that need to
@@ -38,14 +38,41 @@ cover Linux x86_64/ARM64, macOS x86_64/ARM64 and Windows x86_64.
 No stable ABI or production security audit is claimed during 0.x.
 
 **In development: 0.1.3.** Work focuses on bounded-memory plaintext validation,
-cancellation fixes, strict Node Unicode paths and incremental build versioning.
+cancellation fixes, direct metadata-only reads, bundled CLI installation, strict
+Node Unicode paths and incremental build versioning.
 See the [changelog](CHANGELOG.md), [performance guide](docs/performance.md) and
 [troubleshooting](docs/troubleshooting.md). Installation commands below use the
 published 0.1.2 packages; 0.1.3 has not been released.
 
-Development verification passed: [core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794)
+Earlier 0.1.3 performance/Unicode verification passed: [core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794)
 and [five-platform SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475).
 See [executed checks](docs/test-report.md) for results and platform limits.
+
+## Discover plugins by reading only their YLSpec metadata
+
+**New in 0.1.3 development:** read the fixed container header and embedded YLSpec
+frame directly, without opening a Package, scanning its TOC or reading payloads.
+Discovery reads `128 + metadata_frame_length` bytes even for multi-gigabyte plugins.
+
+```python
+from ylplugin import Library
+metadata_toml = Library().read_metadata("package.ylplugin")
+```
+
+```sh
+ylplugin metadata package.ylplugin --json
+```
+
+The same native operation is available in C/C++, JavaScript/TypeScript and
+Java/Kotlin. Metadata contains unverified claims; integrity, signatures and host
+preflight are separate checks. See [exact read scope and API examples](docs/metadata-only.md).
+
+**Installation in 0.1.3:** Python platform wheels bundle the core and native CLI;
+pip registers `ylplugin` in the active environment. npm supplies the same CLI via
+its `bin` entry. Java/Kotlin resolve the core transitively and can invoke the
+bundled command through `xyz.younglion.ylplugin.Cli`. See
+[installation and PATH behavior](docs/installation-cli.md). These additions are
+not present in the currently published 0.1.2 packages.
 
 ## Choose an SDK
 

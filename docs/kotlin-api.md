@@ -1,5 +1,14 @@
 # Kotlin SDK
 
+## Metadata discovery and CLI (0.1.3 development)
+
+`xyz.younglion.ylplugin.kotlin.readMetadata(path: Path)` returns canonical TOML
+through Java/JNI. `YLPlugin.readMetadata(path, limits)` accepts explicit limits.
+Both read only the header and YLSpec frame. See [metadata-only reads](metadata-only.md).
+Use `xyz.younglion.ylplugin.Cli.run(...)` for the bundled native CLI; Gradle resolves
+the core transitively without changing the system PATH. See [installation](installation-cli.md).
+
+
 Coordinates: `xyz.younglion:ylplugin-kotlin`, version 0.1.2, published on Maven Central. The
 JVM target is 11 and the wrapper depends on Java/JNI. Kotlin adds `use` helpers,
 not another native interface or container parser.

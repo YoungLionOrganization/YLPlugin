@@ -10,6 +10,7 @@ fun main(args: Array<String>) {
     openPlugin(path) { plugin ->
         check(plugin.readText("catalog.json").contains("42"))
         check(plugin.targets()[1]["required_permissions"] is Map<*, *>)
+        check(readMetadata(path) == plugin.metadata())
         plugin.validate()
     }
     check(YLPlugin.version() == YLPlugin.VERSION)

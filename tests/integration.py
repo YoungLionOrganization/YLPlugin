@@ -19,7 +19,7 @@ checks = 0
 
 def run(*args, expected=0):
     global checks
-    result = subprocess.run([CLI, *map(str, args)], text=True, capture_output=True)
+    result = subprocess.run([CLI, *map(str, args)], text=True, encoding="utf-8", capture_output=True)
     assert result.returncode == expected, (args, result.returncode, result.stdout, result.stderr)
     checks += 1
     return result
@@ -47,6 +47,13 @@ with tempfile.TemporaryDirectory(prefix="ylplugin-integration-") as temporary:
     output = work / "converted.ylplugin"
     run("convert", fixture, "--manifest", ROOT / "examples/plugin.ylspec", "--output", output, "--json")
     run("validate", output, "--json")
+    discovery = json.loads(run("metadata", output, "--json").stdout)
+    assert discovery["scope"] == "metadata-only" and discovery["integrity_status"] == "UNVERIFIED"
+    assert run("metadata", output).stdout == library.read_metadata(output)
+    unicode_file = work / "Cavanşir-🦁.ylplugin"
+    unicode_file.write_bytes(output.read_bytes())
+    assert json.loads(run("metadata", unicode_file, "--json").stdout)["metadata"] == library.read_metadata(output)
+    run("validate", unicode_file, "--json")
     inspection = json.loads(run("inspect", output, "--json").stdout)
     assert inspection["signed"] is False and inspection["profile_status"] == "VALID"
     assert json.loads(run("list", output, "--json").stdout)[0]["path"] == "game.rcc"

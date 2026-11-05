@@ -59,6 +59,10 @@ typedef struct {
     const uint8_t *bytes; size_t byte_count;
 } ylp_permission;
 YLP_API const char *ylp_version(void);
+/* Discovery only: header + YLSpec frame; no TOC/payload/signature reads. */
+YLP_API ylp_status ylp_read_metadata(const char *path, const ylp_limits*, ylp_buffer *out, ylp_error*);
+YLP_API ylp_status ylp_read_metadata_reader(uint64_t size, ylp_read_at_fn, void *context,
+                                          const ylp_limits*, ylp_buffer *out, ylp_error*);
 YLP_API ylp_limits ylp_default_limits(void);
 YLP_API void ylp_buffer_free(ylp_buffer*);
 YLP_API ylp_status ylp_open(const char *path, const ylp_limits*, ylp_package **out, ylp_error*);

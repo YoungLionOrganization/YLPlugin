@@ -50,6 +50,14 @@ const ylp::Permission& permission(const ylp_package* p,size_t i,int optional) {
 }
 extern "C" {
 const char* ylp_version(void) { return YLPLUGIN_VERSION; }
+ylp_status ylp_read_metadata(const char* path,const ylp_limits* l,ylp_buffer* out,ylp_error* e) {
+    empty(out);return guard(e,[&]{check(path&&out);buffer(out,ylp::read_metadata(utf8_path(path),limits(l)));});
+}
+ylp_status ylp_read_metadata_reader(uint64_t size,ylp_read_at_fn reader,void* ctx,const ylp_limits* l,ylp_buffer* out,ylp_error* e) {
+    empty(out);return guard(e,[&]{check(reader&&out);buffer(out,ylp::read_metadata(size,[reader,ctx](uint64_t offset,std::span<uint8_t> data){
+        ylp::require(reader(ctx,offset,data.data(),data.size())==0,ylp::Code::io,"metadata read_at callback failed");
+    },limits(l)));});
+}
 ylp_limits ylp_default_limits(void) { ylp::Limits l; return {sizeof(ylp_limits),YLP_ABI_VERSION,l.metadata,l.toc,l.records,l.record,l.total,l.ratio}; }
 void ylp_buffer_free(ylp_buffer* out) { if(out) { std::free(out->data); *out={}; } }
 ylp_status ylp_open(const char* path,const ylp_limits* l,ylp_package** out,ylp_error* e) {

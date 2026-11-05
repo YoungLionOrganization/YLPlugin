@@ -1,5 +1,13 @@
 # Frequently Asked Questions
 
+**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+request only the 128-byte header and YLSpec frame. TOC, payload and signature
+regions are not read. Discovery returns unverified metadata; validation and host
+preflight remain separate. Python/npm now bundle the native CLI alongside the
+core; Java/Kotlin supply a Java CLI entry point. See
+[core/CLI installation and PATH behavior](../installation-cli.md).
+These additions are not available in the published 0.1.2 packages.
+
 ## Is this an archive format or a plugin manager?
 
 It is its own indexed container and native host SDK. It is not ZIP and does not

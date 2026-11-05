@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <bit>
 #include <cstring>
+#include <cstdio>
 #include <limits>
 #include <set>
 #include <openssl/crypto.h>
@@ -52,6 +53,23 @@ Bytes make_header(uint64_t flags,uint64_t size,uint64_t meta,uint64_t toc_offset
 struct KeyGuard {
     std::array<uint8_t,32> value{};
     ~KeyGuard() { OPENSSL_cleanse(value.data(),value.size()); }
+};
+struct FileSource {
+    std::ifstream stream;
+    std::mutex mutex;
+    uint64_t size;
+    explicit FileSource(const std::filesystem::path& path):stream(path,std::ios::binary|std::ios::ate) {
+        if(!stream) fail(Code::io,"cannot open package: "+path_text(path));
+        const auto end=stream.tellg();require(end>=0,Code::io,"package size unavailable");
+        size=static_cast<uint64_t>(end);
+    }
+    void read(uint64_t offset,std::span<uint8_t> out) {
+        require(offset<=size&&out.size()<=size-offset,Code::invalid_container,"read outside container");
+        require(offset<=static_cast<uint64_t>(std::numeric_limits<std::streamoff>::max())&&out.size()<=static_cast<uint64_t>(std::numeric_limits<std::streamsize>::max()),Code::resource_limit,"file position exceeds I/O implementation");
+        std::lock_guard lock(mutex);stream.clear();stream.seekg(static_cast<std::streamoff>(offset));
+        stream.read(reinterpret_cast<char*>(out.data()),static_cast<std::streamsize>(out.size()));
+        require(bool(stream),Code::io,"short package read");
+    }
 };
 }
 uint64_t get(std::span<const uint8_t> b,size_t off,size_t count) {
@@ -127,22 +145,74 @@ Bytes Package::Impl::bytes(uint64_t offset,uint64_t count) const {
     Bytes b(static_cast<size_t>(count)); read_at(offset,b); return b;
 }
 Package::Package(const std::filesystem::path& path,Limits limits) {
-    struct File { std::ifstream stream; std::mutex mutex; explicit File(const std::filesystem::path& p):stream(p,std::ios::binary|std::ios::ate) {} };
-    auto file=std::make_shared<File>(path);
-    if(!file->stream) fail(Code::io,"cannot open package: "+path_text(path));
-    auto end=file->stream.tellg(); require(end>=0,Code::io,"package size unavailable");
-    impl_=std::make_shared<Impl>(); impl_->size=static_cast<uint64_t>(end); impl_->limits=limits;
+    auto file=std::make_shared<FileSource>(path);
+    impl_=std::make_shared<Impl>(); impl_->size=file->size; impl_->limits=limits;
     impl_->reader=[file](uint64_t offset,std::span<uint8_t> out) {
-        require(offset<=static_cast<uint64_t>(std::numeric_limits<std::streamoff>::max())&&out.size()<=static_cast<uint64_t>(std::numeric_limits<std::streamsize>::max()),Code::resource_limit,"file position exceeds I/O implementation");
-        std::lock_guard lock(file->mutex); file->stream.clear(); file->stream.seekg(static_cast<std::streamoff>(offset));
-        file->stream.read(reinterpret_cast<char*>(out.data()),static_cast<std::streamsize>(out.size()));
-        require(bool(file->stream),Code::io,"short package read");
+        file->read(offset,out);
     };
     impl_->parse();
 }
 Package::Package(uint64_t size,std::function<void(uint64_t,std::span<uint8_t>)> reader,Limits limits) {
     require(bool(reader),Code::io,"reader callback required");
     impl_=std::make_shared<Impl>(); impl_->size=size; impl_->reader=std::move(reader); impl_->limits=limits; impl_->parse();
+}
+std::string read_metadata(uint64_t size,std::function<void(uint64_t,std::span<uint8_t>)> reader,Limits limits) {
+    require(bool(reader),Code::io,"reader callback required");
+    require(size>=128,Code::invalid_container,"truncated container header");
+    Bytes header(128);reader(0,header);
+    require(std::equal(magic.begin(),magic.end(),header.begin()),Code::invalid_container,"invalid container magic");
+    require(get(header,8,2)==1&&get(header,10,2)==0&&get(header,12,4)==128,Code::invalid_container,"unsupported container version/header");
+    require((get(header,16,8)&~uint64_t(7))==0,Code::invalid_container,"unknown mandatory container feature");
+    require(get(header,24,8)==size,Code::invalid_container,"physical/declarative length mismatch");
+    zero(std::span(header).subspan(104));
+    const auto offset=get(header,32,8),length=get(header,40,8);
+    require(offset==128&&length>=32&&offset<=size&&length<=size-offset,Code::invalid_container,"invalid metadata region");
+    require(length-32<=limits.metadata&&limits.metadata<=SIZE_MAX,Code::resource_limit,"metadata limit exceeded");
+    struct Context {
+        const std::function<void(uint64_t,std::span<uint8_t>)>* reader;
+        uint64_t start,end;
+        std::exception_ptr error;
+    } context{&reader,offset,offset+length,{}};
+    auto callback=[](void* user,uint64_t off,void* data,size_t count)->int {
+        auto& c=*static_cast<Context*>(user);
+        try {
+            require(off>=c.start&&off<=c.end&&count<=c.end-off,Code::invalid_container,"read outside metadata frame");
+            if(count)(*c.reader)(off,{static_cast<uint8_t*>(data),count});
+            return 0;
+        } catch(...) { c.error=std::current_exception();return -1; }
+    };
+    auto yl_limits=yl_default_limits();yl_limits.max_document_bytes=static_cast<size_t>(limits.metadata);
+    yl_document* raw=nullptr;yl_error error{};uint64_t consumed=0;
+    const auto status=yl_read_at(callback,&context,offset,length,&yl_limits,&raw,&consumed,&error);
+    Document document(raw);
+    if(context.error)std::rethrow_exception(context.error);
+    require(status==YL_OK,status==YL_LIMIT?Code::resource_limit:Code::invalid_metadata,error.message);
+    require(consumed==length,Code::invalid_container,"metadata locator must describe exactly one frame");
+    YlBuffer text;require(yl_dump(document.get(),&text.value,&error)==YL_OK,Code::invalid_metadata,error.message);
+    return {reinterpret_cast<const char*>(text.value.data),text.value.size};
+}
+std::string read_metadata(const std::filesystem::path& path,Limits limits) {
+    // Disable stdio buffering: even a small header read must not prefetch the TOC/payload.
+#ifdef _WIN32
+    auto* raw=_wfopen(path.c_str(),L"rb");
+    auto seek=[](FILE* file,int64_t offset,int origin){return _fseeki64(file,offset,origin);};
+    auto tell=[](FILE* file){return _ftelli64(file);};
+#else
+    auto* raw=std::fopen(path.c_str(),"rb");
+    auto seek=[](FILE* file,int64_t offset,int origin){return ::fseeko(file,static_cast<off_t>(offset),origin);};
+    auto tell=[](FILE* file){return ::ftello(file);};
+#endif
+    require(raw!=nullptr,Code::io,"cannot open package: "+path_text(path));
+    auto close=[](FILE* value){std::fclose(value);};
+    std::unique_ptr<FILE,decltype(close)> file(raw,close);
+    require(std::setvbuf(raw,nullptr,_IONBF,0)==0,Code::io,"cannot disable metadata reader buffering");
+    require(seek(raw,0,SEEK_END)==0,Code::io,"package size unavailable");
+    auto end=tell(raw);require(end>=0,Code::io,"package size unavailable");
+    return read_metadata(static_cast<uint64_t>(end),[&](uint64_t offset,std::span<uint8_t> out){
+        require(offset<=INT64_MAX,Code::resource_limit,"file position exceeds I/O implementation");
+        require(seek(raw,static_cast<int64_t>(offset),SEEK_SET)==0,Code::io,"metadata seek failed");
+        require(std::fread(out.data(),1,out.size(),raw)==out.size(),Code::io,"short metadata read");
+    },limits);
 }
 void Package::Impl::parse() {
     require(size>=128,Code::invalid_container,"truncated container header"); header=bytes(0,128);

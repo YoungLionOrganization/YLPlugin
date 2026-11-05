@@ -1,5 +1,13 @@
 # YLPlugin Wiki
 
+**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+request only the 128-byte header and YLSpec frame. TOC, payload and signature
+regions are not read. Discovery returns unverified metadata; validation and host
+preflight remain separate. Python/npm now bundle the native CLI alongside the
+core; Java/Kotlin supply a Java CLI entry point. See
+[core/CLI installation and PATH behavior](../installation-cli.md).
+These additions are not available in the published 0.1.2 packages.
+
 YLPlugin is a standalone plugin container and a native SDK for inspecting,
 building, validating and selecting components before a host activates them.
 The container embeds YLSpec metadata and indexes its own resources. The core is

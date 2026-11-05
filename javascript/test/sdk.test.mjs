@@ -10,7 +10,7 @@ import {fileURLToPath} from 'node:url';
 import {randomBytes, generateKeyPairSync} from 'node:crypto';
 import {createRequire} from 'node:module';
 import {execFileSync} from 'node:child_process';
-import {Package, create, sign, version} from '@younglionorganization/ylplugin';
+import {Package, create, sign, version, readMetadata} from '@younglionorganization/ylplugin';
 
 const root = resolve(fileURLToPath(new URL('../../', import.meta.url)));
 const fixture = join(root, 'examples/artifacts/data.ylplugin');
@@ -37,6 +37,13 @@ test('ESM/CJS native roundtrip, bigint permissions and deterministic builder', (
     assert.equal(createRequire(import.meta.url)('@younglionorganization/ylplugin').version, version);
     const p = new Package(fixture);
     try {
+      assert.equal(readMetadata(fixture), p.metadata);
+      assert.equal(createRequire(import.meta.url)('@younglionorganization/ylplugin').readMetadata(fixture), p.metadata);
+      assert.throws(() => readMetadata(fixture, {metadata: 1}), code(4));
+      const broken = readFileSync(fixture); broken[Number(broken.readBigUInt64LE(48))] ^= 128;
+      writeFileSync(join(work, 'broken-toc'), broken);
+      assert.equal(readMetadata(join(work, 'broken-toc')), p.metadata);
+      assert.throws(() => new Package(join(work, 'broken-toc')));
       p.validate(); assert.equal(JSON.parse(p.read('catalog.json')).total, 42);
       assert.equal(p.targets[1].required_permissions.value, 9223372036854775807n);
       assert.deepEqual(p.permissionBytes(0, {optional: true}), Buffer.from([37, 8, 255, 0]));

@@ -1,5 +1,13 @@
 # Python SDK
 
+**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+request only the 128-byte header and YLSpec frame. TOC, payload and signature
+regions are not read. Discovery returns unverified metadata; validation and host
+preflight remain separate. Python/npm now bundle the native CLI alongside the
+core; Java/Kotlin supply a Java CLI entry point. See
+[core/CLI installation and PATH behavior](../installation-cli.md).
+These additions are not available in the published 0.1.2 packages.
+
 The `ylplugin` package is a typed ctypes facade over the native C ABI. It does
 not contain a second container parser or a Python plugin execution engine.
 Published version 0.1.2 requires Python 3.11+ and supplies platform wheels.

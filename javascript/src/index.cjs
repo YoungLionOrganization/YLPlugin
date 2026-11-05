@@ -62,9 +62,10 @@ class Package {
   extract(destination, paths = [], options) { this.#call('extract', {destination, paths}, options); }
 }
 function create(output, manifest, resources, options) { call(null, 'create', {output, manifest, resources}, options); }
+function readMetadata(path, limits = {}) { return call(null, 'readMetadata', {path, limits}); }
 function sign(input, output, keyId, privatePem, options) {
   const secret = Buffer.from(privatePem);
   try { call(null, 'sign', {input, output, keyId}, options, secret); }
   finally { secret.fill(0); }
 }
-module.exports = {Package, create, sign, version: metadata.version};
+module.exports = {Package, create, sign, readMetadata, version: metadata.version};

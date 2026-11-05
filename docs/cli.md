@@ -1,7 +1,19 @@
 # CLI reference
 
-All listed commands are implemented. None starts plugin code. Use `--json` for
-compact machine-readable JSON; default output is indented JSON. Metadata is
+## Metadata-only command and package installation (0.1.3 development)
+
+`ylplugin metadata FILE` emits canonical TOML and reads only the container header
+and YLSpec frame. `--json` emits `scope: "metadata-only"`,
+`integrity_status: "UNVERIFIED"`, and the TOML string in `metadata`. It does not
+construct a Package or read the TOC/payload/signature. This is a new command;
+other commands retain their existing behavior. See [metadata-only reads](metadata-only.md).
+
+Python wheels now register the native CLI with pip, npm supplies a `bin` entry,
+and Java/Kotlin bundle a Java CLI entry point. See [installation](installation-cli.md).
+
+
+Commands below are implemented in the indicated source version. None starts plugin code. Use `--json` for
+compact machine-readable JSON; default output is indented JSON except the metadata command, which emits TOML. Metadata is
 returned as public TOML inside the inspect report. No command publishes, installs
 components, grants permissions or contacts a network service.
 

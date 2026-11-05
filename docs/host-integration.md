@@ -1,5 +1,14 @@
 # Host integration
 
+## Fast catalog discovery (0.1.3 development)
+
+Use standalone [metadata-only reads](metadata-only.md) to display plugin IDs,
+versions and declarations before loading an index or payload. This reads only the
+fixed header and YLSpec frame, including through C/C++ and Python custom range
+readers. Discovery claims remain untrusted: perform the validation, signature and
+preflight policy described below before activation.
+
+
 A host owns compatibility, trust, permissions, budgets and runtime services.
 YLPlugin supplies container validation and reports; applications decide what
 those reports authorize. Loading the SDK itself is separate from loading a

@@ -1,5 +1,15 @@
 # SDK, ownership and bindings
 
+## Metadata discovery (0.1.3 development)
+
+`ylp::read_metadata(path, limits)` and its `(size, reader, limits)` overload read
+only the fixed header and YLSpec frame. The C ABI exposes `ylp_read_metadata` and
+`ylp_read_metadata_reader`; release output with `ylp_buffer_free`. No Package is
+created and no TOC, payload or signature region is read. Unknown profiles are
+inert readable data. See [metadata-only reads](metadata-only.md) for exact bounds,
+callback lifetimes, errors and the distinction from validation.
+
+
 ## C ABI
 
 Include `ylplugin/ylplugin.h`, link `YLPlugin::ylplugin`. ABI version is 1 within

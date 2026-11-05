@@ -82,6 +82,7 @@ class _Permission(C.Structure):
 
 _Key = C.CFUNCTYPE(C.c_int, C.c_void_p, C.c_char_p, C.POINTER(C.c_uint8))
 _Cancel = C.CFUNCTYPE(C.c_int, C.c_void_p)
+_ReadAt = C.CFUNCTYPE(C.c_int, C.c_void_p, C.c_uint64, C.c_void_p, C.c_size_t)
 
 
 def _key(fn: KeyProvider | None):
@@ -124,6 +125,10 @@ class Library:
         if not path:
             raise RuntimeError("Pass the native library path or set YLPLUGIN_LIBRARY")
         self.native = C.CDLL(os.fspath(path))
+        self.native.ylp_version.restype = C.c_char_p
+        actual = self.native.ylp_version().decode()
+        if actual != __version__:
+            raise RuntimeError(f"Native SDK {actual} does not match Python package {__version__}")
         p, s, n, e, b = C.c_void_p, C.c_char_p, C.c_size_t, C.POINTER(_Error), C.POINTER(_Buffer)
         signatures = {
             "ylp_version": ([], s),
@@ -132,6 +137,8 @@ class Library:
             "ylp_buffer_free": ([b], None),
             "ylp_inspect": ([p, b, e], C.c_int),
             "ylp_metadata": ([p, b, e], C.c_int),
+            "ylp_read_metadata": ([s, p, b, e], C.c_int),
+            "ylp_read_metadata_reader": ([C.c_uint64, _ReadAt, p, p, b, e], C.c_int),
             "ylp_target_count": ([p], n),
             "ylp_entrypoint_count": ([p], n),
             "ylp_target_at": ([p, n, b, e], C.c_int),
@@ -149,9 +156,6 @@ class Library:
         for name, (args, result) in signatures.items():
             function = getattr(self.native, name)
             function.argtypes, function.restype = args, result
-        actual = self.native.ylp_version().decode()
-        if actual != __version__:
-            raise RuntimeError(f"Native SDK {actual} does not match Python package {__version__}")
 
     def _call(self, name, *args):
         error = _Error()
@@ -169,6 +173,38 @@ class Library:
 
     def open(self, path: str | os.PathLike, limits: Limits = Limits()) -> Package:
         return Package(self, path, limits)
+
+    def read_metadata(self, path: str | os.PathLike, limits: Limits = Limits()) -> str:
+        """Read only the header and YLSpec frame, without opening a Package/TOC."""
+        native_limits = _limits(limits)
+        return self._buffer("ylp_read_metadata", _path(path), C.byref(native_limits)).decode("utf-8")
+
+    def read_metadata_reader(self, size: int, reader: Callable[[int, int], bytes], limits: Limits = Limits()) -> str:
+        """Read header/YLSpec through synchronous byte ranges (for example a host's HTTP range reader)."""
+        _integer(size, 2**64 - 1, "size")
+        if not callable(reader):
+            raise TypeError("reader must be callable")
+        native_limits = _limits(limits)
+        errors = []
+
+        def read(_context, offset, destination, count):
+            try:
+                data = reader(offset, count)
+                if not isinstance(data, bytes) or len(data) != count:
+                    raise ValueError("reader must return exactly the requested bytes")
+                C.memmove(destination, data, count)
+                return 0
+            except BaseException as error:
+                errors.append(error)
+                return 1
+
+        callback = _ReadAt(read)
+        try:
+            return self._buffer("ylp_read_metadata_reader", size, callback, None, C.byref(native_limits)).decode("utf-8")
+        except Error:
+            if errors:
+                raise errors[0]
+            raise
 
     def create(self, output, manifest: str, resources: list[dict], *, keys: KeyProvider | None = None, cancel=None):
         provider, cancellation = _key(keys), _cancel(cancel)

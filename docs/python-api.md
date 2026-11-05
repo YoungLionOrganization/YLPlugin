@@ -1,5 +1,19 @@
 # Python SDK
 
+## Direct metadata discovery and installed CLI (0.1.3)
+
+`Library.read_metadata(path, limits=Limits())` reads only the fixed header and
+YLSpec frame. `Library.read_metadata_reader(size, reader, limits=Limits())`
+accepts exact byte ranges without a local plugin copy. Both return canonical TOML,
+retain no handle, and skip TOC/payload/signature validation. In contrast,
+`Package.metadata` follows an indexed open. See [metadata-only reads](metadata-only.md).
+
+Platform wheels also include the core and native CLI. Pip registers `ylplugin` in
+the environment scripts directory; `python -m ylplugin` works as well. See
+[installation and PATH behavior](installation-cli.md). These APIs and CLI entry
+points are development additions, absent from published 0.1.2.
+
+
 `ylplugin` requires Python 3.11+. Version 0.1.2 platform wheels
 contain a ctypes runtime built from the same core. Source/facade-only installs
 require an installed SDK or explicit path. Published v0.1.0's facade-only wheel

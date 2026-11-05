@@ -1,5 +1,13 @@
 # CLI Cookbook
 
+**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+request only the 128-byte header and YLSpec frame. TOC, payload and signature
+regions are not read. Discovery returns unverified metadata; validation and host
+preflight remain separate. Python/npm now bundle the native CLI alongside the
+core; Java/Kotlin supply a Java CLI entry point. See
+[core/CLI installation and PATH behavior](../installation-cli.md).
+These additions are not available in the published 0.1.2 packages.
+
 The CLI inspects and builds containers. None of its commands automatically
 starts plugin code, installs a runtime, grants host permissions or publishes to
 registries. Success output is JSON on stdout; error JSON goes to stderr.

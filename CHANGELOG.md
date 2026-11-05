@@ -2,10 +2,24 @@
 
 ## 0.1.3 — unreleased
 
+### Added
+
+* Standalone metadata discovery in C/C++, Python (including custom range readers),
+  JS/TS and Java/Kotlin, plus `ylplugin metadata`. Reads only the 128-byte header
+  and YLSpec frame, without TOC, payload or signature reads. Returns canonical
+  TOML with explicit unverified discovery scope in CLI JSON.
+* Platform Python wheels include the matching native executable and a pip console
+  entry point (`ylplugin` / `python -m ylplugin`). npm supplies a native CLI `bin`;
+  JVM native resources include an executable with a Java `Cli` launcher.
+* Expanded PyPI author/maintainer metadata, keywords, classifiers, project links
+  and installation/API description following the YLSpec package conventions.
+
 ### Fixed
 
 * Node file opens reject unpaired UTF-16 surrogates instead of silently opening
   a filename containing the Unicode replacement character. Valid Unicode paths remain supported.
+* Bundled Windows CLI uses Unicode arguments and UTF-8 filesystem conversion,
+  preserving non-ASCII plugin paths across Python/npm/JVM launchers.
 * Core file-open diagnostics use UTF-8 instead of the Windows local code page;
   opening/building valid Unicode paths no longer fails while preparing an error message.
 * C++/Node slice reads honor cancellation on empty resources and after the

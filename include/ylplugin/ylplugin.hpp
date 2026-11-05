@@ -80,6 +80,12 @@ Json permission_json(const Permission&);
 std::string hex(std::span<const uint8_t>);
 Bytes unhex(const std::string&);
 
+// Discovery only: reads the container header and YLSpec frame, never TOC,
+// payload or signature bytes. Does not validate resources or publisher trust.
+std::string read_metadata(const std::filesystem::path&, Limits = {});
+std::string read_metadata(uint64_t size,
+    std::function<void(uint64_t,std::span<uint8_t>)> reader, Limits = {});
+
 class Package {
 public:
     struct Impl;

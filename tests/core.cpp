@@ -109,6 +109,41 @@ void native_test(const std::filesystem::path& library){
     (void)library;std::cout<<"Native runtime execution not exercised on this platform\n";
 #endif
 }
+void metadata_discovery(const Bytes& bytes,const std::filesystem::path& path,const std::string& expected) {
+    const auto frame_end=128+u64(bytes,40);
+    auto read=[&](uint64_t offset,std::span<uint8_t> out) {
+        expect((offset==0&&out.size()==128)||(offset>=128&&offset<=frame_end&&out.size()<=frame_end-offset),"metadata reader stays in header/frame");
+        std::copy_n(bytes.begin()+static_cast<ptrdiff_t>(offset),out.size(),out.begin());
+    };
+    expect(read_metadata(bytes.size(),read)==expected,"metadata matches indexed Package");
+    expect(read_metadata(path)==expected,"unbuffered file metadata matches Package");
+    auto large=bytes;const uint64_t virtual_size=uint64_t(5)<<30;field(large,24,virtual_size);
+    uint64_t total=0;
+    expect(read_metadata(virtual_size,[&](uint64_t offset,std::span<uint8_t> out){
+        expect(offset<=frame_end&&out.size()<=frame_end-offset,"virtual 5 GiB discovery never reads TOC/payload");
+        total+=out.size();std::copy_n(large.begin()+static_cast<ptrdiff_t>(offset),out.size(),out.begin());
+    })==expected&&total==frame_end,"discovery reads exactly header plus frame regardless of payload size");
+    auto bad=bytes;bad.at(static_cast<size_t>(u64(bytes,48)))^=0x80;
+    expect(read_metadata(bad.size(),[&](uint64_t off,std::span<uint8_t> out){std::copy_n(bad.begin()+static_cast<ptrdiff_t>(off),out.size(),out.begin());})==expected,"metadata discovery independent of corrupt TOC");
+    rejected([&]{memory(bad);},"corrupt TOC rejected by full Package");
+    Limits limited;limited.metadata=1;rejected([&]{read_metadata(bytes.size(),read,limited);},"discovery metadata limit");
+    for(size_t off:{size_t(0),size_t(8),size_t(12),size_t(24),size_t(32),size_t(40),size_t(104),size_t(128)}) {
+        auto broken=bytes;broken[off]^=0x80;
+        rejected([&]{read_metadata(broken.size(),[&](uint64_t pos,std::span<uint8_t> out){
+            expect(pos<=broken.size()&&out.size()<=broken.size()-pos,"malformed discovery bounded read");
+            std::copy_n(broken.begin()+static_cast<ptrdiff_t>(pos),out.size(),out.begin());
+        });},"malformed metadata discovery "+std::to_string(off));
+    }
+    ylp_buffer out{};ylp_error error{};
+    auto callback=[](void* ctx,uint64_t off,void* dst,size_t n)->int {
+        auto& data=*static_cast<const Bytes*>(ctx);const auto end=128+u64(data,40);
+        if(off>end||n>end-off)return 1;
+        std::memcpy(dst,data.data()+static_cast<size_t>(off),n);return 0;
+    };
+    expect(ylp_read_metadata_reader(bytes.size(),callback,const_cast<Bytes*>(&bytes),nullptr,&out,&error)==YLP_OK,"C metadata reader");
+    expect(std::string(reinterpret_cast<char*>(out.data),out.size)==expected,"C metadata text");ylp_buffer_free(&out);
+    expect(ylp_read_metadata_reader(bytes.size(),nullptr,nullptr,nullptr,&out,&error)!=YLP_OK&&!out.data&&!out.size,"C null reader empties output");
+}
 void core(){
     validation_regressions();
     Temp tmp;auto source=tmp.path/"source";Bytes content(8192);for(size_t i=0;i<content.size();++i)content[i]=static_cast<uint8_t>(i%251);save(source,content);
@@ -118,7 +153,7 @@ void core(){
     expect(p.read_slice("data.bin",8192,0).empty(),"empty slice");rejected([&]{p.read_slice("data.bin",8193,0);},"slice bounds");
     create(tmp.path/"repeat.ylplugin",manifest(),{in});expect(load(path)==load(tmp.path/"repeat.ylplugin"),"deterministic build");
     rejected([&]{create(path,manifest(),{in});},"no overwrite output");
-    auto bytes=load(path);auto toc=u64(bytes,48),payload=u64(bytes,72);expect(bytes[128]=='Y'&&bytes[129]=='L',"embedded genuine YLSpec frame");
+    auto bytes=load(path);metadata_discovery(bytes,path,p.metadata_text());auto toc=u64(bytes,48),payload=u64(bytes,72);expect(bytes[128]=='Y'&&bytes[129]=='L',"embedded genuine YLSpec frame");
     std::vector<size_t> corrupt_fields={0,8,10,12,16,24,32,40,48,56,64,72,80,88,96,104};
     for(auto off:corrupt_fields){auto bad=bytes;bad[off]^=0x80;rejected([&]{memory(bad);},"corrupt header "+std::to_string(off));}
     for(size_t n:{size_t(0),size_t(1),size_t(127),size_t(128),bytes.size()-1}){auto bad=bytes;bad.resize(n);rejected([&]{memory(bad);},"truncated file "+std::to_string(n));}

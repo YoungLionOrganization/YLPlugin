@@ -12,6 +12,12 @@
 #include <openssl/crypto.h>
 #include <openssl/pem.h>
 #include <openssl/rand.h>
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 
 namespace {
 using namespace ylp;
@@ -38,13 +44,19 @@ struct Args {
     std::string required(const std::string& key) const { auto s=option(key);if(s.empty()) throw Error(Code::invalid_metadata,"required option: "+key);return s; }
     std::string input() const { if(positional.size()!=1) throw Error(Code::invalid_metadata,"exactly one input package/file required");return positional[0]; }
 };
+std::filesystem::path fs(const std::string& value) {
+    if(value.find('\0')!=std::string::npos)throw Error(Code::invalid_metadata,"NUL in filesystem path");
+    return std::filesystem::path(reinterpret_cast<const char8_t*>(value.c_str()));
+}
 Bytes load(const std::filesystem::path& path,uint64_t maximum=16*1024*1024) {
-    std::ifstream f(path,std::ios::binary|std::ios::ate);if(!f)throw Error(Code::io,"cannot open: "+path.string());
+    std::ifstream f(path,std::ios::binary|std::ios::ate);if(!f)throw Error(Code::io,"cannot open input file");
     auto n=f.tellg();if(n<0||static_cast<uint64_t>(n)>maximum)throw Error(Code::resource_limit,"input exceeds CLI limit");
     Bytes out(static_cast<size_t>(n)); f.seekg(0); if(!out.empty())f.read(reinterpret_cast<char*>(out.data()),n);
     if(!f)throw Error(Code::io,"short CLI file read");return out;
 }
+Bytes load(const std::string& path,uint64_t maximum=16*1024*1024) {return load(fs(path),maximum);}
 std::string text(const std::filesystem::path& path) { auto bytes=load(path);return {bytes.begin(),bytes.end()}; }
+std::string text(const std::string& path) {return text(fs(path));}
 struct Secret {
     Bytes bytes;
     ~Secret() { if(!bytes.empty()) OPENSSL_cleanse(bytes.data(),bytes.size()); }
@@ -67,9 +79,9 @@ TrustProvider trust_provider(const Args& args) {
 std::vector<Input> plan(const Args& a) {
     std::vector<Input> inputs;
     if(!a.option("--plan").empty()) {
-        auto path=std::filesystem::absolute(a.option("--plan"));auto j=Json::parse(text(path));
+        auto path=std::filesystem::absolute(fs(a.option("--plan")));auto j=Json::parse(text(path));
         for(const auto& r:j.at("resources")) {
-            Input in;in.path=r.at("path").get<std::string>();in.file=path.parent_path()/r.at("file").get<std::string>();
+            Input in;in.path=r.at("path").get<std::string>();in.file=path.parent_path()/fs(r.at("file").get<std::string>());
             in.media=r.value("media",std::string("application/octet-stream"));in.variant=r.value("variant",std::string());
             in.key_id=r.value("key_id",std::string());in.alignment=r.value("alignment",uint32_t(8));
             auto c=r.value("compression",0),e=r.value("extraction",0);
@@ -83,7 +95,8 @@ std::vector<Input> plan(const Args& a) {
             if(file.is_symlink())throw Error(Code::permission,"builder does not follow symlinks");
             if(file.is_directory())continue;
             if(!file.is_regular_file())throw Error(Code::permission,"non-regular builder input");
-            Input in;in.file=file.path();in.path=std::filesystem::relative(file.path(),root).generic_string();
+            Input in;in.file=file.path();auto relative=std::filesystem::relative(file.path(),root).generic_u8string();
+            in.path={reinterpret_cast<const char*>(relative.data()),relative.size()};
             in.compression=(codec=="zstd"&&file.path().extension()!=".rcc")?1:0;
             if(file.path().extension()==".rcc")in.media="application/x-qt-resource";
             if(!a.option("--key-file").empty())in.key_id=a.required("--key-id");inputs.push_back(std::move(in));
@@ -94,6 +107,7 @@ std::vector<Input> plan(const Args& a) {
 void help() {
     std::cout<<"YLPlugin "<<ylp_version()<<" (experimental)\n"
       "ylplugin --version\n"
+      "ylplugin metadata FILE [--json] (header + YLSpec only; unverified discovery)\n"
       "ylplugin create --manifest plugin.ylspec (--root resources | --plan resources.json) --output package.ylplugin\n"
       "ylplugin inspect|list|validate FILE [--json]\n"
       "ylplugin check FILE --host host.json [--target ID] [--os OS --arch ARCH --abi ABI]\n"
@@ -110,6 +124,13 @@ int run(const Args& a) {
     if(a.command=="--version") {std::cout<<ylp_version()<<"\n";return 0;}
     bool machine=a.flags.contains("--json");
     auto print=[&](const Json& j){std::cout<<j.dump(machine?-1:2)<<'\n';};
+    if(a.command=="metadata") {
+        const auto input=a.input();
+        auto metadata=read_metadata(fs(input));
+        if(machine)print({{"scope","metadata-only"},{"integrity_status","UNVERIFIED"},{"metadata",metadata}});
+        else std::cout<<metadata;
+        return 0;
+    }
     std::shared_ptr<Secret> secret;auto keys=key_provider(a,secret);
     if(a.command=="create"||a.command=="convert") {
         auto manifest=text(a.required("--manifest"));std::vector<Input> inputs;
@@ -125,13 +146,13 @@ int run(const Args& a) {
                 std::set<std::string> names;for(const auto& e:m.entrypoints)names.insert(e.resource);
                 if(names.size()!=1)throw Error(Code::invalid_metadata,"convert requires one shared resource or explicit --resource");resource=*names.begin();
             }
-            Input in;in.file=file;in.path=resource;in.media="application/x-qt-resource";
+            Input in;in.file=fs(file);in.path=resource;in.media="application/x-qt-resource";
             if(keys)in.key_id=a.required("--key-id");inputs.push_back(std::move(in));
         }
-        BuildOptions options;options.keys=keys;options.cancel=cancellation;create(a.required("--output"),manifest,std::move(inputs),options);
+        BuildOptions options;options.keys=keys;options.cancel=cancellation;create(fs(a.required("--output")),manifest,std::move(inputs),options);
         print({{"status","CREATED"},{"output",a.required("--output")}});return 0;
     }
-    Package p(a.input());
+    Package p(fs(a.input()));
     if(a.command=="inspect")print(p.inspect());
     else if(a.command=="list")print(p.inspect().at("resources"));
     else if(a.command=="validate") {p.validate(keys,cancellation);print({{"status","VALID"},{"signature_status",p.signed_package()?"UNVERIFIED":"UNSIGNED"}});}
@@ -143,16 +164,16 @@ int run(const Args& a) {
         auto h=host_from_json(host);h.keys=keys;h.trust=trust_provider(a);h.cancel=cancellation;auto result=preflight(p,h);print(result);return result.at("status")=="SUPPORTED"?0:4;
     } else if(a.command=="extract") {
         std::vector<std::string> selected;if(!a.option("--resource").empty())selected.push_back(a.option("--resource"));
-        p.extract(a.required("--output"),selected,keys,cancellation);print({{"status","EXTRACTED"},{"output",a.required("--output")}});
+        p.extract(fs(a.required("--output")),selected,keys,cancellation);print({{"status","EXTRACTED"},{"output",a.required("--output")}});
     } else if(a.command=="sign") {
-        Secret pem;pem.bytes=load(a.required("--private-key"));sign(a.input(),a.required("--output"),a.required("--key-id"),pem.bytes,cancellation);
+        Secret pem;pem.bytes=load(a.required("--private-key"));sign(fs(a.input()),fs(a.required("--output")),a.required("--key-id"),pem.bytes,cancellation);
         print({{"status","SIGNED"},{"output",a.required("--output")}});
     } else if(a.command=="encrypt") {
         if(!keys)throw Error(Code::needs_license,"encrypt requires --key-file and --key-id");
         if(p.signed_package()&&!a.flags.contains("--drop-signature"))throw Error(Code::permission,"encryption changes signed bytes; explicitly pass --drop-signature and sign the result again");
         for(const auto& r:p.resources())if(r.encryption)throw Error(Code::unsupported,"CLI encrypt accepts plaintext input only; use core providers to rekey");
         std::array<uint8_t,16> random{};if(RAND_bytes(random.data(),16)!=1)throw Error(Code::io,"RNG failed");
-        auto root=std::filesystem::path(a.required("--output")).parent_path()/(".ylplugin-encrypt-"+hex(random));
+        auto root=fs(a.required("--output")).parent_path()/(".ylplugin-encrypt-"+hex(random));
         if(!std::filesystem::create_directory(root))throw Error(Code::io,"cannot create encryption staging");
         struct Cleanup {std::filesystem::path p;~Cleanup(){std::error_code ec;std::filesystem::remove_all(p,ec);}} cleanup{root};
         std::filesystem::permissions(root,std::filesystem::perms::owner_all,std::filesystem::perm_options::replace);
@@ -163,13 +184,13 @@ int run(const Args& a) {
             Input in;in.path=r.path;in.file=file;in.media=r.media;in.variant=r.variant;in.compression=r.compression;
             in.extraction=r.extraction;in.alignment=r.alignment;in.key_id=a.required("--key-id");inputs.push_back(std::move(in));
         }
-        BuildOptions options;options.keys=keys;options.cancel=cancellation;create(a.required("--output"),p.metadata_text(),std::move(inputs),options);
+        BuildOptions options;options.keys=keys;options.cancel=cancellation;create(fs(a.required("--output")),p.metadata_text(),std::move(inputs),options);
         print({{"status","ENCRYPTED"},{"output",a.required("--output")},{"signature_status","UNSIGNED"}});
     } else throw Error(Code::unsupported,"unknown command: "+a.command);
     return 0;
 }
 }
-int main(int argc,char** argv) {
+int cli_main(int argc,char** argv) {
     std::signal(SIGINT,interrupt_handler);std::signal(SIGTERM,interrupt_handler);
     bool machine=false;for(int i=1;i<argc;++i)if(std::string(argv[i])=="--json")machine=true;
     try {return run(Args(argc,argv));}
@@ -182,3 +203,20 @@ int main(int argc,char** argv) {
         if(machine)std::cerr<<ylp::Json({{"error",e.what()},{"exit_code",3}}).dump()<<'\n';else std::cerr<<"ylplugin: "<<e.what()<<'\n';return 3;
     }
 }
+
+#ifdef _WIN32
+int wmain(int argc,wchar_t** argv) {
+    std::vector<std::string> arguments;
+    for(int i=0;i<argc;++i) {
+        int size=WideCharToMultiByte(CP_UTF8,WC_ERR_INVALID_CHARS,argv[i],-1,nullptr,0,nullptr,nullptr);
+        if(size<=0){std::cerr<<"ylplugin: invalid Unicode argument\n";return 3;}
+        std::string value(static_cast<size_t>(size),'\0');
+        if(!WideCharToMultiByte(CP_UTF8,WC_ERR_INVALID_CHARS,argv[i],-1,value.data(),size,nullptr,nullptr))return 3;
+        value.pop_back();arguments.push_back(std::move(value));
+    }
+    std::vector<char*> pointers;for(auto& value:arguments)pointers.push_back(value.data());
+    return cli_main(argc,pointers.data());
+}
+#else
+int main(int argc,char** argv) {return cli_main(argc,argv);}
+#endif

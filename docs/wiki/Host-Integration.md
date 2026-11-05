@@ -1,5 +1,13 @@
 # Host Integration
 
+**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+request only the 128-byte header and YLSpec frame. TOC, payload and signature
+regions are not read. Discovery returns unverified metadata; validation and host
+preflight remain separate. Python/npm now bundle the native CLI alongside the
+core; Java/Kotlin supply a Java CLI entry point. See
+[core/CLI installation and PATH behavior](../installation-cli.md).
+These additions are not available in the published 0.1.2 packages.
+
 The host defines the application contract. A plugin declares what it can use;
 it cannot declare those services installed or grant itself authority. Separate
 inventory/discovery from active runtime sessions.

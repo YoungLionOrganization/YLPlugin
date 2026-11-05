@@ -1,4 +1,33 @@
-# Executed verification history — 0.1.0 and 0.1.1
+# Executed verification history
+
+## 0.1.3 metadata discovery and bundled CLI — 2026-11-05
+
+Local Linux x86_64 checks for the development additions:
+
+| Check | Result |
+|---|---|
+| Release static SDK and CTest | 9/9 suites passed |
+| ASan/UBSan with Qt RCC and QML | 11/11 suites passed |
+| C++ and C metadata discovery | Exact header/frame bounds, virtual 5 GiB source, corrupt TOC independence, malformed header/frame and limit checks passed |
+| Python SDK | Exact-range virtual reader, exception propagation, matching indexed metadata, corrupt TOC and limit checks passed |
+| Node SDK and TypeScript | 5 native suites and ESM/CJS declaration checks passed |
+| Java/Kotlin | 23 Java/JNI checks with explicit native path; 24 with bundled resources/CLI; Kotlin smoke passed |
+| Python platform wheel | auditwheel repaired; installed in a clean venv; Library(), console script, module CLI, metadata and validate passed without SDK selectors |
+| Actual npm archive installation | Installed local bin link, native metadata/validate and bundled addon passed without SDK selectors |
+| JVM distributions | Java/Kotlin/natives JARs and local staging publication built; extracted native CLI executed successfully |
+| PyPI metadata | Twine wheel metadata/description check passed |
+| Wiki | 24 English Markdown files and 6 offline publication/link tests passed |
+
+A Linux syscall trace of the data example recorded reads of exactly 128, 32 and
+1011 bytes from the plugin, totaling 1171 of its 1443 bytes. No TOC or payload read
+was requested. OS block caching is outside this assertion. Discovery deliberately
+does not validate signatures, plugin-profile semantics or the rest of the file.
+
+The platform CI workflow additionally installs each produced wheel in a fresh
+virtual environment and tests its console command. The aggregate job installs the
+actual npm archive and runs Java/Kotlin against bundled native resources. These
+are build artifacts for development version 0.1.3; registry publication remains
+a separate release operation.
 
 Environment: Linux x86_64, GCC/G++ 14.2, CMake 3.31.6, CPython 3.12.14,
 OpenSSL 3.5.7 runtime, Zstd 1.5.7, nlohmann-json 3.11.3, Qt 6.8.2.

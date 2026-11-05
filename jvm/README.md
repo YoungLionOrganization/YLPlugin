@@ -1,5 +1,9 @@
 # YLPlugin JVM SDK
 
+For **0.1.3 development**, see [metadata-only discovery](../docs/metadata-only.md)
+and [bundled core/CLI installation](../docs/installation-cli.md). These additions
+are absent from published 0.1.2.
+
 Java 11+ API, Kotlin/JVM 11 helpers and a native runtime JAR. Container, permission,
 integrity and compatibility behavior always comes from the same core.
 

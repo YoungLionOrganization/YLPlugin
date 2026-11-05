@@ -34,6 +34,7 @@ void close(Handle* h) {check(h&&!h->busy,"cannot close a package during a callba
 Result invoke(Handle* h,const std::string& op,const Json& args,std::span<const uint8_t> binary,const Callbacks& cb) {
     Busy busy(h);
     if(op=="version")return std::string(ylp_version());
+    if(op=="readMetadata")return ylp::read_metadata(path(args.at("path").get<std::string>()),limits_from(args.value("limits",Json::object())));
     if(op=="create") {
         std::vector<Input> inputs;
         for(const auto& j:args.at("resources")) {

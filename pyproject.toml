@@ -5,12 +5,40 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ylplugin"
 version = "0.1.3"
-description = "Native YLPlugin container SDK: inspect, build, verify and preflight plugins"
-readme = "bindings/python/README.md"
-authors = [{name = "YoungLionOrganization"}]
+description = "Native plugin container SDK and CLI with direct YLSpec metadata reads, verified resources and host preflight"
+readme = {file = "bindings/python/README.md", content-type = "text/markdown"}
+authors = [{name = "Cavanshirpro", email = "cavanshirpro@gmail.com"}, {name = "YoungLionOrganization"}]
+maintainers = [{name = "Cavanshirpro", email = "cavanshirpro@gmail.com"}, {name = "YoungLionOrganization"}]
+keywords = ["ylplugin", "ylspec", "plugin", "metadata", "manifest", "container", "native", "cli"]
+dependencies = []
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers", "Topic :: File Formats",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Programming Language :: Python :: 3", "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12",
+  "Programming Language :: C", "Programming Language :: C++",
+  "Operating System :: Microsoft :: Windows", "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS", "Typing :: Typed",
+]
 requires-python = ">=3.11"
 license = "LGPL-3.0-only"
 license-files = ["LICENSE", "COPYING", "LICENSING.md", "THIRD_PARTY_NOTICES.md", "SOURCES.md"]
+
+[project.scripts]
+ylplugin = "ylplugin.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/YoungLionOrganization/YLPlugin"
+Repository = "https://github.com/YoungLionOrganization/YLPlugin"
+Documentation = "https://github.com/YoungLionOrganization/YLPlugin/wiki"
+"Python API" = "https://github.com/YoungLionOrganization/YLPlugin/blob/main/docs/python-api.md"
+Issues = "https://github.com/YoungLionOrganization/YLPlugin/issues"
+Changelog = "https://github.com/YoungLionOrganization/YLPlugin/blob/main/CHANGELOG.md"
+Releases = "https://github.com/YoungLionOrganization/YLPlugin/releases"
+Source = "https://github.com/YoungLionOrganization/YLPlugin"
+Security = "https://github.com/YoungLionOrganization/YLPlugin/blob/main/SECURITY.md"
+Funding = "https://www.patreon.com/YoungLionOrganization"
 
 [tool.setuptools.packages.find]
 where = ["bindings/python"]

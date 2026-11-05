@@ -3,6 +3,7 @@
 * [Home](Home.md)
 * [Getting Started](Getting-Started.md)
 * [Installation and Builds](Installation-and-Builds.md)
+* [Metadata-Only Reads](Metadata-Only-Reads.md)
 * [Container and Profile](Container-and-Profile.md)
 * [Authoring Plugins](Authoring-Plugins.md)
 

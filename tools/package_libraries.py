@@ -10,6 +10,8 @@ import shutil
 import subprocess
 import zipfile
 import tarfile
+import tempfile
+import os
 from email.parser import BytesParser
 
 parser=argparse.ArgumentParser();parser.add_argument('native_root',type=Path);parser.add_argument('output',type=Path)
@@ -21,8 +23,11 @@ for metadata in args.native_root.rglob('native.json'):
     assert info['platform'] not in targets;targets[info['platform']]=info
     node=root/'javascript/prebuilds'/info['node_target'];node.mkdir(parents=True,exist_ok=False)
     shutil.copy2(source/'ylplugin.node',node/'ylplugin.node')
+    shutil.copy2(source/info['cli'],node/info['cli'])
+    if info['platform'].startswith(('linux-','macos-')):(node/info['cli']).chmod(0o755)
     jni=root/'jvm/natives/src/main/resources/natives'/info['platform'];jni.mkdir(parents=True,exist_ok=False)
     shutil.copy2(source/info['jni'],jni/info['jni'])
+    shutil.copy2(source/info['cli'],jni/info['cli'])
     licenses=root/'javascript/licenses'/info['platform'];shutil.copytree(source/'licenses',licenses)
     shutil.copytree(source/'licenses',root/'jvm/natives/src/main/resources/licenses'/info['platform'])
     for wheel in source.glob('*.whl'):shutil.copy2(wheel,args.output/wheel.name)
@@ -30,7 +35,16 @@ assert {'linux-x86_64','linux-arm64','windows-x86_64'}.issubset(targets)
 assert any(name.startswith('macos-') for name in targets)
 for file in ('LICENSE','COPYING','LICENSING.md','SOURCES.md','THIRD_PARTY_NOTICES.md'):shutil.copy2(root/file,root/'javascript'/file)
 subprocess.run(['npm','pack','--ignore-scripts','--pack-destination',str(args.output.resolve())],cwd=root/'javascript',check=True)
-subprocess.run(['gradle','-p',str(root/'jvm'),'publishAllPublicationsToStagingRepository','--no-daemon'],check=True)
+# Exercise the actual npm archive, its installed bin link and bundled core.
+with tempfile.TemporaryDirectory(prefix='ylplugin-npm-install-') as temporary:
+    installed=Path(temporary)
+    subprocess.run(['npm','install','--ignore-scripts','--no-audit','--no-fund',str((args.output/f'younglionorganization-ylplugin-{version}.tgz').resolve())],cwd=installed,check=True)
+    env=dict(os.environ)
+    for name in ('YLPLUGIN_CLI','YLPLUGIN_NODE_PATH'):env.pop(name,None)
+    subprocess.run(['npm','exec','--','ylplugin','validate',str(root/'examples/artifacts/data.ylplugin')],cwd=installed,env=env,check=True)
+    script="const sdk=require('@younglionorganization/ylplugin');if(!sdk.readMetadata(process.argv[1]).includes('xyz.example'))process.exit(1)"
+    subprocess.run(['node','-e',script,str(root/'examples/artifacts/data.ylplugin')],cwd=installed,env=env,check=True)
+subprocess.run(['gradle','-p',str(root/'jvm'),'publishAllPublicationsToStagingRepository',':java:smokeTest',':kotlin:smokeTest','--no-daemon'],check=True)
 repository=root/'jvm/build/maven-repository'
 with zipfile.ZipFile(args.output/f'ylplugin-jvm-{version}.zip','w',zipfile.ZIP_DEFLATED) as bundle:
     for path in sorted(repository.rglob('*')):
@@ -49,6 +63,8 @@ for path in args.output.glob('*.whl'):
         names=bundle.namelist()
         metadata=next(name for name in names if name.endswith('.dist-info/METADATA'))
         assert BytesParser().parsebytes(bundle.read(metadata))['License-Expression']=='LGPL-3.0-only'
+        assert any(name.startswith('ylplugin/_native/ylplugin') for name in names)
+        assert b'ylplugin.__main__:main' in bundle.read(next(name for name in names if name.endswith('.dist-info/entry_points.txt')))
         assert any(name.endswith('/licenses/LICENSE') for name in names)
         assert any(name.endswith('/licenses/COPYING') for name in names)
         assert any(name.endswith(f'/YLPlugin-source-{version}.tar.gz') for name in names)

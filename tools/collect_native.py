@@ -17,9 +17,11 @@ arch={'aarch64':'arm64','ARM64':'arm64','AMD64':'x86_64'}.get(platform.machine()
 node_os={'macos':'darwin','windows':'win32'}.get(os_name,os_name);node_arch='x64' if arch=='x86_64' else arch
 target=args.output/f'{os_name}-{arch}';target.mkdir(parents=True,exist_ok=False)
 suffix='.dll' if os_name=='windows' else '.dylib' if os_name=='macos' else '.so';prefix='' if os_name=='windows' else 'lib'
-for filename in ('ylplugin.node',prefix+'ylplugin_jni'+suffix,prefix+'ylplugin_runtime'+suffix):
+cli='ylplugin.exe' if os_name=='windows' else 'ylplugin'
+for filename in (cli,'ylplugin.node',prefix+'ylplugin_jni'+suffix,prefix+'ylplugin_runtime'+suffix):
     candidates=list(args.build.rglob(filename));assert len(candidates)==1,(filename,candidates)
     shutil.copy2(candidates[0],target/filename)
+    if filename==cli and os_name!='windows':(target/filename).chmod(0o755)
 licenses=target/'licenses';licenses.mkdir()
 for name in ('LICENSE','COPYING','LICENSING.md','SOURCES.md'):
     shutil.copy2(root/name,licenses/name)
@@ -59,6 +61,6 @@ if not any(p.name=='LICENSE' for p in java_notices):
         if fallback.is_file():java_notices.append(fallback)
 assert java_notices,'JDK JNI license notices missing'
 for notice in java_notices:shutil.copy2(notice,licenses/('OpenJDK-'+notice.name))
-info={'platform':os_name+'-'+arch,'node_target':node_os+'-'+node_arch,'version':(root/'VERSION').read_text().strip(),'jni':prefix+'ylplugin_jni'+suffix,'runtime':prefix+'ylplugin_runtime'+suffix}
+info={'platform':os_name+'-'+arch,'node_target':node_os+'-'+node_arch,'version':(root/'VERSION').read_text().strip(),'cli':cli,'jni':prefix+'ylplugin_jni'+suffix,'runtime':prefix+'ylplugin_runtime'+suffix}
 (target/'native.json').write_text(json.dumps(info,indent=2)+'\n')
 print(target)

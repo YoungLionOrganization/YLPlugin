@@ -10,6 +10,11 @@ public final class YLPlugin {
     public static final String VERSION = "0.1.3";
     public static String version() { return (String)Native.invoke(0, "version", "{}", null, null, null, null); }
     public static Plugin open(String path) { return new Plugin(path, Map.of()); }
+    /** Reads the header and YLSpec frame only, without a Plugin handle or payload scan. */
+    public static String readMetadata(String path) { return readMetadata(path, Map.of()); }
+    public static String readMetadata(String path, Map<String, ?> limits) {
+        return (String)Native.invoke(0, "readMetadata", Json.encode(Map.of("path", path, "limits", limits)), null, null, null, null);
+    }
     public static Plugin open(String path, Map<String, ?> limits) { return new Plugin(path, limits); }
     public static void create(String output, String manifest, List<? extends Map<String, ?>> resources) { create(output, manifest, resources, null, null); }
     public static void create(String output, String manifest, List<? extends Map<String, ?>> resources, KeyProvider keys, Cancellation cancel) {

@@ -1,5 +1,17 @@
 # JavaScript and TypeScript SDK
 
+## Direct metadata and native CLI (0.1.3 development)
+
+`readMetadata(path, limits?)` is exported in ESM, CommonJS and both TypeScript
+declaration formats. It returns canonical TOML after reading only the header and
+YLSpec frame, without constructing a Package or scanning TOC/payload/signature.
+See [metadata-only reads](metadata-only.md) for validation and trust boundaries.
+
+The npm `bin` entry registers `ylplugin`: use `npx ylplugin` for a local dependency,
+or install globally to use npm's global bin directory. The native core and CLI
+are bundled for supported targets. See [installation](installation-cli.md).
+
+
 Package: `@younglionorganization/ylplugin`. Version 0.1.2 is published on
 [npm](https://www.npmjs.com/package/@younglionorganization/ylplugin) under LGPL-3.0-only.
 The [publishing workflow](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711646655)

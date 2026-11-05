@@ -1,5 +1,18 @@
 # Validation performance and memory
 
+## Metadata-only discovery (0.1.3 development)
+
+Standalone `read_metadata` / `readMetadata` and `ylplugin metadata` read
+`128 + metadata_frame_length` bytes, independent of payload size. Memory scales
+with bounded metadata and its parsed representation. They skip the TOC and
+signature region as well as payloads. `Package` opening remains an indexed
+operation; it has a broader read scope. See [metadata discovery](metadata-only.md).
+
+A virtual 5 GiB regression source asserts exact ranges and total bytes. Linux
+syscall tracing on the data example observed reads of 128, 32 and 1011 bytes,
+with no TOC/payload read. This is read-volume evidence, not a wall-clock speedup
+benchmark or a guarantee about OS block caching.
+
 The 0.1.3 development change streams **plaintext store validation** through the
 existing SHA256 slice path instead of allocating and discarding the full resource.
 Every resource byte is still read and hashed on every call; results are not cached.

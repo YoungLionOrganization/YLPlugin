@@ -1,5 +1,9 @@
 # Documentation guide
 
+For **0.1.3 development**, see [metadata-only discovery](metadata-only.md)
+and [bundled core/CLI installation](installation-cli.md). These additions
+are absent from published 0.1.2.
+
 ## Reading paths
 
 * First use: [getting started](getting-started.md), then the SDK guide for your language.

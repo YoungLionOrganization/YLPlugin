@@ -1,5 +1,9 @@
 # Getting started
 
+For **0.1.3 development**, see [metadata-only discovery](metadata-only.md)
+and [bundled core/CLI installation](installation-cli.md). These additions
+are absent from published 0.1.2.
+
 This walkthrough reads a real container before introducing plugin execution.
 Published packages are **0.1.2**; the default branch prepares **0.1.3**. Use a
 released checkout with released packages, or build native code and facades from
