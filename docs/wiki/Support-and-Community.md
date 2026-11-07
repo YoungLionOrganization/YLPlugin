@@ -1,8 +1,8 @@
 # Support and Community
 
 YLPlugin is maintained by Cavanshirpro under YoungLionOrganization. Original
-project material is LGPL-3.0-only. Published packages are 0.1.2; main prepares
-0.1.3 and maintains the documentation and Wiki sources.
+project material is LGPL-3.0-only. The release baseline is 0.1.3; main also
+maintains the next milestone, documentation and Wiki sources.
 
 ## Support development
 

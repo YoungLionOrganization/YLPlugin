@@ -3,7 +3,7 @@
 ## Start with the interface and version
 
 Record package/native versions, OS/architecture, language runtime and operation.
-Published packages are 0.1.2; the main source branch prepares 0.1.3. A matching
+This guide targets 0.1.3; check your selected release/development version. A matching
 C ABI number does not allow a facade/runtime SDK version mismatch. Rebuild native
 code after switching source versions and select the resulting library explicitly.
 

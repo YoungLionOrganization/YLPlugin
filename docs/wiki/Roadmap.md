@@ -1,7 +1,7 @@
 # Roadmap and presentation assets
 
 The [repository roadmap](../../ROADMAP.md) tracks current and future work.
-0.1.3 is in development; 0.1.2 remains the latest published release.
+0.1.3 is the release baseline; the next presentation asset milestone remains planned.
 
 ## Current baseline
 

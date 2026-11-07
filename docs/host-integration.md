@@ -1,6 +1,6 @@
 # Host integration
 
-## Fast catalog discovery (0.1.3 development)
+## Fast catalog discovery (0.1.3)
 
 Use standalone [metadata-only reads](metadata-only.md) to display plugin IDs,
 versions and declarations before loading an index or payload. This reads only the

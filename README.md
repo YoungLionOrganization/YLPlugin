@@ -32,17 +32,17 @@ inspect, validate, build and select components before executing them. A
 `.ylplugin` has its own indexed binary format and embeds the existing YLSpec
 metadata frame. It is not a renamed ZIP and does not require YLPkg or LeoMiniGames.
 
-**Latest release: [v0.1.2](https://github.com/YoungLionOrganization/YLPlugin/releases/tag/v0.1.2), LGPLv3.**
+**[YLPlugin v0.1.3](https://github.com/YoungLionOrganization/YLPlugin/releases/tag/v0.1.3), LGPLv3.**
 Available on GitHub Releases, npm, PyPI and Maven Central. Published native SDKs
 cover Linux x86_64/ARM64, macOS x86_64/ARM64 and Windows x86_64.
 No stable ABI or production security audit is claimed during 0.x.
 
-**In development: 0.1.3.** Work focuses on bounded-memory plaintext validation,
+**0.1.3 highlights.** This release adds bounded-memory plaintext validation,
 cancellation fixes, direct metadata-only reads, bundled CLI installation, strict
 Node Unicode paths and incremental build versioning.
 See the [changelog](CHANGELOG.md), [performance guide](docs/performance.md) and
-[troubleshooting](docs/troubleshooting.md). Installation commands below use the
-published 0.1.2 packages; 0.1.3 has not been released.
+[troubleshooting](docs/troubleshooting.md). Installation commands below target
+0.1.3. See the [release notes](docs/releases/v0.1.3.md) for the complete scope.
 
 Development verification passed: [all seven core CI jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664950)
 and [all six SDK/platform packaging jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664789).
@@ -50,7 +50,7 @@ See [executed checks](docs/test-report.md) for results and platform limits.
 
 ## Discover plugins by reading only their YLSpec metadata
 
-**New in 0.1.3 development:** read the fixed container header and embedded YLSpec
+**New in 0.1.3:** read the fixed container header and embedded YLSpec
 frame directly, without opening a Package, scanning its TOC or reading payloads.
 Discovery reads `128 + metadata_frame_length` bytes even for multi-gigabyte plugins.
 
@@ -72,7 +72,7 @@ pip registers `ylplugin` in the active environment. npm supplies the same CLI vi
 its `bin` entry. Java/Kotlin resolve the core transitively and can invoke the
 bundled command through `xyz.younglion.ylplugin.Cli`. See
 [installation and PATH behavior](docs/installation-cli.md). These additions are
-not present in the currently published 0.1.2 packages.
+new in 0.1.3.
 
 ## Planned: plugin front-page assets
 
@@ -105,8 +105,8 @@ download during SDK import. See [compatibility](docs/compatibility.md).
 Python and Node.js packages are published separately from the source release:
 
 ```sh
-python -m pip install ylplugin==0.1.2
-npm install @younglionorganization/ylplugin@0.1.2
+python -m pip install ylplugin==0.1.3
+npm install @younglionorganization/ylplugin@0.1.3
 ```
 
 Python wheels include the native ctypes runtime. The npm package includes the
@@ -222,18 +222,11 @@ plugin activation are separate operations. See [security](docs/security.md).
 
 ## Release verification
 
-Version 0.1.2 was built from `81b1fa257ca7085f41180d2f2b08934a852c1940`.
-[Core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41709787677)
-passed seven jobs, including desktop tests, sanitizers, fuzzing and packaging.
-[Language SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41709787678)
-passed all five platform builds and aggregate packaging, including checks of the
-actual license texts, source archives and package metadata.
-
-Publication succeeded for [GitHub Releases](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711388362),
-[npm](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711646655),
-[PyPI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711655711)
-and [Maven Central](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711661036).
-See the [test report](docs/test-report.md) for executed checks and platform limits.
+The release pipeline requires core and language SDK builds from the same commit.
+It validates provenance, package identities, licenses and every artifact checksum
+before publishing. The [release notes](docs/releases/v0.1.3.md),
+[publishing record](docs/publishing.md) and [test report](docs/test-report.md)
+record the scope, workflows and platform limits. Historical releases stay immutable.
 
 ## Documentation
 

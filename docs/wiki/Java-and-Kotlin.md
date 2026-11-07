@@ -1,15 +1,15 @@
 # Java and Kotlin
 
-**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+**0.1.3 additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
 request only the 128-byte header and YLSpec frame. TOC, payload and signature
 regions are not read. Discovery returns unverified metadata; validation and host
 preflight remain separate. Python/npm now bundle the native CLI alongside the
 core; Java/Kotlin supply a Java CLI entry point. See
 [core/CLI installation and PATH behavior](../installation-cli.md).
-These additions are not available in the published 0.1.2 packages.
+These additions are available from 0.1.3.
 
 Published JVM artifacts are `xyz.younglion:ylplugin`, `ylplugin-kotlin` and
-`ylplugin-natives`, version 0.1.2. They target JVM 11+; CI uses a JDK 17 test
+`ylplugin-natives`, version 0.1.3. They target JVM 11+; CI uses a JDK 17 test
 environment. JNI runs the same native core used by other SDKs.
 
 ## Gradle installation
@@ -18,14 +18,14 @@ For Java:
 
 ```kotlin
 repositories { mavenCentral() }
-dependencies { implementation("xyz.younglion:ylplugin:0.1.2") }
+dependencies { implementation("xyz.younglion:ylplugin:0.1.3") }
 ```
 
 For Kotlin, select the wrapper, which also brings in Java:
 
 ```kotlin
 repositories { mavenCentral() }
-dependencies { implementation("xyz.younglion:ylplugin-kotlin:0.1.2") }
+dependencies { implementation("xyz.younglion:ylplugin-kotlin:0.1.3") }
 ```
 
 The natives JAR is a runtime dependency. These are desktop packages, not an

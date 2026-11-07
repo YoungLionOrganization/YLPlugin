@@ -5,12 +5,12 @@ without loading executable plugin code or depending on Qt.
 
 ## Obtain matching inputs
 
-Published packages are 0.1.2. For this walkthrough use the matching tag:
+This walkthrough targets 0.1.3. Use its matching tag:
 
 ```sh
 mkdir ylplugin-work
 cd ylplugin-work
-git clone --branch v0.1.2 --depth 1 https://github.com/YoungLionOrganization/YLPlugin.git source
+git clone --branch v0.1.3 --depth 1 https://github.com/YoungLionOrganization/YLPlugin.git source
 ```
 
 `source/examples/artifacts/data.ylplugin` contains `catalog.json`, whose `total`
@@ -25,7 +25,9 @@ Create/activate a virtual environment and install:
 python -m venv .venv
 # POSIX: . .venv/bin/activate
 # PowerShell: .venv\Scripts\Activate.ps1
-python -m pip install ylplugin==0.1.2
+python -m pip install ylplugin==0.1.3
+ylplugin --version
+ylplugin metadata source/examples/artifacts/data.ylplugin --json
 ```
 
 From `ylplugin-work`, save and run:
@@ -53,7 +55,7 @@ Create a separate consumer directory:
 mkdir node-client
 cd node-client
 npm init -y
-npm install @younglionorganization/ylplugin@0.1.2
+npm install @younglionorganization/ylplugin@0.1.3
 ```
 
 Save `read.mjs` and run `node read.mjs`:

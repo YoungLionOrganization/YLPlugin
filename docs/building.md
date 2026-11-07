@@ -1,8 +1,8 @@
 # Building, testing and installing
 
-For **0.1.3 development**, see [metadata-only discovery](metadata-only.md)
+For **0.1.3**, see [metadata-only discovery](metadata-only.md)
 and [bundled core/CLI installation](installation-cli.md). These additions
-are absent from published 0.1.2.
+are absent from 0.1.2.
 
 Requirements: CMake 3.26+, C11/C++20 compilers, YLSpec 0.1.2+, OpenSSL 3+, Zstd,
 nlohmann-json 3.11+, and threads. Python 3.11+ is needed for integration tests.
@@ -47,7 +47,7 @@ installed export (`YLPlugin::qt` is the in-tree alias). Shared library runtime
 search paths/DLL deployment are the host's responsibility. The project does not
 depend on LeoMiniGames or require its source in SDK consumers.
 
-The default branch prepares 0.1.3; the latest published packages remain 0.1.2.
+This guide targets 0.1.3; source builds and facades must come from a matching checkout.
 Use matching source/native/facade versions. From 0.1.3, changing `VERSION`
 automatically triggers CMake reconfiguration in an existing build directory.
 
@@ -72,8 +72,8 @@ are fixed-width, serialized explicitly and independent of native struct layout.
 
 Python source packaging: `python -m pip install .` installs the ctypes facade;
 provide the separately built shared library using `Library(path)` or `YLPLUGIN_LIBRARY`.
-Published 0.1.2 platform wheels include a native runtime. The universal GitHub
-facade wheel does not. Release and npm/PyPI/Maven publishing workflows are
+Platform wheels from 0.1.3 include the native runtime and CLI. The universal
+GitHub facade wheel does not; use PyPI platform wheels for automatic core/CLI setup. Release and npm/PyPI/Maven publishing workflows are
 configured separately from build CI; see [publishing](publishing.md).
 
 ## Building the language SDKs

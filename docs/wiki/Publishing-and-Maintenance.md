@@ -1,7 +1,7 @@
 # Publishing and Maintenance
 
-The latest published version is 0.1.2. Version 0.1.3 is development work and has
-not been tagged, released or uploaded to registries. A normal push builds/tests;
+This guide describes the 0.1.3 release pipeline. Actual publication results are
+recorded in the [publishing record](../publishing.md). A normal push builds/tests;
 it does not perform registry publication.
 
 ## Identities and immutable versions

@@ -1,6 +1,6 @@
 # Testing and Contributing
 
-The default branch is development 0.1.3; released packages remain 0.1.2. Changes
+The release baseline is 0.1.3; follow the roadmap for subsequent development. Changes
 to original material use LGPL-3.0-only and retain SPDX/dependency notices.
 
 ## Local checks by change type

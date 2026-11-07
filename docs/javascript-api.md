@@ -1,6 +1,6 @@
 # JavaScript and TypeScript SDK
 
-## Direct metadata and native CLI (0.1.3 development)
+## Direct metadata and native CLI (0.1.3)
 
 `readMetadata(path, limits?)` is exported in ESM, CommonJS and both TypeScript
 declaration formats. It returns canonical TOML after reading only the header and
@@ -12,12 +12,11 @@ or install globally to use npm's global bin directory. The native core and CLI
 are bundled for supported targets. See [installation](installation-cli.md).
 
 
-Package: `@younglionorganization/ylplugin`. Version 0.1.2 is published on
-[npm](https://www.npmjs.com/package/@younglionorganization/ylplugin) under LGPL-3.0-only.
-The [publishing workflow](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41711646655)
-consumed verified CI artifacts without rebuilding them.
+Package: `@younglionorganization/ylplugin`, version 0.1.3, under LGPL-3.0-only.
+Install it from [npm](https://www.npmjs.com/package/@younglionorganization/ylplugin).
+The publishing pipeline consumes verified CI artifacts without rebuilding them.
 
-The source branch prepares 0.1.3; it is not yet on npm. Native file opens now
+In 0.1.3, native file opens
 reject unpaired UTF-16 surrogates instead of substituting U+FFFD. Valid Unicode
 paths are preserved. Slice cancellation also covers empty resources and the
 final reader callback. See [troubleshooting](troubleshooting.md).

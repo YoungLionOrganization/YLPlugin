@@ -1,12 +1,12 @@
 # YLPlugin Wiki
 
-**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+**0.1.3 additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
 request only the 128-byte header and YLSpec frame. TOC, payload and signature
 regions are not read. Discovery returns unverified metadata; validation and host
 preflight remain separate. Python/npm now bundle the native CLI alongside the
 core; Java/Kotlin supply a Java CLI entry point. See
 [core/CLI installation and PATH behavior](../installation-cli.md).
-These additions are not available in the published 0.1.2 packages.
+These additions are available from 0.1.3.
 
 YLPlugin is a standalone plugin container and a native SDK for inspecting,
 building, validating and selecting components before a host activates them.
@@ -14,7 +14,7 @@ The container embeds YLSpec metadata and indexes its own resources. The core is
 C++20 with a public C ABI, Node-API JavaScript/TypeScript bindings, JNI Java/Kotlin
 bindings and a Python ctypes facade.
 
-**Published SDK: 0.1.2. Development SDK: 0.1.3, unreleased.** Container/profile
+**SDK baseline: 0.1.3.** Container/profile
 1.0, C ABI version 1, runtime ABI and the host application's API are independently
 versioned. Original project material is LGPL-3.0-only.
 
@@ -92,7 +92,7 @@ Earlier performance and Unicode work at
 `cca0c717309857d2223421e547b29bd4a077527e` passed all thirteen jobs across
 [core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794)
 and [SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475).
-No 0.1.3 release has been published.
+Release publication and registry verification are recorded in [publishing](../publishing.md).
 
 The Wiki is an explanatory guide. [The specification](../specification.md) and
 [profile](../profile.md) define the normative byte/metadata contract. Versioned

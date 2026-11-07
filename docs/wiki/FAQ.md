@@ -1,12 +1,12 @@
 # Frequently Asked Questions
 
-**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+**0.1.3 additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
 request only the 128-byte header and YLSpec frame. TOC, payload and signature
 regions are not read. Discovery returns unverified metadata; validation and host
 preflight remain separate. Python/npm now bundle the native CLI alongside the
 core; Java/Kotlin supply a Java CLI entry point. See
 [core/CLI installation and PATH behavior](../installation-cli.md).
-These additions are not available in the published 0.1.2 packages.
+These additions are available from 0.1.3.
 
 ## Is this an archive format or a plugin manager?
 
@@ -28,7 +28,7 @@ before the activation stage.
 
 ## Which release should I install?
 
-Use published 0.1.2 packages. The main branch prepares 0.1.3; match native/facade
+Use matching 0.1.3 packages and source; keep native/facade
 versions for source builds. File/profile 1.0 and C ABI version 1 are separate
 version namespaces and do not waive the SDK loader version check.
 
@@ -59,7 +59,7 @@ host-provided keys. There is no automatic entitlement, account or perfect DRM sy
 
 The format uses a complete-resource SHA256, not a per-chunk authenticated tree.
 The SDK authenticates the entire resource before returning the selected bytes.
-Development 0.1.3 lowers scratch usage and improves cancellation without caching trust.
+Version 0.1.3 lowers scratch usage and improves cancellation without caching trust.
 
 ## Why does Windows SDK support not enable native plugin activation?
 

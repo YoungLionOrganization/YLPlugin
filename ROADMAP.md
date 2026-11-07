@@ -1,7 +1,7 @@
 # YLPlugin roadmap
 
-Status: living plan. SDK **0.1.3 is in development**; the latest published release
-is **0.1.2**. Later version numbers below are proposed milestones, not release
+Status: living plan for the **0.1.3 release baseline** and the next presentation
+asset milestone. Later version numbers below are proposed milestones, not release
 dates or claims that an API already exists. Container, profile and SDK versions
 are independent.
 
@@ -13,7 +13,7 @@ See the [presentation asset architecture](docs/design/presentation-assets.md)
 for the proposed catalog, byte layout, discovery rules, writer algorithm,
 compatibility and acceptance criteria.
 
-## 0.1.3 — finish and release the current baseline
+## 0.1.3 — release baseline
 
 Implemented and verified:
 

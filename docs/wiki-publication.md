@@ -61,7 +61,7 @@ not invented from an unrelated account or an ambient browser tab.
 
 ## Version policy
 
-Keep installation commands pinned to the published 0.1.2 package while main
-prepares 0.1.3. Label development-only behavior explicitly. Update release status,
+Keep installation commands pinned to the release baseline, currently 0.1.3.
+Label later development-only behavior explicitly. Update release status,
 SDK/platform claims and the verification links together after a real release.
 Wiki publication does not publish npm/PyPI/Maven packages or change any SDK tag.

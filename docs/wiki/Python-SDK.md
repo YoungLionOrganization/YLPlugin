@@ -1,19 +1,19 @@
 # Python SDK
 
-**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+**0.1.3 additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
 request only the 128-byte header and YLSpec frame. TOC, payload and signature
 regions are not read. Discovery returns unverified metadata; validation and host
 preflight remain separate. Python/npm now bundle the native CLI alongside the
 core; Java/Kotlin supply a Java CLI entry point. See
 [core/CLI installation and PATH behavior](../installation-cli.md).
-These additions are not available in the published 0.1.2 packages.
+These additions are available from 0.1.3.
 
 The `ylplugin` package is a typed ctypes facade over the native C ABI. It does
 not contain a second container parser or a Python plugin execution engine.
-Published version 0.1.2 requires Python 3.11+ and supplies platform wheels.
+Version 0.1.3 requires Python 3.11+ and supplies platform wheels with core and CLI.
 
 ```sh
-python -m pip install ylplugin==0.1.2
+python -m pip install ylplugin==0.1.3
 ```
 
 ## Open, validate and read
@@ -71,7 +71,7 @@ are appropriate for independently scheduled I/O.
 
 The facade validates negative/fractional/bool/overflowing ranges before ctypes
 can narrow them. `read_slice(path, offset, count)` has no cancellation argument;
-full reads and validation do. In development 0.1.3, plaintext validation uses
+full reads and validation do. In 0.1.3, plaintext validation uses
 bounded streaming hash checks; full read still returns the complete resource.
 
 See [the complete Python guide](../python-api.md),

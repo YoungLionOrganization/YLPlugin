@@ -1,17 +1,17 @@
 # JavaScript and TypeScript
 
-**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+**0.1.3 additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
 request only the 128-byte header and YLSpec frame. TOC, payload and signature
 regions are not read. Discovery returns unverified metadata; validation and host
 preflight remain separate. Python/npm now bundle the native CLI alongside the
 core; Java/Kotlin supply a Java CLI entry point. See
 [core/CLI installation and PATH behavior](../installation-cli.md).
-These additions are not available in the published 0.1.2 packages.
+These additions are available from 0.1.3.
 
 Install the published desktop Node-API package:
 
 ```sh
-npm install @younglionorganization/ylplugin@0.1.2
+npm install @younglionorganization/ylplugin@0.1.3
 ```
 
 Node 20+ is required. ESM, CommonJS and declarations share the same implementation.
@@ -70,12 +70,11 @@ The addon loads from `prebuilds/<node-platform>-<node-arch>/ylplugin.node`, or
 There are no installation scripts or import-time native downloads. A finalizer
 is fallback cleanup; explicit close gives predictable resource lifetime.
 
-## Development 0.1.3 behavior
+## 0.1.3 behavior
 
-The development branch rejects lone UTF-16 surrogates in file-open paths before
+Version 0.1.3 rejects lone UTF-16 surrogates in file-open paths before
 V8 can replace them with U+FFFD. It preserves valid Unicode paths and uses UTF-8
-diagnostics on Windows. These are development fixes, not claims about the already
-published 0.1.2 files. Slice cancellation now covers empty resources and the
+diagnostics on Windows. These fixes are new in 0.1.3 and do not alter the immutable 0.1.2 files. Slice cancellation now covers empty resources and the
 last reader callback; complete-resource hashing is retained.
 
 See [the API guide](../javascript-api.md) and the

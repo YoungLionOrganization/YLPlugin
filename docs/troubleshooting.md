@@ -3,7 +3,8 @@
 ## Native and package versions differ
 
 The C runtime, Node addon and JNI library must match the facade's SDK version.
-The published packages are 0.1.2; the current source tree prepares 0.1.3.
+This guide targets 0.1.3. Use matching package/native versions for the release
+or development checkout you select.
 Rebuild native code after changing branches or versions, then select that build
 using `YLPLUGIN_LIBRARY`, `YLPLUGIN_NODE_PATH` or `ylplugin.native.path`.
 From 0.1.3, changing `VERSION` automatically invalidates CMake configuration.

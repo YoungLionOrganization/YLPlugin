@@ -1,6 +1,6 @@
 # Security architecture and limits
 
-## Metadata-only discovery (0.1.3 development)
+## Metadata-only discovery (0.1.3)
 
 Standalone [metadata discovery](metadata-only.md) reads only the header and public
 YLSpec frame. It intentionally skips TOC/profile/resource validation and signatures.

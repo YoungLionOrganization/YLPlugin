@@ -1,6 +1,6 @@
 # Read YLSpec metadata without scanning a plugin
 
-Available in development version **0.1.3**. Published **0.1.2** exposes metadata
+Available from **0.1.3**. Earlier **0.1.2** exposes metadata
 through an indexed `Package` open; that operation also reads the table of contents
 (TOC), alignment padding and signature descriptor when present. Use the new
 standalone operations below when only plugin information is needed.

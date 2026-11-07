@@ -1,6 +1,6 @@
 # SDK, ownership and bindings
 
-## Metadata discovery (0.1.3 development)
+## Metadata discovery (0.1.3)
 
 `ylp::read_metadata(path, limits)` and its `(size, reader, limits)` overload read
 only the fixed header and YLSpec frame. The C ABI exposes `ylp_read_metadata` and

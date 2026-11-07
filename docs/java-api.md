@@ -1,6 +1,6 @@
 # Java SDK
 
-## Metadata discovery and CLI (0.1.3 development)
+## Metadata discovery and CLI (0.1.3)
 
 `YLPlugin.readMetadata(path)` and `readMetadata(path, limits)` return canonical
 TOML using only the header and YLSpec frame. Neither constructs a Plugin handle
@@ -13,7 +13,7 @@ See [installation](installation-cli.md).
 
 
 Coordinates: `xyz.younglion:ylplugin` and runtime dependency
-`xyz.younglion:ylplugin-natives`, version 0.1.2, published on Maven Central. Java 11+ is the
+`xyz.younglion:ylplugin-natives`, version 0.1.3, available through Maven Central. Java 11+ is the
 library baseline; CI runs smoke tests on JDK 17. This is a desktop JNI SDK,
 not an Android AAR or an implemented Java plugin execution runtime.
 

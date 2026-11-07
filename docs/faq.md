@@ -14,7 +14,7 @@ require explicit host-controlled runtime integration.
 
 ## Which version should I install?
 
-Published packages are 0.1.2. The default branch prepares 0.1.3 with validation,
+Use 0.1.3 for metadata discovery, bundled CLI installation, validation,
 cancellation, Unicode-path and incremental-build fixes. Build source facades and
 native libraries from the same version. Format/profile 1.0 is a different
 version namespace from the SDK, native ABI and your application's API.

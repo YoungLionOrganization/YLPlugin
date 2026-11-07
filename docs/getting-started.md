@@ -1,13 +1,12 @@
 # Getting started
 
-For **0.1.3 development**, see [metadata-only discovery](metadata-only.md)
+For **0.1.3**, see [metadata-only discovery](metadata-only.md)
 and [bundled core/CLI installation](installation-cli.md). These additions
-are absent from published 0.1.2.
+are absent from 0.1.2.
 
 This walkthrough reads a real container before introducing plugin execution.
-Published packages are **0.1.2**; the default branch prepares **0.1.3**. Use a
-released checkout with released packages, or build native code and facades from
-the same development checkout. The container/profile version remains 1.0.
+This guide targets **0.1.3**. Use its matching tag and packages, or build native
+code and facades from the same checkout. The container/profile version remains 1.0.
 
 ## 1. Choose a supported environment
 
@@ -22,7 +21,7 @@ need a source build, not a renamed wheel or a foreign-architecture binary.
 ```sh
 mkdir ylplugin-work
 cd ylplugin-work
-git clone --branch v0.1.2 --depth 1 https://github.com/YoungLionOrganization/YLPlugin.git source
+git clone --branch v0.1.3 --depth 1 https://github.com/YoungLionOrganization/YLPlugin.git source
 ```
 
 The data fixture is `source/examples/artifacts/data.ylplugin`. It contains
@@ -37,7 +36,9 @@ Create and activate a virtual environment, then install the matching package:
 python -m venv .venv
 # POSIX: . .venv/bin/activate
 # PowerShell: .venv\Scripts\Activate.ps1
-python -m pip install ylplugin==0.1.2
+python -m pip install ylplugin==0.1.3
+ylplugin --version
+ylplugin metadata source/examples/artifacts/data.ylplugin --json
 ```
 
 Run from `ylplugin-work`:
@@ -64,7 +65,7 @@ Keep the consumer package separate from YLPlugin's own source package:
 mkdir node-client
 cd node-client
 npm init -y
-npm install @younglionorganization/ylplugin@0.1.2
+npm install @younglionorganization/ylplugin@0.1.3
 ```
 
 Save this as `read.mjs` inside `node-client` and run `node read.mjs`:

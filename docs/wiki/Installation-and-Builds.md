@@ -1,16 +1,16 @@
 # Installation and Builds
 
-**0.1.3 development additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
+**0.1.3 additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
 request only the 128-byte header and YLSpec frame. TOC, payload and signature
 regions are not read. Discovery returns unverified metadata; validation and host
 preflight remain separate. Python/npm now bundle the native CLI alongside the
 core; Java/Kotlin supply a Java CLI entry point. See
 [core/CLI installation and PATH behavior](../installation-cli.md).
-These additions are not available in the published 0.1.2 packages.
+These additions are available from 0.1.3.
 
 ## Choose a distribution
 
-| Consumer | Published 0.1.2 distribution |
+| Consumer | 0.1.3 distribution |
 |---|---|
 | Python 3.11+ | `ylplugin`, platform-specific ctypes runtime wheels |
 | Node 20+ JS/TS | `@younglionorganization/ylplugin`, native Node-API prebuilds |
@@ -73,7 +73,7 @@ basic shared-core command also produces every registry package.
 
 ## Version and loader selection
 
-The default branch prepares 0.1.3. Native/runtime and facade versions must match
+This guide targets 0.1.3. Native/runtime and facade versions must match
 even though C ABI version 1 and file/profile 1.0 remain unchanged. Explicit
 loader selectors are `YLPLUGIN_LIBRARY`/`Library(path)`, `YLPLUGIN_NODE_PATH`
 and JVM `ylplugin.native.path`. No SDK import downloads executable code.

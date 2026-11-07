@@ -30,7 +30,7 @@ can configure their own appropriate limits.
 | Encrypted/compressed validation | Existing stored/decoded authenticated decode buffers |
 | Signature verification | Separate SHA512 prefix scan/Ed25519 verification |
 
-The bounded plaintext validation change is in development 0.1.3. Every byte is
+The bounded plaintext validation change is available from 0.1.3. Every byte is
 still read and hashed on each call; successful hashes are not cached across a
 mutable custom reader. A small slice checks data outside the slice too.
 Metadata, TOC, interpreter, crypto state and concurrent calls add memory beyond

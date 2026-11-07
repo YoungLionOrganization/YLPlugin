@@ -41,8 +41,8 @@ does not validate signatures, plugin-profile semantics or the rest of the file.
 The platform CI workflow additionally installs each produced wheel in a fresh
 virtual environment and tests its console command. The aggregate job installs the
 actual npm archive and runs Java/Kotlin against bundled native resources. These
-are build artifacts for development version 0.1.3; registry publication remains
-a separate release operation.
+were development artifacts for version 0.1.3; subsequent publication is recorded
+in the [publishing record](publishing.md).
 
 Environment: Linux x86_64, GCC/G++ 14.2, CMake 3.31.6, CPython 3.12.14,
 OpenSSL 3.5.7 runtime, Zstd 1.5.7, nlohmann-json 3.11.3, Qt 6.8.2.
@@ -207,7 +207,7 @@ their historical metadata remains immutable. Current distributions carry the sel
 ## 0.1.3 development verification — 2026-11-04
 
 Implementation commit: `cca0c717309857d2223421e547b29bd4a077527e`.
-Version 0.1.3 is unreleased; the published packages remain 0.1.2.
+At this historical check, 0.1.3 was unreleased and published packages were 0.1.2.
 
 Local verification passed 11 ASan/UBSan CTests (including RCC/QML), nine
 static-core CTests, five Node tests, TypeScript ESM/CommonJS checks, 19 Java/JNI
@@ -242,8 +242,8 @@ autodiscovery. Linux x86_64/ARM64 and macOS x86_64/ARM64 SDK jobs also passed.
 Native plugin activation remains intentionally unsupported on Windows because
 secure extraction is not implemented; SDK Unicode filesystem tests do execute there.
 
-No 0.1.3 tag, GitHub Release or registry version was published. Its CI artifacts
-are development build outputs. The latest published version remains 0.1.2.
+This historical check did not publish a 0.1.3 tag, release or registry version.
+Its outputs were development artifacts; 0.1.2 was the latest release at the time.
 
 ## English Wiki and documentation verification — 2026-11-05
 

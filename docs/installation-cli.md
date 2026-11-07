@@ -1,7 +1,7 @@
 # SDK installation and the native command
 
-The changes below are new in **0.1.3 (development)**. Published 0.1.2 wheels and
-npm/JVM packages supply the native SDK, but do not register a CLI.
+The changes below are new in **0.1.3**. Earlier 0.1.2 wheels and npm/JVM
+packages supply the native SDK, but do not register a CLI.
 
 All supported packages carry binaries from the same native core. Installation
 never fetches code in an SDK import hook. Native/package versions must match.

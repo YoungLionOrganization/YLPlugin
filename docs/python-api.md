@@ -11,11 +11,11 @@ retain no handle, and skip TOC/payload/signature validation. In contrast,
 Platform wheels also include the core and native CLI. Pip registers `ylplugin` in
 the environment scripts directory; `python -m ylplugin` works as well. See
 [installation and PATH behavior](installation-cli.md). These APIs and CLI entry
-points are development additions, absent from published 0.1.2.
+points are new in 0.1.3 and absent from 0.1.2.
 
 
-`ylplugin` requires Python 3.11+. Version 0.1.2 platform wheels
-contain a ctypes runtime built from the same core. Source/facade-only installs
+`ylplugin` requires Python 3.11+. Version 0.1.3 platform wheels
+contain the native CLI and a ctypes runtime built from the same core. Source/facade-only installs
 require an installed SDK or explicit path. Published v0.1.0's facade-only wheel
 is preserved.
 
@@ -24,6 +24,7 @@ import json
 from ylplugin import Library, Limits
 
 sdk = Library()  # bundled runtime, YLPLUGIN_LIBRARY, or installed SDK
+print(sdk.read_metadata("data.ylplugin"))  # no TOC or payload reads
 with sdk.open("data.ylplugin", Limits(record=64 * 1024 * 1024)) as plugin:
     plugin.validate()
     print(json.loads(plugin.read("catalog.json"))["total"])

@@ -1,12 +1,12 @@
 # YLPlugin for JavaScript and TypeScript
 
-For **0.1.3 development**, see [metadata-only discovery](../docs/metadata-only.md)
+For **0.1.3**, see [metadata-only discovery](../docs/metadata-only.md)
 and [bundled core/CLI installation](../docs/installation-cli.md). These additions
-are absent from published 0.1.2.
+are absent from 0.1.2.
 
 Node-API SDK for the native container, with ESM/CommonJS declarations and exact
-bigint support. Configured package: `@younglionorganization/ylplugin` 0.1.2
-(development; publication is manual).
+bigint support. Package: `@younglionorganization/ylplugin` 0.1.3. Publication uses verified CI
+artifacts through the manual release pipeline.
 
 ```js
 import {Package} from '@younglionorganization/ylplugin';

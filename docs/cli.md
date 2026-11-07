@@ -1,6 +1,6 @@
 # CLI reference
 
-## Metadata-only command and package installation (0.1.3 development)
+## Metadata-only command and package installation (0.1.3)
 
 `ylplugin metadata FILE` emits canonical TOML and reads only the container header
 and YLSpec frame. `--json` emits `scope: "metadata-only"`,

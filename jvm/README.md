@@ -1,8 +1,8 @@
 # YLPlugin JVM SDK
 
-For **0.1.3 development**, see [metadata-only discovery](../docs/metadata-only.md)
+For **0.1.3**, see [metadata-only discovery](../docs/metadata-only.md)
 and [bundled core/CLI installation](../docs/installation-cli.md). These additions
-are absent from published 0.1.2.
+are absent from 0.1.2.
 
 Java 11+ API, Kotlin/JVM 11 helpers and a native runtime JAR. Container, permission,
 integrity and compatibility behavior always comes from the same core.
@@ -15,7 +15,7 @@ integrity and compatibility behavior always comes from the same core.
 
 Version 0.1.2 applies LGPL-3.0-only to all three publications. JARs include the
 license texts, source archives and dependency notices. All three are published on
-[Maven Central](https://central.sonatype.com/artifact/xyz.younglion/ylplugin/0.1.2).
+[Maven Central](https://central.sonatype.com/artifact/xyz.younglion/ylplugin/0.1.3).
 
 ## Install
 
@@ -24,7 +24,7 @@ Use Maven Central in your Gradle repositories:
 ```kotlin
 repositories { mavenCentral() }
 dependencies {
-    implementation("xyz.younglion:ylplugin:0.1.2")
+    implementation("xyz.younglion:ylplugin:0.1.3")
 }
 ```
 
@@ -32,7 +32,7 @@ Kotlin applications can select the wrapper, which also brings in the Java API:
 
 ```kotlin
 dependencies {
-    implementation("xyz.younglion:ylplugin-kotlin:0.1.2")
+    implementation("xyz.younglion:ylplugin-kotlin:0.1.3")
 }
 ```
 
