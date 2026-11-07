@@ -38,6 +38,10 @@
 
 ### Documentation
 
+* Added a versioned roadmap and proposed presentation catalog architecture for
+  auto-detected icons/documents and explicit, bounded single-asset reads.
+  This records planned work; the runtime feature is not implemented yet.
+
 * Added performance, troubleshooting and contribution guides.
 * Corrected source-install versus platform-wheel instructions and outdated
   publication/build statements. Published installation examples remain on 0.1.2.

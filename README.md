@@ -19,12 +19,12 @@
 
 **One plugin container. A shared native core. SDKs for your host language.**
 
-[Documentation](docs/index.md) · [Examples](docs/examples.md) · [Downloads](https://github.com/YoungLionOrganization/YLPlugin/releases/latest) · [License](LICENSE)
+[Documentation](docs/index.md) · [Examples](docs/examples.md) · [Downloads](https://github.com/YoungLionOrganization/YLPlugin/releases/latest) · [Roadmap](ROADMAP.md) · [License](LICENSE)
 
 [English Wiki](https://github.com/YoungLionOrganization/YLPlugin/wiki) · [Getting started](docs/getting-started.md) ·
 [Author a plugin](docs/plugin-authoring.md) · [Host integration](docs/host-integration.md)
 
-The Wiki contains 22 detailed topic pages, a sidebar and a footer; its
+The Wiki contains 23 detailed topic pages, a sidebar and a footer; its
 [versioned English sources](docs/wiki/Home.md) are maintained with the repository.
 
 A standalone plugin container and native SDK for applications that need to
@@ -73,6 +73,16 @@ its `bin` entry. Java/Kotlin resolve the core transitively and can invoke the
 bundled command through `xyz.younglion.ylplugin.Cli`. See
 [installation and PATH behavior](docs/installation-cli.md). These additions are
 not present in the currently published 0.1.2 packages.
+
+## Planned: plugin front-page assets
+
+The [roadmap](ROADMAP.md) adds conventional discovery of icons, README, license,
+contributing and security documents during packaging. Metadata will hold file
+**descriptors only**; a separate native discovery API will read just a selected
+file, without scanning the TOC or unrelated payload. The
+[architecture proposal](docs/design/presentation-assets.md) explains direct byte
+locators, deterministic writer planning, compatibility and trust. This feature
+is planned for the next 0.1.x milestone; it is not implemented in 0.1.3.
 
 ## Choose an SDK
 

@@ -70,6 +70,14 @@ adapters implement data, approved native libraries and optional Qt RCC mounting.
 WASM execution in the example is supplied explicitly by its Node host; there is
 no automatic Python execution adapter, Android AAR, installer or dependency solver.
 
+## Planned plugin front pages
+
+The [roadmap](Roadmap.md) describes automatic icon/README/license/security file
+selection, descriptor-only metadata and explicit reads of individual assets.
+The [architecture proposal](../design/presentation-assets.md) uses the existing
+container layout and explains stable locator generation. These are planned
+features, distinct from the implemented metadata-only API.
+
 ## Evidence and document status
 
 Metadata discovery and bundled CLI implementation:

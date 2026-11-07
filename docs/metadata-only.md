@@ -134,3 +134,12 @@ volume, plus metadata limits, malformed framing and independence from a corrupt
 TOC. Python repeats the virtual-range check; Node, Java and the CLI compare
 standalone results to indexed metadata. This tests the distinction between
 metadata discovery and full container validation explicitly.
+
+## Planned: discover document and icon descriptors
+
+The [roadmap](../ROADMAP.md) and [presentation architecture](design/presentation-assets.md)
+propose a separate asset catalog/read API. Metadata will describe icon, README,
+license and similar files, while their bytes stay in ordinary payload resources.
+Metadata-only operations will keep their current read boundary. Fetching a file
+will be an explicit operation for that one declared range. This is future work,
+not an existing asset reader in 0.1.3.

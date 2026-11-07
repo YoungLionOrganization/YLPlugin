@@ -134,3 +134,9 @@ volume, plus metadata limits, malformed framing and independence from a corrupt
 TOC. Python repeats the virtual-range check; Node, Java and the CLI compare
 standalone results to indexed metadata. This tests the distinction between
 metadata discovery and full container validation explicitly.
+
+## Planned document and icon reads
+
+See [Roadmap and Presentation Assets](Roadmap.md) for descriptor-only catalogs
+and explicitly fetching one icon/document without a TOC scan. These future asset
+operations will be separate from the existing metadata-only read contract.

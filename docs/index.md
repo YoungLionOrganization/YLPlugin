@@ -9,7 +9,7 @@ are absent from published 0.1.2.
 * First use: [getting started](getting-started.md), then the SDK guide for your language.
 * Plugin author: [authoring tutorial](plugin-authoring.md), profile and examples.
 * Host developer: [host integration](host-integration.md), preflight, runtime and security contracts.
-* Maintainer: contributing, verification, publishing and [Wiki maintenance](wiki-publication.md).
+* Maintainer: [roadmap](../ROADMAP.md), contributing, verification, publishing and [Wiki maintenance](wiki-publication.md).
 
 The [published English Wiki](https://github.com/YoungLionOrganization/YLPlugin/wiki) covers these workflows as an organized
 handbook with language guides, a CLI cookbook, crypto, runtime, performance,
@@ -24,6 +24,8 @@ execute are separate decisions.
 
 | Topic | Guide |
 |---|---|
+| Delivery milestones and planned plugin front pages | [Roadmap](../ROADMAP.md) |
+| Proposed icon/document discovery and selective reads | [Presentation assets](design/presentation-assets.md) |
 | Format, offsets, codecs and cryptographic coverage | [Specification](specification.md) |
 | Profile fields, permissions, version ranges and target selection | [Plugin profile](profile.md) |
 | Build dependencies, static/shared SDK and installation | [Building](building.md) |

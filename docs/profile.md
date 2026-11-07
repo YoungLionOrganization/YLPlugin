@@ -116,3 +116,11 @@ mask exceeds the safe number range, Java uses Long and Python int; the writer
 still emits decimal integers. A host must not stringify a mask to work around
 its language's numeric limits. See the [language compatibility rules](compatibility.md).
 The data example demonstrates a full signed-64 mask and explicit generic opt-in.
+
+## Planned optional presentation catalog
+
+The [presentation proposal](design/presentation-assets.md) uses a namespaced
+optional `extensions` table for icon/document descriptors. It does not add fields
+to `data` or change this normative profile. The catalog validator, generated
+locators and asset reader remain roadmap work; the current profile validator
+does not validate that proposed extension's semantics.
