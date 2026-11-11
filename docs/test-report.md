@@ -19,7 +19,13 @@ new parser. It performs no file I/O.
 
 Local verification: Release CTest 10/10 and ASan/UBSan CTest 12/12 passed; updated
 catalog cases and their authoring schema are checked separately after refinements.
-Remote verification for the new development commit is recorded in its workflows.
+Development implementation commit `bb21a5fc6fe8df11d4467e4d0dfe815e9cc71bb8`
+passed all seven [core jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535690)
+and six [SDK/package jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535599).
+The new catalog test covers 34 shared vectors plus ownership, absence, custom
+limits and null-input checks (41 native checks). Native/schema expectations remain
+separate for references, path rules and TOML integer/float distinctions.
+The 0.1.4 artifacts are development builds; only 0.1.3 was released.
 
 ## 0.1.3 metadata discovery and bundled CLI — 2026-11-06 (Asia/Baku)
 

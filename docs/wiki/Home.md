@@ -85,6 +85,13 @@ features, distinct from the implemented metadata-only API.
 
 ## Evidence and document status
 
+The 0.1.4 catalog foundation at `bb21a5fc6fe8df11d4467e4d0dfe815e9cc71bb8`
+passed all thirteen [core](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535690)
+and [SDK/package](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535599) jobs.
+It includes 41 native declaration checks and 34 structural schema vectors.
+These are development artifacts, not a 0.1.4 release.
+
+
 Metadata discovery and bundled CLI implementation:
 `e1b2ed7a8638e825cbdb9989c342276703405f36`. Its
 [five-platform SDK and packaging CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664789)

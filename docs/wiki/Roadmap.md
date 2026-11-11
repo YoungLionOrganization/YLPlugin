@@ -15,6 +15,7 @@ SDK/package CI jobs passed for that implementation.
 
 P1 now has an [authoring schema and native C++ validator](../presentation-catalog.md),
 with shared positive/negative vectors. It checks declarations without file I/O.
+All thirteen core/SDK CI jobs passed for the foundation; see the [test report](../test-report.md).
 Auto-detection, locator generation, discovery handles and asset reads remain planned.
 
 ## Next priority: a plugin front page

@@ -22,8 +22,8 @@ Implemented and verified:
 - [x] Bundled native core and CLI, Python console entry point, npm bin and JVM launcher.
 - [x] Bounded-memory plaintext validation, cancellation fixes and Unicode path handling.
 - [x] Expanded package metadata, English documentation and Wiki.
-- [x] [Seven core CI jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664950)
-  and [six SDK/package jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664789) passed.
+- [x] [Seven core CI jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42384970996)
+  and [six SDK/package jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42384970956) passed.
 - [x] Presentation asset architecture and a feasibility experiment using the current native writer.
 
 Remaining release work:
@@ -53,7 +53,9 @@ versioned YLSpec extension and the existing container 1.0 resource layout.
   without changing the existing normative profile 1.0 schema prematurely.
 
 The [native parser and schema contract](docs/presentation-catalog.md) now implement
-P1 on the 0.1.4 branch. File detection, locator generation and asset reads are
+P1 on the 0.1.4 branch. Its [core](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535690)
+and [SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535599) passed all thirteen jobs.
+File detection, locator generation and asset reads are
 not implemented yet.
 
 Acceptance: metadata alone describes declared front-page files; old packages

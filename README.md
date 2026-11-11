@@ -50,8 +50,8 @@ See the [changelog](CHANGELOG.md), [performance guide](docs/performance.md) and
 [troubleshooting](docs/troubleshooting.md). Installation commands below target
 0.1.3. See the [release notes](docs/releases/v0.1.3.md) for the complete scope.
 
-Development verification passed: [all seven core CI jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664950)
-and [all six SDK/platform packaging jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42125664789).
+Development verification passed: [all seven core CI jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535690)
+and [all six SDK/platform packaging jobs](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42976535599).
 See [executed checks](docs/test-report.md) for results and platform limits.
 
 ## Discover plugins by reading only their YLSpec metadata
