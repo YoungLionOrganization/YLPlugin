@@ -1,9 +1,10 @@
 # Proposal: discover and selectively read presentation assets
 
-Status: **proposed architecture**, targeting the next 0.1.x milestone after
-0.1.3. This document does not add a supported API, CLI flag, extension validator
-or automatic detection to the current runtime. Track delivery in the
-[roadmap](../../ROADMAP.md). Existing normative contracts remain the
+Status: **architecture under implementation**. Catalog declarations, an authoring
+schema and a native C++ validator are implemented in 0.1.4 development; see the
+[catalog contract](../presentation-catalog.md). Automatic detection, locator
+generation, discovery handles and selective asset I/O remain planned in the
+[roadmap](../../ROADMAP.md). Existing normative byte/profile contracts remain the
 [container 1.0 specification](../specification.md) and [profile 1.0](../profile.md).
 
 ## Decision and rationale
@@ -92,7 +93,7 @@ The package writer owns all physical locations and hashes, not the author recipe
 | `resource` | Canonical container path, following its portable ASCII and 1024-byte limit |
 | `media_type`, `format` | Validated supported pair, for example `text/markdown` + `markdown` |
 | `encoding` | Required `utf-8` for v1 text documents; absent for images |
-| `offset` | Absolute package byte position; nonnegative TOML signed-64 integer |
+| `offset` | Absolute package byte position, divisible by 8; nonnegative TOML signed-64 integer |
 | `length` | Exact stored/plaintext byte length; nonnegative signed-64 integer |
 | `sha256` | SHA-256 of the complete returned bytes, 64 lowercase hex characters |
 

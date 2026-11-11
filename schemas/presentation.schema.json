@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://younglion.xyz/schemas/ylplugin/presentation-1.0.json",
+  "title": "Presentation catalog 1.0 logical tree (experimental; native validator is authoritative)",
+  "$comment": "Validates the extension value, not a whole YLSpec document. Defaults match native budgets. Source bounds, hashes, uniqueness, aliases and primary references need native validation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "assets"
+  ],
+  "properties": {
+    "version": {
+      "const": "1.0"
+    },
+    "primary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "icon": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "readme": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "contributing": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "security": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "code_of_conduct": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "changelog": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "notice": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "maxItems": 64,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    }
+  },
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "role",
+        "resource",
+        "media_type",
+        "format",
+        "offset",
+        "length",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "role": {
+          "enum": [
+            "icon",
+            "readme",
+            "license",
+            "contributing",
+            "security",
+            "code_of_conduct",
+            "changelog",
+            "notice"
+          ]
+        },
+        "resource": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "^[A-Za-z0-9._/-]+$"
+        },
+        "media_type": {
+          "enum": [
+            "image/png",
+            "image/webp",
+            "image/jpeg",
+            "text/markdown",
+            "text/plain"
+          ]
+        },
+        "format": {
+          "enum": [
+            "png",
+            "webp",
+            "jpeg",
+            "markdown",
+            "text"
+          ]
+        },
+        "encoding": {
+          "const": "utf-8"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036854775807,
+          "multipleOf": 8
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9223372036854775807
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "role": {
+                "const": "icon"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "encoding"
+              ]
+            },
+            "properties": {
+              "length": {
+                "minimum": 1,
+                "maximum": 2097152
+              }
+            },
+            "oneOf": [
+              {
+                "properties": {
+                  "format": {
+                    "const": "png"
+                  },
+                  "media_type": {
+                    "const": "image/png"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "format": {
+                    "const": "webp"
+                  },
+                  "media_type": {
+                    "const": "image/webp"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "format": {
+                    "const": "jpeg"
+                  },
+                  "media_type": {
+                    "const": "image/jpeg"
+                  }
+                }
+              }
+            ]
+          },
+          "else": {
+            "required": [
+              "encoding"
+            ],
+            "properties": {
+              "length": {
+                "maximum": 1048576
+              }
+            },
+            "oneOf": [
+              {
+                "properties": {
+                  "format": {
+                    "const": "markdown"
+                  },
+                  "media_type": {
+                    "const": "text/markdown"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "format": {
+                    "const": "text"
+                  },
+                  "media_type": {
+                    "const": "text/plain"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "length": {
+                "const": 0
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sha256": {
+                "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

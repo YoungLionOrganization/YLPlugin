@@ -70,7 +70,12 @@ adapters implement data, approved native libraries and optional Qt RCC mounting.
 WASM execution in the example is supplied explicitly by its Node host; there is
 no automatic Python execution adapter, Android AAR, installer or dependency solver.
 
-## Planned plugin front pages
+## 0.1.4 development and planned plugin front pages
+
+The [catalog contract](../presentation-catalog.md) now has an experimental C++
+declaration validator and schema on main. The source SDK is 0.1.4; installation
+examples stay on release 0.1.3. Native/facade versions must match.
+
 
 The [roadmap](Roadmap.md) describes automatic icon/README/license/security file
 selection, descriptor-only metadata and explicit reads of individual assets.
@@ -92,7 +97,8 @@ Earlier performance and Unicode work at
 `cca0c717309857d2223421e547b29bd4a077527e` passed all thirteen jobs across
 [core CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889748794)
 and [SDK CI](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/41889749475).
-Release publication and registry verification are recorded in [publishing](../publishing.md).
+GitHub, PyPI and Maven 0.1.3 publication succeeded; npm is awaiting token permissions.
+See the [publication record](../publishing.md#version-013-publication).
 
 The Wiki is an explanatory guide. [The specification](../specification.md) and
 [profile](../profile.md) define the normative byte/metadata contract. Versioned

@@ -1,6 +1,6 @@
 # YLPlugin roadmap
 
-Status: living plan for the **0.1.3 release baseline** and the next presentation
+Status: living plan for the **0.1.3 release baseline**, **0.1.4 development** and the presentation
 asset milestone. Later version numbers below are proposed milestones, not release
 dates or claims that an API already exists. Container, profile and SDK versions
 are independent.
@@ -28,8 +28,9 @@ Implemented and verified:
 
 Remaining release work:
 
-- [ ] Finalize 0.1.3 release notes and immutable source/artifact references.
-- [ ] Publish and verify GitHub, PyPI, npm and Maven distributions as a release operation.
+- [x] Finalize 0.1.3 release notes and immutable source/artifact references.
+- [x] Publish and verify GitHub, PyPI and Maven 0.1.3 distributions.
+- [ ] Complete npm 0.1.3 publication after package token permissions are corrected; see the [publishing record](docs/publishing.md#version-013-publication).
 
 The presentation catalog and selective asset APIs below are **planned**. They are
 not part of the current 0.1.3 runtime. Keep `read_metadata` strictly metadata-only;
@@ -42,14 +43,18 @@ versioned YLSpec extension and the existing container 1.0 resource layout.
 
 ### P1. Catalog and compatibility contract
 
-- [ ] Specify `extensions."xyz.younglion.ylplugin.presentation"`, version `1.0`.
-- [ ] Define asset IDs, roles, primary selections, package paths, media types,
+- [x] Specify `extensions."xyz.younglion.ylplugin.presentation"`, version `1.0`.
+- [x] Define asset IDs, roles, primary selections, package paths, media types,
   formats, text encodings, absolute byte offsets, lengths and SHA-256 hashes.
-- [ ] Keep file contents outside metadata: no Markdown bodies, image bytes,
+- [x] Keep file contents outside metadata: no Markdown bodies, image bytes,
   base64/data URLs or embedded document strings in the catalog.
-- [ ] Separate legacy/missing catalogs, unsupported versions and malformed catalogs.
-- [ ] Add a proposed-extension schema and positive/negative conformance vectors
+- [x] Separate legacy/missing catalogs, unsupported versions and malformed catalogs.
+- [x] Add a proposed-extension schema and positive/negative conformance vectors
   without changing the existing normative profile 1.0 schema prematurely.
+
+The [native parser and schema contract](docs/presentation-catalog.md) now implement
+P1 on the 0.1.4 branch. File detection, locator generation and asset reads are
+not implemented yet.
 
 Acceptance: metadata alone describes declared front-page files; old packages
 remain readable and optional presentation data does not change runtime permissions.

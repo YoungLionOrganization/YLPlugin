@@ -8,7 +8,9 @@ containers, verify resources and signatures, and check host compatibility before
 activating a plugin. Python calls the shared native C/C++ core through a typed
 ctypes API; metadata uses the original native YLSpec parser.
 
-This README describes **0.1.3**. The standalone metadata APIs and bundled CLI are
+The features below were introduced in **0.1.3**. Main now develops **0.1.4**,
+whose initial presentation declaration validator is C++-only; selective asset
+reads are not implemented yet. The standalone metadata APIs and bundled CLI are
 new in that version; 0.1.2 platform wheels contain the SDK runtime only.
 
 ## Install the SDK, core and command together

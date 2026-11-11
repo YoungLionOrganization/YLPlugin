@@ -130,3 +130,11 @@ integers are not rounded through JS doubles: large results become bigint, Java
 uses Long/BigInteger and Python uses int. Per-handle ownership prevents callback
 close/reentry. See [JS/TS](javascript-api.md), [Java](java-api.md),
 [Kotlin](kotlin-api.md) and [Python](python-api.md) for actual frontend coverage.
+
+## Experimental presentation declarations — 0.1.4 development
+
+`parse_presentation_catalog` in `ylplugin/presentation.hpp` validates and copies
+a namespaced catalog from an already parsed YLSpec document. It performs no file
+I/O. See the [catalog contract](presentation-catalog.md) for limits, ownership,
+errors and the distinction from actual asset reads. This helper is absent from
+0.1.3 and does not expose a C/JS/JVM/Python asset API yet.

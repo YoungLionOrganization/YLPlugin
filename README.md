@@ -32,10 +32,16 @@ inspect, validate, build and select components before executing them. A
 `.ylplugin` has its own indexed binary format and embeds the existing YLSpec
 metadata frame. It is not a renamed ZIP and does not require YLPkg or LeoMiniGames.
 
-**[YLPlugin v0.1.3](https://github.com/YoungLionOrganization/YLPlugin/releases/tag/v0.1.3), LGPLv3.**
+**Latest GitHub release: [YLPlugin v0.1.3](https://github.com/YoungLionOrganization/YLPlugin/releases/tag/v0.1.3), LGPLv3.**
 Available on GitHub Releases, npm, PyPI and Maven Central. Published native SDKs
 cover Linux x86_64/ARM64, macOS x86_64/ARM64 and Windows x86_64.
 No stable ABI or production security audit is claimed during 0.x.
+
+**Development branch: 0.1.4.** The first presentation-catalog validator and
+[schema contract](docs/presentation-catalog.md) are implemented in C++; automatic
+file discovery and selective asset I/O remain planned. Install examples below
+target 0.1.3. npm 0.1.3 publication is awaiting token permissions; see the
+[publishing record](docs/publishing.md#version-013-publication).
 
 **0.1.3 highlights.** This release adds bounded-memory plaintext validation,
 cancellation fixes, direct metadata-only reads, bundled CLI installation, strict

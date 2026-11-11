@@ -25,6 +25,7 @@ execute are separate decisions.
 | Topic | Guide |
 |---|---|
 | Delivery milestones and planned plugin front pages | [Roadmap](../ROADMAP.md) |
+| Experimental 0.1.4 catalog declarations and native validation | [Catalog contract](presentation-catalog.md) |
 | Proposed icon/document discovery and selective reads | [Presentation assets](design/presentation-assets.md) |
 | Format, offsets, codecs and cryptographic coverage | [Specification](specification.md) |
 | Profile fields, permissions, version ranges and target selection | [Plugin profile](profile.md) |

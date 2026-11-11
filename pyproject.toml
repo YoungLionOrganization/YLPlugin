@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ylplugin"
-version = "0.1.3"
+version = "0.1.4"
 description = "Native plugin container SDK and CLI with direct YLSpec metadata reads, verified resources and host preflight"
 readme = {file = "bindings/python/README.md", content-type = "text/markdown"}
 authors = [{name = "Cavanshirpro", email = "cavanshirpro@gmail.com"}, {name = "YoungLionOrganization"}]

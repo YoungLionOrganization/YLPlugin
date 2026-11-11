@@ -1,5 +1,9 @@
 # JavaScript and TypeScript SDK
 
+**npm publication status:** 0.1.3 is awaiting token write permissions. npm's public
+latest is 0.1.2; new metadata/CLI APIs require the matching 0.1.3 source build until
+the upload succeeds. See the [publication record](publishing.md#version-013-publication).
+
 ## Direct metadata and native CLI (0.1.3)
 
 `readMetadata(path, limits?)` is exported in ESM, CommonJS and both TypeScript

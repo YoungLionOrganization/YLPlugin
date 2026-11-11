@@ -4,6 +4,13 @@ This guide describes the 0.1.3 release pipeline. Actual publication results are
 recorded in the [publishing record](../publishing.md). A normal push builds/tests;
 it does not perform registry publication.
 
+## 0.1.3 publication status
+
+GitHub, five PyPI wheels and all three Maven artifacts were published. npm 0.1.3
+remains blocked by an E404/write-access response; its latest version is 0.1.2.
+See the [publication record](../publishing.md#version-013-publication) for exact
+runs. Updating docs/Wiki does not fix registry credentials or publish npm.
+
 ## Identities and immutable versions
 
 | Destination | Identity |

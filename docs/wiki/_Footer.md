@@ -4,5 +4,5 @@ YLPlugin · [Repository](https://github.com/YoungLionOrganization/YLPlugin) ·
 [Support](https://www.patreon.com/YoungLionOrganization) ·
 [LGPLv3](../../LICENSE) · Maintained by [Cavanshirpro](https://github.com/Cavanshirpro).
 
-SDK guide 0.1.3; later features are tracked in the [roadmap](Roadmap.md). Normative contracts:
+Release guide 0.1.3; source development 0.1.4; later features are tracked in the [roadmap](Roadmap.md). Normative contracts:
 [container](../specification.md) and [profile](../profile.md).

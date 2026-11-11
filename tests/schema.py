@@ -16,3 +16,12 @@ for path in (root / "tests/vectors").glob("*.ylspec"):
     errors = list(validator.iter_errors(tomllib.loads(path.read_text())))
     assert bool(errors) == (path.name != "manifest.ylspec"), (path, errors)
 print("JSON Schema and positive/negative profile projections passed")
+
+presentation = json.loads((root / "schemas/presentation.schema.json").read_text())
+Draft202012Validator.check_schema(presentation)
+validator = Draft202012Validator(presentation)
+vectors = json.loads((root / "tests/presentation/catalog-cases.json").read_text())["cases"]
+for case in vectors:
+    errors = list(validator.iter_errors(case["catalog"]))
+    assert (not errors) == case["schema_valid"], (case["name"], errors)
+print(f"Presentation schema: {len(vectors)} structural vectors passed; native semantic validation remains required")

@@ -74,3 +74,27 @@ run `41709787678` passed. Publication succeeded in GitHub run `41711388362`,
 npm run `41711646655`, PyPI run `41711655711` and Central run `41711661036`.
 Public npm/PyPI metadata and all three Central POMs expose the selected LGPLv3 license.
 This records completed uploads; subsequent versions still use the manual pipeline.
+
+## Version 0.1.3 publication
+
+The immutable release commit is `584ceb1c2e8cb1336eeb0c3a69259ee15d82a688`.
+Its [core run](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42384970996)
+and [SDK run](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42384970956)
+passed all thirteen jobs. Publication uses those existing artifacts without rebuilding.
+
+| Destination | Result | Workflow |
+|---|---|---|
+| [GitHub v0.1.3](https://github.com/YoungLionOrganization/YLPlugin/releases/tag/v0.1.3) | Published, five asset checksums verified | [42917423317](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42917423317) |
+| [PyPI 0.1.3](https://pypi.org/project/ylplugin/0.1.3/) | Published, five platform wheels; fresh-venv CLI/core smoke passed | [42917547121](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42917547121) |
+| Maven Central, three artifacts | Published; all three public POMs checked; published JNI/core and CLI smoke passed | [42917553273](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42917553273) |
+| npm 0.1.3 | Blocked: registry PUT returns E404; latest remains 0.1.2 | [42917539619](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42917539619) |
+
+The npm package exists publicly. The configured token's write/package access
+needs correction before another upload attempt. Update the organization NPM_TOKEN
+for `@younglionorganization/ylplugin` without posting its value in issues/chat,
+then rerun only that failed registry workflow. Do not re-upload the successful
+PyPI/Maven versions or replace GitHub assets/tags. The failure is not reported as
+completed npm publication.
+
+The main branch continues as 0.1.4 development. Select v0.1.3 and registry version
+0.1.3 for released core/CLI behavior; its source and published binaries stay immutable.

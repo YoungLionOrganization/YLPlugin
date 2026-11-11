@@ -1,5 +1,26 @@
 # Executed verification history
 
+## 0.1.3 publication and 0.1.4 catalog foundation
+
+Release commit `584ceb1c2e8cb1336eeb0c3a69259ee15d82a688` passed all thirteen
+[core](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42384970996)
+and [SDK](https://github.com/YoungLionOrganization/YLPlugin/actions/runs/42384970956)
+jobs. GitHub, PyPI and Central publication succeeded; npm is blocked by registry
+E404/write access. See the [actual publication record](publishing.md#version-013-publication).
+A clean venv installed PyPI 0.1.3 and ran the bundled native CLI/version/validation
+without explicit SDK paths. Three Central POMs expose 0.1.3 and LGPLv3. Downloaded public Java/native JARs
+matched their SHA256 files and passed JNI metadata/validation and bundled CLI tests.
+
+Development 0.1.4 adds a pure native presentation declaration validator. Its shared
+vectors distinguish JSON Schema's structural constraints from native references,
+paths, ranges, limits and exact TOML types. File detection, physical payload bounds,
+TOC agreement, actual content hashes and asset reads are not implemented by this
+new parser. It performs no file I/O.
+
+Local verification: Release CTest 10/10 and ASan/UBSan CTest 12/12 passed; updated
+catalog cases and their authoring schema are checked separately after refinements.
+Remote verification for the new development commit is recorded in its workflows.
+
 ## 0.1.3 metadata discovery and bundled CLI — 2026-11-06 (Asia/Baku)
 
 Implementation commit: `e1b2ed7a8638e825cbdb9989c342276703405f36`.

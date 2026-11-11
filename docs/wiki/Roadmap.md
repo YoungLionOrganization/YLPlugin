@@ -1,7 +1,8 @@
 # Roadmap and presentation assets
 
 The [repository roadmap](../../ROADMAP.md) tracks current and future work.
-0.1.3 is the release baseline; the next presentation asset milestone remains planned.
+0.1.3 is the release baseline; 0.1.4 development implements the initial catalog
+contract and native C++ validator. Selective asset reads remain planned.
 
 ## Current baseline
 
@@ -9,6 +10,12 @@ The [repository roadmap](../../ROADMAP.md) tracks current and future work.
 Its [metadata API](Metadata-Only-Reads.md) reads the header and YLSpec frame,
 without scanning the TOC or loading payload resources. All thirteen core and
 SDK/package CI jobs passed for that implementation.
+
+## 0.1.4 development: catalog declarations
+
+P1 now has an [authoring schema and native C++ validator](../presentation-catalog.md),
+with shared positive/negative vectors. It checks declarations without file I/O.
+Auto-detection, locator generation, discovery handles and asset reads remain planned.
 
 ## Next priority: a plugin front page
 

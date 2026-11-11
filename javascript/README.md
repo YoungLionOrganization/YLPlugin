@@ -1,5 +1,9 @@
 # YLPlugin for JavaScript and TypeScript
 
+**npm publication status:** 0.1.3 is awaiting token write permissions. npm's public
+latest is 0.1.2; new metadata/CLI APIs require the matching 0.1.3 source build until
+the upload succeeds. See the [publication record](../docs/publishing.md#version-013-publication).
+
 For **0.1.3**, see [metadata-only discovery](../docs/metadata-only.md)
 and [bundled core/CLI installation](../docs/installation-cli.md). These additions
 are absent from 0.1.2.

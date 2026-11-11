@@ -1,5 +1,9 @@
 # JavaScript and TypeScript
 
+**npm publication status:** 0.1.3 is awaiting token write permissions. npm's public
+latest is 0.1.2; new metadata/CLI APIs require the matching 0.1.3 source build until
+the upload succeeds. See the [publication record](../publishing.md#version-013-publication).
+
 **0.1.3 additions:** [direct metadata-only reads](Metadata-Only-Reads.md)
 request only the 128-byte header and YLSpec frame. TOC, payload and signature
 regions are not read. Discovery returns unverified metadata; validation and host

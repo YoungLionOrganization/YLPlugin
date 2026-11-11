@@ -1,0 +1,1567 @@
+{
+  "description": "Metadata declarations only; these fixtures are not complete containers or content/trust verification. native_code is the expected YLP Code, including YLSpec type distinctions.",
+  "cases": [
+    {
+      "name": "valid",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 0
+    },
+    {
+      "name": "empty-catalog",
+      "catalog": {
+        "version": "1.0",
+        "assets": []
+      },
+      "schema_valid": true,
+      "native_code": 0
+    },
+    {
+      "name": "unknown-version",
+      "catalog": {
+        "version": "2.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 9
+    },
+    {
+      "name": "inline-content",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68",
+            "body": "# must stay outside metadata"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "negative-offset",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": -8,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "unaligned-offset",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4097,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "boolean-length",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": true,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "floating-offset",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096.0,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "string-offset",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": "4096",
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "negative-length",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": -1,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "uppercase-hash",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "wrong-media",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "image/png",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "wrong-encoding",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "latin1",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "missing-encoding",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "icon-encoding",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "encoding": "utf-8"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "empty-icon",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 0,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "text-limit",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 1048577,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 4
+    },
+    {
+      "name": "icon-limit",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 2097153,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 4
+    },
+    {
+      "name": "missing-primary-ID",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "missing"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "primary-role-mismatch",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "icon"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "traversal",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "../README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "windows-device",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "CON.txt",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "overlap",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "noncanonical-order",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "empty-text",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 0
+    },
+    {
+      "name": "empty-text-bad-hash",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 0,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "exact-resource-alias",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "license",
+            "role": "license",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 0
+    },
+    {
+      "name": "duplicate-ID",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "license",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "conflicting-alias",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "license",
+            "role": "license",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "unknown-field",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "unknown": true
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "unknown-role",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "script",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": false,
+      "native_code": 3
+    },
+    {
+      "name": "case-path-alias",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "DOCS/readme.md",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "file-directory-collision",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 4096,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "docs/README.md/child",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 3
+    },
+    {
+      "name": "exact-large-offset",
+      "catalog": {
+        "version": "1.0",
+        "primary": {
+          "icon": "icon",
+          "readme": "readme"
+        },
+        "assets": [
+          {
+            "id": "icon",
+            "role": "icon",
+            "resource": "assets/icon.png",
+            "media_type": "image/png",
+            "format": "png",
+            "offset": 2048,
+            "length": 68,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "id": "readme",
+            "role": "readme",
+            "resource": "docs/README.md",
+            "media_type": "text/markdown",
+            "format": "markdown",
+            "encoding": "utf-8",
+            "offset": 9007199254745088,
+            "length": 49,
+            "sha256": "1a1ee81fcf27adbb8522191b004daa01f01aaaae2fb046a8d0f90b2f6c4ddc68"
+          },
+          {
+            "id": "security",
+            "role": "security",
+            "resource": "SECURITY.txt",
+            "media_type": "text/plain",
+            "format": "text",
+            "encoding": "utf-8",
+            "offset": 8192,
+            "length": 52,
+            "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ]
+      },
+      "schema_valid": true,
+      "native_code": 0
+    }
+  ]
+}

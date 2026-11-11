@@ -15,7 +15,7 @@ from dataclasses import dataclass
 import threading
 from typing import Callable
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 KeyProvider = Callable[[str], bytes | None]
 
 

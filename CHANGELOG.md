@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.4 — unreleased
+
+* Added experimental native C++ presentation-catalog declaration validation,
+  independent byte/count limits and an authoring JSON Schema with shared vectors.
+* Validates primary selections, exact integer positions, formats, hashes, aliases
+  and overlaps without any file I/O. Automatic detection and asset reads remain planned.
+
+
 ## 0.1.3
 
 ### Added

@@ -7,7 +7,7 @@ import java.util.List;
 
 /** Static native SDK operations; no plugin code is executed by these methods. */
 public final class YLPlugin {
-    public static final String VERSION = "0.1.3";
+    public static final String VERSION = "0.1.4";
     public static String version() { return (String)Native.invoke(0, "version", "{}", null, null, null, null); }
     public static Plugin open(String path) { return new Plugin(path, Map.of()); }
     /** Reads the header and YLSpec frame only, without a Plugin handle or payload scan. */
